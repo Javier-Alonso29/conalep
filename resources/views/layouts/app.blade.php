@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 3 | Dashboard</title>
+  <title>@yield('title')</title>
+  <link rel="icon" type="image/png" href="{{ asset('imagenes/Conalep-logo.png') }}" />
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- Font Awesome -->
@@ -28,38 +29,33 @@
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   @yield('css')
 </head>
-<body>
+
+<body style="background-color: #007e67;">
     <div id="app">
 
         <main class="py-4">
             @yield('content')
+
         </main>
     </div>
-    @yield('scripts')
 
-    <footer class="main-footer">
-    <div class="container">
+
+    <footer>
+        <div class="container">
 
         <div class="row justify-content-md-center">
         <p>Developed by: </p>
             <div class=" col-sm-1">
-            
-            <a href="https://cozcyt.gob.mx/labsol/" target="_blank" data-toggle="lightbox" data-title="sample 1 - white">
+                
+                <a href="https://cozcyt.gob.mx/labsol/" target="_blank" data-toggle="lightbox" data-title="sample 1 - white">
                 <img src="{{ asset('imagenes/Labsol.jpg')  }}" class="img-fluid mb-2" alt="white sample"/>
-            </a>
+                </a>
             </div>
 
-            <div class=" col-sm-1">
-            <a href="#" data-toggle="lightbox" data-title="sample 1 - white">
-                <img src="{{ asset('imagenes/conalep-logo.png')  }}" class="img-fluid mb-2" alt="white sample"/>
-            </a>
-            </div>
         </div>
+    </footer>
 
-        </div>
-  </footer>
-
-
+@yield('scripts')
 <!-- jQuery -->
 <script src="{{ asset('plugins/jquery/jquery.min.js') }}"></script>
 <!-- jQuery UI 1.11.4 -->

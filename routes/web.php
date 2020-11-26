@@ -12,11 +12,27 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('auth.login');
+Auth::routes(['verify'=>true]);
+Route::post('logout', 'Auth\LoginController@logout')->name('logout');
+Route::group(['middleware' => ['guest']], function () {
+	Route::get('/', function () {
+		return view('auth.login');
+    });
 });
 
-Auth::routes();
+Route::get('/home','UsuariosController@validaUsuarios');
 
-Route::get('/home', 'HomeController@index')->name('home');
+/**
+* Rutas del Super usuario
+*/
+
+
+/**
+* Rutas del administrador
+*/
+
+Route::group(['middleware' => ['Administrador','auth',]], function(){
+
+	Route::get('/administrador', 'Administrador\HomeController@index')->name('administrador');
+	
+});
