@@ -13,10 +13,16 @@ class DatabaseSeeder extends Seeder
     {
         $this->truncateTables([
             'roles',
-            'users'
+            'users',
+            'estados',
+            'municipios',
+            'planteles'
         ]);
 
         $this->call(RolesSeeder::class);
+        $this->call(EstadosSeeder::class);
+        $this->call(MunicipiosSeeder::class);
+        $this->call(PlantelesSeeder::class);
     }
 
     protected function truncateTables(array $tables){
