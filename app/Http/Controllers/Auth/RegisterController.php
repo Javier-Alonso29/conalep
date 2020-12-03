@@ -49,11 +49,21 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $messages = ['email.regex' => 'Correo electrónico con formato invalido',
+                     'email.unique' => 'Este correo ya está registrado',
+                     'email.max' => 'Tu correo no puede exceder los 255 caracteres',
+                     'email.required' => 'Se requiere insertar un correo electrónico para registrarse',
+                     'password.confirmed' => 'Las contraseñas no coinciden',
+                     'password.min' => 'La contraseña debe tener mínimo 8 caracteres',
+                     'password.required' => 'Se requiere una contraseña para registrarse',
+                     'name.required' => 'Se requiere insertar un nombre para registrarse',
+                     'name.max' => 'El nombre no puede contener más de 255 caracteres'];
+
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users','regex:/(.*)@zac\.conalep.edu.mx$/i'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-        ]);
+        ],$messages);
     }
 
     /**
