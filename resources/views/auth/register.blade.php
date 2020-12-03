@@ -24,8 +24,32 @@
                         <!--Nombre-->
                         <div class="form-group row">
                             <div class="col-md-12">
-                                <input placeholder="Nombre completo" id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                                <input placeholder="Nombre" id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                                 @error('name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!--App_paterno-->
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <input placeholder="Primer apellido" id="app_paterno" type="text" class="form-control @error('app_paterno') is-invalid @enderror" name="app_paterno" value="{{ old('app_paterno') }}" autocomplete="app_paterno" autofocus>
+                                @error('app_paterno')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <!--App_materno-->
+                        <div class="form-group row">
+                            <div class="col-md-12">
+                                <input placeholder="Segundo apellido" id="app_materno" type="text" class="form-control @error('app_materno') is-invalid @enderror" name="app_materno" value="{{ old('app_materno') }}" autocomplete="app_materno" autofocus>
+                                @error('app_materno')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

@@ -20,7 +20,7 @@ Route::group(['middleware' => ['guest']], function () {
     });
 });
 
-Route::get('/home','UsuariosController@validaUsuarios');
+Route::get('/home','UsuariosController@validaUsuarios')->name('inicio');
 
 /**
 * Rutas del Super usuario
@@ -30,9 +30,15 @@ Route::get('/home','UsuariosController@validaUsuarios');
 /**
 * Rutas del administrador
 */
-
 Route::group(['middleware' => ['Administrador','auth',]], function(){
 
 	Route::get('/administrador', 'Administrador\HomeController@index')->name('administrador');
+
+	Route::prefix('administrador')->middleware(['Administrador','auth',])->group(function (){
+
+		// Route::post('/procesos/create','Administrador\ProcesosController')->name('administrador.procesos.create');
+		Route::resource('/procesos','Administrador\ProcesosController');
+
+	});
 	
 });
