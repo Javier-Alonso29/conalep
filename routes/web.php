@@ -36,7 +36,6 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 
 	Route::prefix('administrador')->middleware(['Administrador','auth',])->group(function (){
 
-		// Route::post('/procesos/create','Administrador\ProcesosController')->name('administrador.procesos.create');
 		Route::resource('/procesos','Administrador\ProcesosController');
 
 	});
