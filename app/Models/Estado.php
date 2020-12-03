@@ -1,12 +1,11 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class State
+class State extends Models
 {
-    use Notifiable;
 
     /**
      * The attributes that are mass assignable.
