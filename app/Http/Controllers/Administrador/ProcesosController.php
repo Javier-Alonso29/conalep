@@ -118,12 +118,22 @@ class ProcesosController extends Controller
         }
 
         $proceso = Proceso::FindOrFail($request->id);
+        $codigo_anterior = $proceso->codigo;
         $proceso->fill($request->all());
+
+        /**
+         * Cambiar el nombre del codigo debe de cambiar el nombre de 
+         * la carpeta 
+         */
+        if($codigo_anterior != $proceso->codigo){
+            Storage::move('public/'.$codigo_anterior, 'public/'.$proceso->codigo);
+        }
         
 
         if ($proceso->save()) {
-            
+
             return redirect()->route('procesos.index')->with("success","Proceso actualizado correctamente!");
+
         }else{
             return redirect()->route('procesos.index')->with("error","Proceso no actualizada!");
         }
