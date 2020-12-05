@@ -12,7 +12,7 @@ class RolesSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('roles')->insert(['name'=>'Super_user']);
+        DB::table('roles')->insert(['name'=>'Super Usuario']);
         DB::table('roles')->insert(['name'=>'Administrador']);
     }
 }
