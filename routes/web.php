@@ -49,6 +49,7 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 	Route::prefix('administrador')->middleware(['Administrador','auth',])->group(function (){
 
 		Route::resource('/procesos','Administrador\ProcesosController');
+		Route::post('/procesos/downloadFolder','Administrador\ZipController@downloadFolder')->name('procesos.download.folder');
 
 	});
 	

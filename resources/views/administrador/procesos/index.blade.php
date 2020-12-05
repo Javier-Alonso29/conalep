@@ -88,9 +88,6 @@
                                     <i class="fa fa-edit" ></i>
                                 </a>
 
-                                <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="" href="#" data-datos="" >
-                                    <i class="fa fa-download"></i>
-                                </a>
                             </td>
                         </tr>
                         @empty
@@ -115,7 +112,6 @@
                 </div>
                 <ul class="list-group list-group-flush">
                         <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo proceso</a></li>
-                        <li class="list-group-item"><a href="#" class="btn btn-primary btn-block">Descargar todos</a></li>
                         <li class="list-group-item"><a href="#" class="btn btn-danger btn-block">Borrar todos</a></li>
                 </ul>
                 <div class="card-footer text-center">Procesos</div>
@@ -134,6 +130,7 @@
 @include('administrador.procesos.create')
 @include('administrador.procesos.delete')
 @include('administrador.procesos.edit')
+@include('administrador.procesos.downloadFolder')
 @endsection
 
 @section('scripts')
@@ -154,6 +151,14 @@
 		$('#edit_codigo').val(proceso.codigo);
         $('#edit_descripcion').val(proceso.descripcion);
 		$('#id_proceso').val(proceso.id);
+	});
+
+
+    $('#downloadFolder').on('show.bs.modal', function(e) {
+		var proceso = $(e.relatedTarget).data().datos;
+		console.log(proceso);
+        $('#downloadFolder_id').val(proceso.id);
+		$('#codigo_proceso').text(proceso.codigo);
 	});
 
 </script>
