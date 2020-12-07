@@ -3,12 +3,14 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use App\User;
+use Artisan;
 
 class InicioSesionTest extends TestCase
 {
-    /*
-    Verifica si muestra el formulario 
-    de login al inicio.
+    /**
+     *  Verifica si muestra el formulario 
+     *  de login al inicio.
     */
     public function test_usuario_ve_formulario_login()
     {
@@ -18,23 +20,11 @@ class InicioSesionTest extends TestCase
         $response->assertViewIs('auth.login');
     }
 
-    /* 
-    Verifica si se ingresa a home al ingresar 
-    correctamente los datos en login. Tienes que crear este usuario para poder ingresar
-    */
-    public function test_login_correcto(){
-        $response = $this->call('POST', '/login', [
-            'email' => 'ed120@zac.conalep.edu.mx',
-            'password' => 'conalep123',
-            '_token' => csrf_token()
-        ]);
-        $this->assertEquals(302, $response->getStatusCode());
-        $response->assertRedirect('/home');
-    }
+   
 
-    /*
-    Verifica si se queda en la misma pagina
-    si se insertan mal los datos de login.
+    /**
+     * Verifica si se queda en la misma pagina
+     * si se insertan mal los datos de login.
     */
     public function test_login_pass_incorrecta(){
         $response = $this->call('POST', '/login', [
@@ -50,9 +40,9 @@ class InicioSesionTest extends TestCase
         $this->assertGuest();
     }
 
-    /*
-    Verifica si se queda en la misma pagina
-    si no se inserta el email.
+    /**
+     * Verifica si se queda en la misma pagina
+     * si no se inserta el email.
     */
     public function test_login_email_vacio(){
         $response = $this->call('POST', '/login', [
@@ -65,9 +55,9 @@ class InicioSesionTest extends TestCase
     }
 
     
-    /*
-    Verifica si se queda en la misma pagina
-    si no se inserta la constraseña.
+    /**
+     * Verifica si se queda en la misma pagina
+     * si no se inserta la constraseña.
     */
     public function test_login_pass_vacio(){
         $response = $this->call('POST', '/login', [
