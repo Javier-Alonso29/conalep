@@ -15,8 +15,6 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Artisan;
 
-//use PHPUnit\Framework\TestCase;
-
 
 class CrearProcesosTest extends TestCase
 {
@@ -24,72 +22,59 @@ class CrearProcesosTest extends TestCase
     use RefreshDatabase;
     use WithoutMiddleware;
 
-
-    /*public function test_index_muestra_procesos(){
-        $user = factory(User::class)->create();
-        
-        $proceso_1=$user->procesos()->create();
-        $proceso_2=
-    }*/
-
+    /**
+     * Crear procesos cuando el nombre del proceso ya este en uso
+     */
    public function test_crear_proceso_nombre_codigo_existentes()
-    
     {
+
+        Artisan::call('migrate:fresh');
+        Artisan::call('db:seed');
         
         $user = factory(User::class)->create();
-
         $this->actingAs($user);
 
-        $processData = [
-            "nombre" => "Servicios Escolares",
-            "codigo" => "GSE",
-            "descripción" => "Departamento de servicios escolares",
-        ];
+        $proceso1 = factory(Proceso::class)->create(['nombre'=>'Proceso 1','codigo'=>'AAAC']);
 
-        $response=$this->json('POST','administrador/procesos',$processData,['Accept' => 'application/json']);
-        $response->assertJson([
-            "errors" => [
-                "nombre" => ["Ya existe un proceso registrado con este nombre"],
-                "codigo" => ["Ya existe un proceso con este codigo"]
-            ]
-        ]);
+        $result = $this->post(route('procesos.store'),['nombre'=>'Proceso 1','codigo'=>'AAAC']);
+
+        $result->assertSessionHasErrors();
     }
 
 
-
+    /**
+     * Crear un proceso con los campos vacios, donde la base de datos
+     * no acepta el nombre ni el codigo del proceso vacios.
+     */
     public function test_crear_proceso_campos_vacios()
     {
+        Artisan::call('migrate:fresh');
+        Artisan::call('db:seed');
+        
         $user = factory(User::class)->create();
-
         $this->actingAs($user);
 
-        $processData = [
-            "nombre" => "",
-            "codigo" => "",
-            "descripción" => "",
-        ];
+        $result = $this->post(route('procesos.store'),['nombre'=>'','codigo'=>'']);
 
-        $response=$this->post('administrador/procesos',$processData,['Accept' => 'application/json']);
-        $response->assertStatus(302);
+        $result->assertSessionHasErrors();
     }
 
-    /* 
-        Verifica si un proceso fue creado
-        correctamente.
+    /**
+    * Crear un proceso con sus valores correctos
     */
     public function test_crear_proceso_correcto()
     {
+        Artisan::call('migrate:fresh');
+        Artisan::call('db:seed');
+        
         $user = factory(User::class)->create();
-
         $this->actingAs($user);
 
-        $processData = [
-            "nombre" => "Recursos Humanos S",
-            "codigo" => "RHS",
-            "descripción" => "Departamento de recursos humanos",
-        ];
+        $result = $this->post(route('procesos.store'),['nombre'=>'Proceso 1','codigo'=>'AAAC']);
 
-        $response=$this->post('administrador/procesos',$processData,['Accept' => 'application/json'])
-        ->assertSuccessful();
+        $this->assertDatabaseHas('procesos',[
+            'nombre'=>'Proceso 1',
+            'codigo'=>'AAAC'
+        ]);
     }
 }

@@ -155,25 +155,6 @@ class ModuloProcesosTest extends TestCase
 
     }
 
-    public function test_eliminar_proceso_contraseña_incorrecta()
-    {
-        Artisan::call('migrate:fresh');
-        Artisan::call('db:seed');
-
-        $user = factory(User::class)->create();
-        $this->actingAs($user);
-
-        $proceso = factory(Proceso::class)->create();
-
-        $result = $this->delete(route('procesos.destroy', 1),[
-            'id' => 1,
-            'contraseña' => 'contraseña'
-        ]);
-
-        $result = assertSessionHasErrors(['contraseña']);
-
-
-    }
 
 
 }
