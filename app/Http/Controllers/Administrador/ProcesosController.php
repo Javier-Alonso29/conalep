@@ -45,17 +45,17 @@ class ProcesosController extends Controller
 
         $proceso = Proceso::create($request->all());
         
-        $access = Storage::makeDirectory('public/'.$proceso->codigo);
+        //$access = Storage::makeDirectory('public/'.$proceso->codigo);
 
-        if($access === true ){
+        //if($access === true ){
 
             return redirect()->route('procesos.index')->With('success', 'El prceso se creo con exito');
 
-        }else{
+        //}else{
 
-            return redirect()->route('procesos.index')->With('error', 'No se creo el directorio');
+        //    return redirect()->route('procesos.index')->With('error', 'No se creo el directorio');
 
-        }
+        //}
     }
 
     /**
