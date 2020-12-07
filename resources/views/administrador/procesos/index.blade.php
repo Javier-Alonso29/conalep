@@ -92,7 +92,7 @@
                         </tr>
                         @empty
                         <tr>
-							<td colspan="5">Ningún proceso registrado</td>
+							<td colspan="5">Ningún proceso registrado.</td>
 						</tr>
                         @endforelse
                     </tbody>

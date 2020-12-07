@@ -27,16 +27,15 @@ class CreateAdministradorRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => 'required|unique:procesos',
-            'descripcion',
+            'email' => 'required|unique:users',
         ];
     }
 
     public function messages()
     {
         return [
-            'nombre.unique' => 'Ya existe un proceso registrado con este nombre',
-            'nombre.required' => 'Debes de darle un nombre al proceso',
+            'email.unique' => 'Ya existe un administrador registrado con este E-Mail.',
+            'email.required' => 'Debes de darle un E-Mail valido al administrador.',
         ];
     }
 }

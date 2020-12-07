@@ -5,11 +5,9 @@ namespace App\Http\Controllers\SuperUsuario;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
-use App\Models\Proceso;
 use Validator;
 use Illuminate\Support\Facades\Hash;
 use Auth;
-use App\Http\Requests\CreateProcesoRequest;
 use App\Http\Requests\CreateAdministradorRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
@@ -36,7 +34,7 @@ class AdministradoresController extends Controller
     {
         $usuarios = User::get();
 
-        return view('superusuario.administradores.index', compact('administradores'));
+        return view('superusuario.administradores.index', compact('usuarios'));
     }
 
     /**
@@ -46,10 +44,8 @@ class AdministradoresController extends Controller
     {
 
         $usuario = User::create($request->all());
-        
-        $access = Storage::makeDirectory('public/'.$usuario->codigo);
 
-        if($access === true ){
+        if($usuario === true ){
 
             return redirect()->route('administradores.index')->With('success', 'El administrador se creo con exito');
 
@@ -85,9 +81,8 @@ class AdministradoresController extends Controller
         }
 
         $usuario = User::FindOrFail($request->id);
-        $access = Storage::deleteDirectory('public/'.$usuario->codigo);
 
-        if($access === true ){
+        if($usuario === true ){
 
             $usuario->delete();
             return redirect()->route('administradores.index')->With('success', 'Se borro correctamente el administrador');
@@ -105,7 +100,7 @@ class AdministradoresController extends Controller
     public function update(Request $request)
     {
 
-        // Valida que el proceso tenga un nombre
+        // Valida que el admin tenga un nombre
         $validator = Validator::make($request->all(), [
             'name' => ['required',Rule::unique('administradores','name')->ignore($request->id)],
         ],[

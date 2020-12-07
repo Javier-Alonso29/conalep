@@ -3,19 +3,16 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header bg-black">
-				<h5 class="modal-title" id="exampleModalLabel">¿Seguro que quieres eliminar el proceso <span class="badge badge-danger" id="nombre_proceso"></span>?</h5>
+				<h5 class="modal-title" id="exampleModalLabel">¿Seguro que quieres eliminar el administrador <span class="badge badge-danger" id="nombre_usuario"></span>?</h5>
                 
-				
                     <span class="badge badge-danger" class="close"  data-dismiss="modal" aria-label="Close">
                         <i class="fas fa-times fa-lg" style="color:#fff"></i>
                     </span>
-			
                 
 			</div>
-			<form  method="POST" action="{{ route('procesos.destroy',0) }}" role="form" >
+			<form  method="POST" action="{{ route('administradores.destroy',0) }}" role="form" >
 
-                
-				<div class="modal-body">Se eliminaran los archivos internos de este proceso
+				<div class="modal-body">Se eliminara el administrador
                         
 						<input class="form-control {{ $errors->delete->has('contraseña') ? ' is-invalid' : '' }}" type="password" name="contraseña" placeholder="Coloca tu contraseña para confirmar">
 						@if ($errors->delete->has('contraseña'))

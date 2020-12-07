@@ -45,6 +45,26 @@
             <!-- /.info-box -->
           </div>
           <!-- /.col -->
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+              
+              <a class="info-box-icon bg-info elevation-1" href="{{ route('administradores.index') }}">
+                <i class="fas fa-user"></i>
+              </a>
+
+              <div class="info-box-content">
+                <span class="info-box-text">Administradores</span>
+                <span class="info-box-number">
+                  10
+                </span>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
               <a class="info-box-icon bg-danger elevation-1">
