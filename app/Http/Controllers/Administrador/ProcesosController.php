@@ -22,7 +22,7 @@ class ProcesosController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('Administrador');
+        // $this->middleware('Administrador');
     }
 
     /**
@@ -84,17 +84,11 @@ class ProcesosController extends Controller
 
         $proceso = Proceso::FindOrFail($request->id);
         $access = Storage::deleteDirectory('public/'.$proceso->codigo);
+        $proceso->delete(); 
+            
+        return redirect()->route('procesos.index')->With('success', 'Se borro correctamente el proceso');
 
-        if($access === true ){
-
-            $proceso->delete();
-            return redirect()->route('procesos.index')->With('success', 'Se borro correctamente el proceso');
-
-        }else{
-
-            return redirect()->route('procesos.index')->With('error', 'No pudo borrar el proceso');
-
-        }
+        
     }
 
     /**
