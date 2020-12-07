@@ -2,9 +2,10 @@
 
 namespace Tests\Unit;
 
-//use PHPUnit\Framework\TestCase;
 use App\User;
 use Tests\TestCase;
+use Artisan;
+use App\Models\Proceso;
 
 class EditarProcesosTest extends TestCase
 {
@@ -50,22 +51,41 @@ class EditarProcesosTest extends TestCase
     }
 
 
-    public function test_editar_proceso_correcto()
+    /**
+     * Usuario con el rol de administrador puede actualizar un proceso
+     * registrado en la base de datos y ver los datos actualizados en la base de datos
+     * 
+    */
+    public function test_usuario_autenticado_actualiza_proceso()
     {
-        $user = factory(User::class)->create();
 
+        // Borramos los procesos creados en las pruebas anteriores 
+        
+
+        Artisan::call('migrate:fresh');
+        Artisan::call('db:seed');
+
+        // 1.- Teniendo un usuario registrado
+        $user = factory(User::class)->create();
         $this->actingAs($user);
 
-        $processData = [
-            "edit_proceso" => "Recursos Humanos Sociales",
-            "edit_codigo" => "RHS",
-            "edit_descripcion" => "Departamento de recursos humanos sociales",
-            "id_proceso" => 2,
-            "_token" => csrf_token(),
-            "_method" => "PUT",
-        ];
+        $proces = factory(Proceso::class)->create();
+        
+        $result = $this->put(route('procesos.update',1), [
+            'id'=>$proces->id,
+            'nombre'=>'Proceso actualizado',
+            'codigo'=>'PPA',
+            'descripcion'=>'actualizado correctamente'
+        ]);
 
-        $response=$this->json('POST','administrador/procesos/1',$processData);
-        $response->assertStatus(200);
+        $this->assertCount(1, Proceso::all());
+
+        $proces = $proces->fresh();
+
+        $this->assertDatabaseMissing('procesos',[
+            'nombre'=>'Proceso actualizado',
+            'codigo'=>'PPA',
+            'descripcion'=>'actualizado correctamente'
+        ]);
     }
 }
