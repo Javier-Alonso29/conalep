@@ -23,26 +23,31 @@
 </div>
 
 @if(session('success'))
-    <div class="col-sm-12">
-        <div class="alert  alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<div id="toastsContainerTopRight" class="toasts-top-right fixed">
+        <div class="toast bg-navy fade show" role="alert" aria-live="assertive" aria-atomic="true" data-delay="6000">
+            <div class="toast-header">
+                <strong class="mr-auto">¡Exito! ... </strong>
+                <small>Proceso</small>
+                <button data-dismiss="toast" type="button" class="ml-2 mb-1 close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="toast-body">{{session('success')}}</div>
         </div>
-    </div>
+</div>
 @endif
 
 @if(session('error'))
-    <div class="col-sm-12">
-        <div class="alert  alert-danger alert-dismissible fade show" role="alert">
-            {{ session('error') }}
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<div id="toastsContainerTopRight" class="toasts-top-right fixed"><div class="toast bg-danger fade show" role="alert" aria-live="assertive" aria-atomic="true" data-delay="6000">
+    <div class="toast-header">
+        <strong class="mr-auto">¡Error! ...</strong>
+        <small>Proceso</small>
+        <button data-dismiss="toast" type="button" class="ml-2 mb-1 close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         </div>
+        <div class="toast-body">{{session('error')}}</div>
     </div>
+</div>
 @endif
+
+
 
 
 <section class="container">
@@ -130,6 +135,9 @@
 
 
 
+
+
+
 @include('administrador.procesos.create')
 @include('administrador.procesos.delete')
 @include('administrador.procesos.edit')
@@ -162,7 +170,15 @@
 		console.log(proceso);
         $('#downloadFolder_id').val(proceso.id);
 		$('#codigo_proceso').text(proceso.codigo);
-	});
+    });
+    
+
+</script>
+
+<script>
+    $(document).ready(function(){
+        $('.toast').toast('show')
+    })
 
 </script>
 

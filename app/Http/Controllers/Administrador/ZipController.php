@@ -55,7 +55,8 @@ class ZipController extends Controller
         if ($validator->fails()) {
             return back()
             ->withErrors($validator,'donwloadFolder')
-            ->withInput();
+            ->withInput()
+            ->With('error', 'La contraseña ingresada es incorrecta.');
         }
         
         // Buscamos el proceso del cual queremos descargar el zip
@@ -65,11 +66,18 @@ class ZipController extends Controller
         $zip = new ZipArchive;
         $file_name = $proceso->codigo.'.zip';
 
+        // Obtenemos los archivos de la carpeta del proceso seleccionado
+        $files = File::files(public_path('storage/'.$proceso->codigo));
+
+        if(empty($files)){
+            return redirect()
+            ->route('procesos.index')->With('error', 'El proceso no cuenta con archivos internos.');
+        }
+
         // Crear o sobrescribir el zip dentro de la carpeta zips
         if($zip->open(public_path('zips/'.$file_name), ZipArchive::CREATE|ZipArchive::OVERWRITE) === TRUE)
         {
-            // Obtenemos los archivos de la carpeta del proceso seleccionado
-            $files = File::files(public_path('storage/'.$proceso->codigo));
+            
 
             foreach($files as $key => $value)
             {   
@@ -88,6 +96,6 @@ class ZipController extends Controller
         }
 
         // Regresamos la vista con la descarga del zip
-        return response()->download(public_path($file_name));
+        return response()->download(public_path('zips/'.$file_name));
     }
 }
