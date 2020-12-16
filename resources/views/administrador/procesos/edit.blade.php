@@ -36,7 +36,7 @@
 
 					<div class="form-group">
 						<label for="inicio">Descripcion</label>
-                        <textarea class="form-control {{ $errors->has('descripcion') ? ' is-invalid' : '' }}" autocomplete="off" value="{{ old('descripcion') }}" aria-label="With textarea" name="descripcion" id="edit_descripcion"></textarea>
+                        <textarea class="form-control" autocomplete="off" value="{{ old('descripcion') }}" aria-label="With textarea" name="descripcion" id="edit_descripcion"></textarea>
 						@if ($errors->has('descripcion'))
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $errors->first('descripcion') }}</strong>
