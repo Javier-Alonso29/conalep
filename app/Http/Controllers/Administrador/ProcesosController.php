@@ -47,6 +47,8 @@ class ProcesosController extends Controller
         
         $access = Storage::makeDirectory('public/'.$proceso->codigo);
 
+        Storage::setVisibility('public/'.$proceso->codigo,'public');
+
         if($access === true ){
 
             return redirect()->route('procesos.index')->With('success', 'El prceso se creo con exito');
