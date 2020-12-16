@@ -14,8 +14,7 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('inicio') }}">Inicio</a></li>
-              <li class="breadcrumb-item active"><a href="{{ route('inicio') }}">Procesos</a></li>
-              <li class="breadcrumb-item active"></li>
+              <li class="breadcrumb-item active" aria-current="page">Procesos</li>
             </ol>
         </div>
 
@@ -86,6 +85,10 @@
 
                                 <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" href="#" data-datos="{{$proceso}}" >
                                     <i class="fa fa-edit" ></i>
+                                </a>
+
+                                <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#downloadFolder" href="#" data-datos="{{$proceso}}" >
+                                    <i class="fa fa-download"></i>
                                 </a>
 
                             </td>
