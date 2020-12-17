@@ -47,13 +47,15 @@ class ProcesosController extends Controller
         
         //$access = Storage::makeDirectory('public/'.$proceso->codigo);
 
+        Storage::setVisibility('public/'.$proceso->codigo,'public');
+
         //if($access === true ){
 
-            return redirect()->route('procesos.index')->With('success', 'El prceso se creo con exito');
+            return redirect()->route('procesos.index')->With('success', 'El prceso '.$proceso->codigo.' se creo con exito');
 
         //}else{
 
-        //    return redirect()->route('procesos.index')->With('error', 'No se creo el directorio');
+            //return redirect()->route('procesos.index')->With('error', 'No se creo el directorio de nuevo proceso');
 
         //}
     }
@@ -79,14 +81,15 @@ class ProcesosController extends Controller
         if ($validator->fails()) {
             return back()
             ->withErrors($validator,'delete')
-            ->withInput();
+            ->withInput()
+            ->With('error', 'Contraseña incorrecta, proceso no borrado.');
         }
 
         $proceso = Proceso::FindOrFail($request->id);
         $access = Storage::deleteDirectory('public/'.$proceso->codigo);
         $proceso->delete(); 
             
-        return redirect()->route('procesos.index')->With('success', 'Se borro correctamente el proceso');
+        return redirect()->route('procesos.index')->With('success', 'Se borro correctamente el proceso.');
 
         
     }
@@ -103,12 +106,17 @@ class ProcesosController extends Controller
             'codigo' => ['required',Rule::unique('procesos','codigo')->ignore($request->id)]
         ],[
             'nombre.required'=>'Debes asignar un nombre al proceso',
-            'codigo.required' => 'Debes de asegnar un codigo al proceso'
+            'nombre.unique' => 'Ya existe un proceso con este nombre',
+            'codigo.required' => 'Debes de asegnar un codigo al proceso',
+            'codigo.unique' => 'Ya existe un proceso con este codigo'
         ]);
 
         if ($validator->fails())
         {
-            return redirect()->route('procesos.index')->With('error', 'Proceso no actualizado');
+            return back()
+            ->withErrors($validator)
+            ->withInput()
+            ->With('error', 'El proceso no pudo ser actualizado.');
         }
 
         $proceso = Proceso::FindOrFail($request->id);

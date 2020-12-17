@@ -27,6 +27,8 @@
   <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <!-- Toast -->
+  <link rel="stylesheet" href="{{ asset('plugins/toastr/toastr.min.css') }}">
   @yield('css')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed text-sm">
@@ -230,6 +232,8 @@
 <script src="{{ asset('dist/js/pages/dashboard.js') }}"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="{{ asset('dist/js/demo.js') }}"></script>
+<!-- Toast -->
+<script src="{{ asset('plugins/toastr/toastr.min.js') }}"></script>
 @yield('scripts')
 </body>
 </html>

@@ -31,6 +31,9 @@ class ZipController extends Controller
     public function downloadFolder(Request $request)
     {
 
+        /**
+         * Validar la contraseña del usuario
+         */
         $validator = Validator::make($request->all(), [
             'contraseña' => [
                 'required',
@@ -44,36 +47,55 @@ class ZipController extends Controller
             ],
         ]);
 
+        /**
+         * En caso de que sea una contraseña incorrecta 
+         * fallara la validacion y regresamos al index
+         * Con el mensaje de contraseña incorrecta
+         */
         if ($validator->fails()) {
             return back()
             ->withErrors($validator,'donwloadFolder')
-            ->withInput();
+            ->withInput()
+            ->With('error', 'La contraseña ingresada es incorrecta.');
         }
         
+        // Buscamos el proceso del cual queremos descargar el zip
         $proceso = Proceso::FindOrFail($request->id);
 
-        //Creo que archivo zip con el nombre del proceso
+        // Creamos un zip y le asignamos el nombre del proceso que deseamos descargar
         $zip = new ZipArchive;
-        $fileName = $proceso->codigo.'.zip';
-        Storage::put('public/'.$fileName, $zip);
+        $file_name = $proceso->codigo.'.zip';
 
-        $creado = $zip->open(public_path($fileName), ZipArchive::CREATE);
+        // Obtenemos los archivos de la carpeta del proceso seleccionado
+        $files = File::files(public_path('storage/'.$proceso->codigo));
 
-        if($creado == TRUE)
+        if(empty($files)){
+            return redirect()
+            ->route('procesos.index')->With('error', 'El proceso no cuenta con archivos internos.');
+        }
+
+        // Crear o sobrescribir el zip dentro de la carpeta zips
+        if($zip->open(public_path('zips/'.$file_name), ZipArchive::CREATE|ZipArchive::OVERWRITE) === TRUE)
         {
-            $files = Storage::allFiles('public/'.$proceso->codigo);
             
-            foreach($files as $key=>$value)
-            {
-                $relativeName = basename($value);
 
-                $zip->addFiles($value, $relativeName);
+            foreach($files as $key => $value)
+            {   
+                // home/vagrant/code/conalep/storage/app/public/PRC/PruebaArchivo.txt
+
+                //PruebaArchivo.txt
+                $relativeNameInZipFile = basename($value);
+
+                //Guardamos el archivo dentro del zip
+                $guardado = $zip->addFile($value , $relativeNameInZipFile);
             }
 
+            // Cerramos el zip
             $zip->close();
 
         }
-        //dd(public_path($fileName));
-        return response()->download(public_path($fileName));
+
+        // Regresamos la vista con la descarga del zip
+        return response()->download(public_path('zips/'.$file_name));
     }
 }
