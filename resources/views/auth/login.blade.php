@@ -13,7 +13,7 @@
 
             <div class="col">
               <div class="p-5">
-                <img src="{{ asset('imagenes/Conalep-logo.png') }}" alt="Injuventud" class="img-fluid img-thumbnail m-2" style="width: 19rem;">
+                <img src="{{ asset('imagenes/Conalep-logo.png') }}" alt="CONALEP" class="img-fluid img-thumbnail m-2" style="width: 19rem;">
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">Inicia sesión</h1>
                 </div>

@@ -68,7 +68,7 @@
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
               <a class="info-box-icon bg-success elevation-1">
-              <i class="fas fa-shopping-cart"></i>
+              <i class="fas fa-folder-open"></i>
               </a>
 
               <div class="info-box-content">
