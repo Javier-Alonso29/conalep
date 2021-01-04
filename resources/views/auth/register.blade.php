@@ -11,11 +11,11 @@
             <p style="color:#FFF">Sistema de gestión y administración de archivos para el Colegio Nacional de Educación Profesional Técnica (CONALEP).</p>
         </div>
 
-        <div class="col">
+        <div class="col o-hidden border-0">
 
             <div class="card w-75">
 
-                <img src="{{ asset('imagenes/Conalep-logo.png') }}" alt="Injuventud" class="img-fluid img-thumbnail m-2" >
+                <img src="{{ asset('imagenes/Conalep-logo.png') }}" alt="CONALEP" class="img-thumbnail m-2">
 
                 <div class="card-body tarjeta_registro">
                     <form method="POST" action="{{ route('register') }}">
@@ -33,28 +33,30 @@
                             </div>
                         </div>
 
-                        <!--App_paterno-->
                         <div class="form-group row">
-                            <div class="col-md-12">
-                                <input placeholder="Primer apellido" id="app_paterno" type="text" class="form-control @error('app_paterno') is-invalid @enderror" name="app_paterno" value="{{ old('app_paterno') }}" autocomplete="app_paterno" autofocus>
-                                @error('app_paterno')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                                <!--App_paterno-->
+                                
+                                    <div class="col-6">
+                                        <input placeholder="Primer apellido" id="app_paterno" type="text" class="form-control @error('app_paterno') is-invalid @enderror" name="app_paterno" value="{{ old('app_paterno') }}" autocomplete="app_paterno" autofocus>
+                                        @error('app_paterno')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                            
 
-                        <!--App_materno-->
-                        <div class="form-group row">
-                            <div class="col-md-12">
-                                <input placeholder="Segundo apellido" id="app_materno" type="text" class="form-control @error('app_materno') is-invalid @enderror" name="app_materno" value="{{ old('app_materno') }}" autocomplete="app_materno" autofocus>
-                                @error('app_materno')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+                                <!--App_materno-->
+                                
+                                    <div class="col-6">
+                                        <input placeholder="Segundo apellido" id="app_materno" type="text" class="form-control @error('app_materno') is-invalid @enderror" name="app_materno" value="{{ old('app_materno') }}" autocomplete="app_materno" autofocus>
+                                        @error('app_materno')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                
                         </div>
 
                         <!--correo-->
