@@ -42,20 +42,16 @@ class AdministradoresController extends Controller
      */
     public function store(CreateAdministradorRequest $request)
     {
-
+        $request['password'] = Hash::make($request->get('password'));
         $usuario = User::create($request->all());
 
-        if($usuario === true ){
-
+        if($usuario === true){
             return redirect()->route('administradores.index')->With('success', 'El administrador se creo con exito');
-
         }else{
-
             return redirect()->route('administradores.index')->With('error', 'No se creo el administrador');
-
         }
     }
-
+    
     /**
      * Metodo que elimina un admin selecccionado
      */
@@ -77,20 +73,17 @@ class AdministradoresController extends Controller
         if ($validator->fails()) {
             return back()
             ->withErrors($validator,'delete')
-            ->withInput();
+            ->withInput()
+            ->With('error', 'Contraseña incorrecta, proceso no borrado.');
         }
 
         $usuario = User::FindOrFail($request->id);
+        $usuario->delete();
 
-        if($usuario === true ){
-
-            $usuario->delete();
+        if($usuario === true){
             return redirect()->route('administradores.index')->With('success', 'Se borro correctamente el administrador');
-
         }else{
-
             return redirect()->route('administradores.index')->With('error', 'No pudo borrar el administrador');
-
         }
     }
 
@@ -100,11 +93,16 @@ class AdministradoresController extends Controller
     public function update(Request $request)
     {
 
-        // Valida que el admin tenga un nombre
+        //Valida que el admin tenga un nombre
         $validator = Validator::make($request->all(), [
-            'name' => ['required',Rule::unique('administradores','name')->ignore($request->id)],
+            'name' => 'required',
+            'apellido_paterno' => 'required',
+            'apellido_materno' => 'required',
+            'rol_id' => 'bool',
         ],[
             'name.required'=>'Debes asignar un nombre al administrador',
+            'apellido_paterno.required'=>'Debes asignar un apellido paterno al administrador',
+            'apellido_materno.required'=>'Debes asignar un apellido materno al administrador',
         ]);
 
         if ($validator->fails())

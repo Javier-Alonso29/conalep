@@ -84,10 +84,6 @@
                                 <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" href="#" data-datos="{{$admin}}" >
                                     <i class="fa fa-edit" ></i>
                                 </a>
-
-                                <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="" href="#" data-datos="" >
-                                    <i class="fa fa-download"></i>
-                                </a>
                             </td>
                         </tr>
                         @empty
@@ -112,8 +108,6 @@
                 </div>
                 <ul class="list-group list-group-flush">
                         <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo administrador</a></li>
-                        <li class="list-group-item"><a href="#" class="btn btn-primary btn-block">Descargar todos</a></li>
-                        <li class="list-group-item"><a href="#" class="btn btn-danger btn-block">Borrar todos</a></li>
                 </ul>
                 <div class="card-footer text-center">Administradores</div>
             </div>
@@ -123,8 +117,6 @@
     </div>
     <!-- Row -->
 </section>
-
-
 
 @include('superusuario.administradores.create')
 @include('superusuario.administradores.delete')
@@ -138,14 +130,17 @@
 		var usuario = $(e.relatedTarget).data().datos;
 		console.log(usuario);
         $('#eliminarId').val(usuario.id);
-		$('#nombre_usuario').text(usuario.name);
+		$('#nombre_usuario_delete').text(usuario.name);
 	});
 
     $('#editar').on('show.bs.modal', function(e) {
 		var usuario = $(e.relatedTarget).data().datos;
 		console.log(usuario);
-		$('#edit_usuario').val(usuario.name);
+		$('#nombre_usuario_edit').val(usuario.name);
 		$('#id_usuario').val(usuario.id);
+		$('#user_name').val(usuario.name);
+		$('#apellido_paterno').val(usuario.apellido_paterno);
+		$('#apellido_materno').val(usuario.apellido_materno);
 	});
 
 </script>

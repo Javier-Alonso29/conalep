@@ -27,15 +27,23 @@ class CreateAdministradorRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required|unique:users',
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users|regex:/(.*)@zac\.conalep.edu.mx$/i',
+            'password' => 'required|string|min:8',
         ];
     }
 
     public function messages()
     {
         return [
-            'email.unique' => 'Ya existe un administrador registrado con este E-Mail.',
-            'email.required' => 'Debes de darle un E-Mail valido al administrador.',
+            'email.unique' => 'Este correo ya está registrado.',
+            'email.required' => 'El administrador debe tener un correo valido.',
+            'email.regex' => 'Correo electrónico con formato invalido.',
+            'email.max' => 'Correo electrónico excede los 255 caracteres.',
+            'password.min' => 'La contraseña debe tener mínimo 8 caracteres',
+            'password.required' => 'Se requiere una contraseña.',
+            'name.required' => 'Se requiere un nombre.',
+            'name.max' => 'El nombre no puede contener más de 255 caracteres'
         ];
     }
 }
