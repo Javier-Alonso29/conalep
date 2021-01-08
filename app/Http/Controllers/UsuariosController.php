@@ -29,7 +29,7 @@ class UsuariosController extends Controller
 
         if($user->rol_id === 1){
 
-            return redirect('/superuser');
+            return redirect('/superusuario');
 
         }elseif($user->rol_id == 2){
 

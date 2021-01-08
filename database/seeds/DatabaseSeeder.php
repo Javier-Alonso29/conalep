@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(EstadosSeeder::class);
         $this->call(MunicipiosSeeder::class);
         $this->call(PlantelesSeeder::class);
+        $this->call(UsuariosSeeder::class);
     }
 
     protected function truncateTables(array $tables){

@@ -23,8 +23,20 @@ Route::group(['middleware' => ['guest']], function () {
 Route::get('/home','UsuariosController@validaUsuarios')->name('inicio');
 
 /**
-* Rutas del Super usuario
+* Rutas del super usuario
 */
+Route::group(['middleware' => ['SuperUsuario','auth',]], function(){
+
+	Route::get('/superusuario', 'SuperUsuario\HomeController@index')->name('superusuario');
+
+	Route::prefix('superusuario')->middleware(['SuperUsuario','auth',])->group(function (){
+
+		Route::resource('/procesos','Administrador\ProcesosController');
+		Route::resource('/administradores','SuperUsuario\AdministradoresController');
+
+	});
+	
+});
 
 
 /**
