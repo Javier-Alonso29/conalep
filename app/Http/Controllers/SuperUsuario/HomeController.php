@@ -4,6 +4,7 @@ namespace App\Http\Controllers\SuperUsuario;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -24,7 +25,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //dd('equis');
-        return view('superusuario.home');
+        $admin = User::where('rol_id',2)->get();
+        $cantidad_admins = User::where('rol_id',2)->count();
+        
+
+        return view('superusuario.home', compact('admin','cantidad_admins'));
     }
 }

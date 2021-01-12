@@ -34,6 +34,8 @@
   <link rel="stylesheet" href="{{ asset('plugins/daterangepicker/daterangepicker.css')}}">
   <!-- summernote -->
   <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.min.css')}}">
+  <!--Icon-->
+  <link rel="icon" type="image/png" href="{{ asset('imagenes/conalep-logo-sin-letras.png') }}" />
   @yield('css')
 
 </head>
@@ -44,9 +46,6 @@
   <nav class="main-header navbar navbar-expand navbar-dark navbar-success">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
       <li class="nav-item d-none d-sm-inline-block">
         <a href="{{route('inicio')}}" class="nav-link">Home</a>
       </li>

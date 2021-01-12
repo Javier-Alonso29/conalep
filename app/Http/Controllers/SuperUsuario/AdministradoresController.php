@@ -32,7 +32,7 @@ class AdministradoresController extends Controller
      */
     public function index()
     {
-        $usuarios = User::get();
+        $usuarios = User::where('rol_id',2)->get();
 
         return view('superusuario.administradores.index', compact('usuarios'));
     }
@@ -42,14 +42,13 @@ class AdministradoresController extends Controller
      */
     public function store(CreateAdministradorRequest $request)
     {
-        $request['password'] = Hash::make($request->get('password'));
-        $usuario = User::create($request->all());
+        $usuario = new User($request->all());
+        $usuario->password = bcrypt($request->password);
+        $usuario->rol_id = 2;
+        $usuario->save();
 
-        if($usuario === true){
-            return redirect()->route('administradores.index')->With('success', 'El administrador se creo con exito');
-        }else{
-            return redirect()->route('administradores.index')->With('error', 'No se creo el administrador');
-        }
+        return redirect()->route('administradores.index')->With('success', 'El administrador '.$usuario->name.' '.$usuario->ap_paterno.' se creo con exito');
+       
     }
     
     /**
@@ -80,11 +79,9 @@ class AdministradoresController extends Controller
         $usuario = User::FindOrFail($request->id);
         $usuario->delete();
 
-        if($usuario === true){
-            return redirect()->route('administradores.index')->With('success', 'Se borro correctamente el administrador');
-        }else{
-            return redirect()->route('administradores.index')->With('error', 'No pudo borrar el administrador');
-        }
+        
+        return redirect()->route('administradores.index')->With('success', 'Se borro correctamente el administrador');
+        
     }
 
     /**
@@ -98,16 +95,18 @@ class AdministradoresController extends Controller
             'name' => 'required',
             'apellido_paterno' => 'required',
             'apellido_materno' => 'required',
-            'rol_id' => 'bool',
+            'email' => 'required',
         ],[
             'name.required'=>'Debes asignar un nombre al administrador',
             'apellido_paterno.required'=>'Debes asignar un apellido paterno al administrador',
             'apellido_materno.required'=>'Debes asignar un apellido materno al administrador',
+            'email.required' => 'Debes de asignar un correo al administrador',
         ]);
 
         if ($validator->fails())
         {
-            return redirect()->route('administradores.index')->With('error', 'Administrador no actualizado');
+            return back()->withErrors($validator)
+            ->withInput()->With('error', 'Administrador no actualizado');
         }
 
         $usuario = User::FindOrFail($request->id);

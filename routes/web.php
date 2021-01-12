@@ -31,7 +31,6 @@ Route::group(['middleware' => ['SuperUsuario','auth',]], function(){
 
 	Route::prefix('superusuario')->middleware(['SuperUsuario','auth',])->group(function (){
 
-		Route::resource('/procesos','Administrador\ProcesosController');
 		Route::resource('/administradores','SuperUsuario\AdministradoresController');
 
 	});

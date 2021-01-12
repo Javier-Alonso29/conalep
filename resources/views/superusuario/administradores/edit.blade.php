@@ -44,36 +44,19 @@
 						</span>
 						@endif
 					</div>
-					
-					<div class="form-group">
-						<label for="inicio">Administrador o Super Usuario</label>
-						 
-						<div class="form-group">
-								<div class="radio">
-									<label>
-										<input type="radio" name="rol_id" id="rol_id1" value="1">
-										Administrador
-									</label>
-								</div>
-								<div class="radio">
-									<label>
-										<input type="radio" name="rol_id" id="rol_id2" value="2">
-										Super Usuario
-									</label>
-								</div>
-							</div>
 
-						@if ($errors->has('rol_id'))
+					<div class="form-group">
+						<label for="inicio">Correo</label>
+						<input id="email" required type="text" name="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" autocomplete="off" value="{{ old('email') }}" >
+						@if ($errors->has('email'))
 						<span class="invalid-feedback" role="alert">
-							<strong>{{ $errors->first('rol_id') }}</strong>
+							<strong>{{ $errors->first('email') }}</strong>
 						</span>
 						@endif
 					</div>
 					
 					<div class="modal-footer">
-						<div class="form-group">
-							<button type="submit" class="btn btn-primary">Guardar</button>
-						</div>
+						<button type="submit" class="btn btn-primary btn-block">Guardar</button>
 					</div>
 				</form>
 			</div>
