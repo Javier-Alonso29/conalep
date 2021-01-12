@@ -59,7 +59,7 @@
                     <!-- from grup -->
 					<div class="form-group">
 						<label for="inicio">Contraseña</label>
-						<input type="password" name="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" autocomplete="off" >
+						<input type="password" name="password" class="form-control {{ $errors->has('password') ? ' is-invalid' : '' }}" autocomplete="off" required>
 						@if ($errors->has('password'))
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $errors->first('password') }}</strong>
@@ -67,31 +67,11 @@
 						@endif
 					</div>
 
-                    <!-- from grup -->
+					<!--confirma contraseña-->
 					<div class="form-group">
-						<label for="inicio">Administrador o Super Usuario</label>
-						 
-							<div class="form-group">
-								<div class="radio">
-									<label>
-										<input type="radio" name="rol_id" id="rol_id1" value="1">
-										Administrador
-									</label>
-								</div>
-								<div class="radio">
-									<label>
-										<input type="radio" name="rol_id" id="rol_id2" value="2">
-										Super Usuario
-									</label>
-								</div>
-							</div>
-
-						@if ($errors->has('rol_id'))
-						<span class="invalid-feedback" role="alert">
-							<strong>{{ $errors->first('rol_id') }}</strong>
-						</span>
-						@endif
-					</div>
+						<label for="inicio">Confirma contraseña</label>
+                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required >
+                    </div>
 
 					<div class="modal-footer">
 						<div class="form-group">

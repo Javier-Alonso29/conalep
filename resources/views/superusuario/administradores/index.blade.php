@@ -14,8 +14,7 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('inicio') }}">Inicio</a></li>
-              <li class="breadcrumb-item active"><a href="{{ route('inicio') }}">Administradores</a></li>
-              <li class="breadcrumb-item active"></li>
+              <li class="breadcrumb-item active" aria-current="page">Administradores</li>
             </ol>
         </div>
 
@@ -47,16 +46,16 @@
 
 <section class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
         
             <div class="card ">
                 <div class="card-header bg-dark">
                 <h3 class="card-title">Administradores</h3>
 
                 <div class="card-tools">
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
-                    </button>
+                    <div class="btn btn-tool">
+                        <a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo administrador</a>
+                    </div>
                 </div>
                 </div>
                 <div class="card-body p-0" style="display: block;">
@@ -65,6 +64,7 @@
                         <tr>
                             <th>#</th>
                             <th>Nombre</th>
+                            <th>Fecha registro</th>
                             <th>E-Mail</th>
                             <th>Operaciones</th>
                         </tr>
@@ -74,8 +74,8 @@
                         <tr>
                             <td>{{  $loop->iteration  }}</td>
                             <td>{{  $admin->name  }} {{  $admin->apellido_paterno  }} {{  $admin->apellido_materno  }}</td>
+                            <td>{{ $admin->created_at }}</td>
                             <td>{{  $admin->email  }}</td>
-                            <td>  </td>
                             <td>
                                 <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar"  href="#" data-datos="{{$admin}}">
                                     <i class="fa fa-trash" ></i>
@@ -88,7 +88,7 @@
                         </tr>
                         @empty
                         <tr>
-							<td colspan="5">Ningún usuario registrado.</td>
+							<td colspan="4">Ningún administrador registrado.</td>
 						</tr>
                         @endforelse
                     </tbody>
@@ -97,20 +97,6 @@
                 <!-- /.card-body -->
             </div>
             <!-- /.card -->
-        </div>
-        <!-- Col -->
-
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header bg-dark">Operaciones Generales</div>
-                <div class="card-body">
-                    <p class="card-text">Operaciones generales que puedes hacer a todos los administradores registrados</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo administrador</a></li>
-                </ul>
-                <div class="card-footer text-center">Administradores</div>
-            </div>
         </div>
         <!-- Col -->
 
@@ -141,6 +127,7 @@
 		$('#user_name').val(usuario.name);
 		$('#apellido_paterno').val(usuario.apellido_paterno);
 		$('#apellido_materno').val(usuario.apellido_materno);
+        $('#email').val(usuario.email);
 	});
 
 </script>
