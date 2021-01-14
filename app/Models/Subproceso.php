@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Proceso extends Model
+class Subproceso extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -12,14 +12,14 @@ class Proceso extends Model
      * @var array
      */
     protected $fillable = [
-        'nombre', 'codigo', 'descripcion',
+        'nombre', 'codigo', 'descripcion', 'id_proceso',
     ];
 
     /**
-     * Un proceso tiene muchos subprocesos
+     * Un subproceso tiene un proceso
      */
-    public function subprocesos()
+    public function proceso()
     {
-        return $this->hasMany(Subproceso::class, 'id_proceso', 'id');
+        return $this->belongsTo(Proceso::class, 'id_proceso');
     }
 }

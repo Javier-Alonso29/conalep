@@ -16,7 +16,9 @@ class DatabaseSeeder extends Seeder
             'users',
             'estados',
             'municipios',
-            'planteles'
+            'planteles',
+            'procesos',
+            'subprocesos'
         ]);
 
         $this->call(RolesSeeder::class);
@@ -24,6 +26,8 @@ class DatabaseSeeder extends Seeder
         $this->call(EstadosSeeder::class);
         $this->call(MunicipiosSeeder::class);
         $this->call(PlantelesSeeder::class);
+        $this->call(ProcesosSeeder::class);
+        $this->call(SubprocesosSeeder::class);
         
     }
 

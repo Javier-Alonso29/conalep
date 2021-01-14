@@ -49,6 +49,8 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 
 		Route::resource('/procesos','Administrador\ProcesosController');
 		Route::post('/procesos/downloadFolder','Administrador\ZipController@downloadFolder')->name('procesos.download.folder');
+		Route::resource('/subprocesos','Administrador\SubprocesosController');
+		Route::post('/subprocesos/downloadFolder','Administrador\ZipController@downloadFolder')->name('subprocesos.download.folder');
 
 	});
 	
