@@ -26,41 +26,34 @@
 
 <div class="container">
         <div class="row">
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-              
-              <a class="info-box-icon bg-info elevation-1" href="{{ route('procesos.index') }}">
-                <i class="fas fa-cog"></i>
-              </a>
-
-              <div class="info-box-content">
-                <span class="info-box-text">Procesos</span>
-                <span class="info-box-number">
-                  10
-                  <small>%</small>
-                </span>
-              </div>
-              <!-- /.info-box-content -->
+        
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="info-box">
+            
+            <a class="info-box-icon bg-info elevation-1" href="{{ route('procesos.index') }}">
+              <i class="fas fa-cog"></i>
+            </a>
+            <div class="info-box-content">
+              <span class="info-box-text">Procesos</span>
+              <span class="info-box-number">10</span>
             </div>
-            <!-- /.info-box -->
+
           </div>
-          <!-- /.col -->
+        </div>
 
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <a class="info-box-icon bg-danger elevation-1">
-                <i class="fas fa-cogs"></i>
-              </a>
+        <div class="col-12 col-sm-6 col-md-3">
+          <div class="info-box mb-3">
 
-              <div class="info-box-content">
-                <span class="info-box-text">Sub procesos</span>
-                <span class="info-box-number">41,410</span>
-              </div>
-              <!-- /.info-box-content -->
+            <a class="info-box-icon bg-danger elevation-1" href="{{ route('subprocesos.index') }}">
+              <i class="fas fa-cogs"></i>
+            </a>
+            <div class="info-box-content">
+              <span class="info-box-text">Subprocesos</span>
+              <span class="info-box-number">41,410</span>
             </div>
-            <!-- /.info-box -->
+            
           </div>
-          <!-- /.col -->
+        </div>
 
           <!-- fix for small devices only -->
           <div class="clearfix hidden-md-up"></div>

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateProcesoRequest extends FormRequest
+class CreateSubprocesoRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,8 +27,8 @@ class CreateProcesoRequest extends FormRequest
     public function rules()
     {
         return [
-            'nombre' => 'required|unique:procesos',
-            'codigo' => 'required|unique:procesos',
+            'nombre' => 'required|unique:subprocesos',
+            'codigo' => 'required|unique:subprocesos',
             'descripcion',
         ];
     }
@@ -36,10 +36,10 @@ class CreateProcesoRequest extends FormRequest
     public function messages()
     {
         return [
-            'nombre.unique' => 'Ya existe un proceso registrado con este nombre',
-            'nombre.required' => 'Debes de darle un nombre al proceso',
-            'codigo.required' => 'Debes de darle un codigo al proceso',
-            'codigo.unique' => 'Ya existe un proceso con este codigo',
+            'nombre.unique' => 'Ya existe un subproceso registrado con este nombre',
+            'nombre.required' => 'Debes de darle un nombre al subproceso',
+            'codigo.required' => 'Debes de darle un codigo al subproceso',
+            'codigo.unique' => 'Ya existe un subproceso con este codigo',
         ];
     }
 }
