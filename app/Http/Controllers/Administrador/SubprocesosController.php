@@ -53,11 +53,9 @@ class SubprocesosController extends Controller
         Storage::setVisibility('public/'.$subproceso->proceso['nombre'].'/'.$subproceso->codigo,'public');
 
         if($access === true ){
-
             return redirect()->route('subprocesos.index')->With('success', 'El subproceso '.$subproceso->codigo.' se creo con exito');
 
         }else{
-
             return redirect()->route('subprocesos.index')->With('error', 'No se creo el directorio de nuevo subproceso');
 
         }
