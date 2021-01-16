@@ -16,7 +16,10 @@ class CreateDocumentoTable extends Migration
         Schema::create('documento', function (Blueprint $table) {
             $table->id();
             $table->string('nombre')->unique();
-            $table->timestamps();
+            $table->unsignedBigInteger('id_tipodocumento');
+            $table->foreign('id_tipodocumento')
+                      ->references('id')->on('tipodocumento');
+                      $table->timestamps();
         });
     }
 
