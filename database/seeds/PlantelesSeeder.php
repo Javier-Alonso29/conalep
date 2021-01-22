@@ -12,7 +12,7 @@ class PlantelesSeeder extends Seeder
      */
     public function run()
     {
-        $municipio_dolores_id = DB::table('municipios')->where('nombre','=','Dolores Castro Varela')->value('id');
+        $municipio_dolores_id = DB::table('municipios')->where('nombre','=','Zacatecas')->value('id');
         $municipio_fresnillo_id = DB::table('municipios')->where('nombre','=','Fresnillo')->value('id');
         $municipio_mazapil_id = DB::table('municipios')->where('nombre','=','Mazapil')->value('id');
         $municipio_zacatecas_id = DB::table('municipios')->where('nombre','=','Zacatecas')->value('id');

@@ -33,6 +33,8 @@ Route::group(['middleware' => ['SuperUsuario','auth',]], function(){
 
 		Route::resource('/administradores','SuperUsuario\AdministradoresController');
 
+		Route::resource('/planteles','SuperUsuario\PlantelesController');
+
 	});
 	
 });

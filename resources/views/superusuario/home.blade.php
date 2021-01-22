@@ -61,7 +61,7 @@
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
               <a class="info-box-icon bg-success elevation-1">
-              <i class="fas fa-shopping-cart"></i>
+              <i class="fas fa-folder"></i>
               </a>
 
               <div class="info-box-content">
@@ -94,7 +94,7 @@
             <!-- Planteles -->
             <div class="card direct-chat direct-chat-success collapsed-card">
               <div class="card-header bg-dark">
-                <h3 class="card-title">Planteles </h3>
+                <h3 class="card-title">Planteles</h3>
 
                 <div class="card-tools">
 
@@ -102,15 +102,15 @@
                         <input type="search" class="form-control" type="search" placeholder="Buscar" >
                     </div>
 
-                    <span title="3 New Messages" class="badge bg-primary">{{$cantidad_admins}}</span>
+                    <span title="3 New Messages" class="badge bg-primary">{{$cantidad_planteles}}</span>
 
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                         <i class="fas fa-plus"></i>
                     </button>
 
-                    <button type="button" class="btn btn-tool">
-                      <i class="fas fa-cogs"></i>
-                    </button>
+                    <a class="btn btn-tool" href="{{ route('planteles.index') }}">
+                      <i class="fas fa-angle-double-right"></i>
+                    </a>
 
 
                 </div>
@@ -121,24 +121,22 @@
                   <table class="table m-0" >
                       <thead>
                         <tr>
-                          <th>ID</th>
-                          <th>Nombre</th>
+                          <th>#</th>
+                          <th>Numero</th>
+                          <th>Clave de trabajo</th>
                           <th>Fecha registro</th>
-                          <th>Correo</th>
-                          <th>Plantel</th>
                         </tr>
                       </thead>
                       <tbody>
-                      @forelse ($admin as $usuario)
+                      @forelse ($planteles as $plantel)
                         <tr>
-                          <td>{{$usuario->id}}</td>
-                          <td>{{$usuario->name}}</td>
-                          <td>{{$usuario->created_at}}</td>
-                          <td>{{$usuario->email}}</td>
-                          <td>plantel A</td>
+                          <td>{{$loop->iteration}}</td>
+                          <td>{{$plantel->numero}}</td>
+                          <td>{{$plantel->clave_trabajo}}</td>
+                          <td>{{$plantel->created_at}}</td>
                       @empty
                         <tr>
-                          <td colspan="5">Ningún usuario registrado</td>
+                          <td colspan="4">Ningún plantel registrado</td>
                         </tr>
                       @endforelse
                       </tbody>
@@ -172,7 +170,7 @@
                   </button>
 
                   <a class="btn btn-tool" href="{{ route('administradores.index') }}">
-                    <i class="fas fa-cogs"></i>
+                    <i class="fas fa-angle-double-right"></i>
                   </a>
 
                  
@@ -186,9 +184,9 @@
                         <tr>
                           <th>ID</th>
                           <th>Nombre</th>
-                          <th>Fecha registro</th>
                           <th>Correo</th>
                           <th>Plantel</th>
+                          <th>Fecha registro</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -196,9 +194,9 @@
                         <tr>
                           <td>{{$usuario->id}}</td>
                           <td>{{$usuario->name}}</td>
-                          <td>{{$usuario->created_at}}</td>
                           <td>{{$usuario->email}}</td>
                           <td>plantel A</td>
+                          <td>{{$usuario->created_at}}</td>
                       @empty
                         <tr>
                           <td colspan="5">Ningún usuario registrado</td>
