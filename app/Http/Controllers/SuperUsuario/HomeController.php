@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SuperUsuario;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use App\Models\Planteles;
 
 class HomeController extends Controller
 {
@@ -27,8 +28,11 @@ class HomeController extends Controller
     {
         $admin = User::where('rol_id',2)->get();
         $cantidad_admins = User::where('rol_id',2)->count();
+
+        $planteles = Planteles::get();
+        $cantidad_planteles = Planteles::count(); 
         
 
-        return view('superusuario.home', compact('admin','cantidad_admins'));
+        return view('superusuario.home', compact('admin','cantidad_admins','planteles','cantidad_planteles'));
     }
 }

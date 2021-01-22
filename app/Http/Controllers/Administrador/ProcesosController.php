@@ -32,7 +32,7 @@ class ProcesosController extends Controller
      */
     public function index()
     {
-        $procesos = Proceso::get();
+        $procesos = Proceso::paginate(10);
 
         return view('administrador.procesos.index', compact('procesos'));
     }

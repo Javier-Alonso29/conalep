@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class State extends Models
+class Estados extends Model
 {
 
     /**
@@ -13,4 +13,13 @@ class State extends Models
      * @var array
      */
     protected $fillable = ['nombre'];
+
+    /**
+     * Un estado tiene muchos municipios
+     */
+    public function municipios()
+    {
+        return $this->hasMany(Municipios::class,'estado_id');
+    }
+
 }

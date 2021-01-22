@@ -61,7 +61,7 @@
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
               <a class="info-box-icon bg-success elevation-1"  href="{{ route('tipodocumento.index') }}">
-              <i class="fas fa-folder-open"></i>
+              <i class="fas fa-folder"></i>
               </a>
 
               <div class="info-box-content">

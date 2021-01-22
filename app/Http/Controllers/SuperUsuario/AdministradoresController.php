@@ -32,7 +32,7 @@ class AdministradoresController extends Controller
      */
     public function index()
     {
-        $usuarios = User::where('rol_id',2)->get();
+        $usuarios = User::where('rol_id',2)->paginate(10);
 
         return view('superusuario.administradores.index', compact('usuarios'));
     }
