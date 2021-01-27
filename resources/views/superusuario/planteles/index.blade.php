@@ -97,7 +97,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    {{$planteles->links()}}
+                    
                 </div>
             </div>
             <!-- /.card -->

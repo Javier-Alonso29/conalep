@@ -11,6 +11,8 @@ use Auth;
 use App\Http\Requests\CreateAdministradorRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use App\Models\PermisosProcesos;
+use SebastianBergmann\Environment\Console;
 
 class AdministradoresController extends Controller
 {
@@ -46,6 +48,17 @@ class AdministradoresController extends Controller
         $usuario->password = bcrypt($request->password);
         $usuario->rol_id = 2;
         $usuario->save();
+
+        $permisos = new PermisosProcesos($request->all());
+        $permisos->id_user = $usuario->id;
+        $permisos->id_plantel = 1;
+        $permisos->id_proceso = 1;
+        $permisos->leer = 0;
+        $permisos->subir = 0;
+        $permisos->descargar = 0;
+        $permisos->borrar = 0;
+        $permisos->save();
+
 
         return redirect()->route('administradores.index')->With('success', 'El administrador '.$usuario->name.' '.$usuario->ap_paterno.' se creo con exito');
        
@@ -117,7 +130,10 @@ class AdministradoresController extends Controller
             
             return redirect()->route('administradores.index')->with("success","Administrador actualizado correctamente!");
         }else{
-            return redirect()->route('administradores.index')->with("error","Administrador no actualizado!");
+            return redirect()->route('administradores.index')->with("error","Administrador no actualizado!!!! :(");
         }
     }
+
+
+
 }
