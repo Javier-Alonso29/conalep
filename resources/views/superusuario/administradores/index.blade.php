@@ -96,7 +96,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    {{$usuarios->links()}}
+                    
                 </div>
             </div>
             <!-- /.card -->
@@ -132,6 +132,8 @@
 		$('#apellido_materno').val(usuario.apellido_materno);
         $('#email').val(usuario.email);
 	});
+
+    
 
 </script>
 

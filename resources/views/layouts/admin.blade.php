@@ -184,13 +184,58 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index3.html" class="nav-link">
+                <a href="{{ route('tipodocumento.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Tipos de documentos</p>
                 </a>
               </li>
             </ul>
           </li>
+
+          @if ((Auth::user()->rol_id) == 1)
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="far fa-user"></i>
+              <p>
+                Usuarios
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('administradores.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Administradores</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{ route('permisos.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Permisos</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link active">
+              <i class="far fa-building"></i>
+              <p> </p>
+              <p>
+                 Gestión de planteles
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('planteles.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Planteles</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+					@endif
           
         </ul>
       </nav>

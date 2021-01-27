@@ -60,7 +60,7 @@
 
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
-              <a class="info-box-icon bg-success elevation-1">
+              <a class="info-box-icon bg-success elevation-1" href="{{ route('tipodocumento.index') }}">
               <i class="fas fa-folder"></i>
               </a>
 
@@ -88,6 +88,22 @@
             <!-- /.info-box -->
           </div>
           <!-- /.col -->
+        </div>
+
+        <div class="row">
+        
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+              
+              <a class="info-box-icon bg-warning elevation-1" href="{{ route('permisos.index') }}">
+                <i class="fa fa-lock"></i>
+              </a>
+              <div class="info-box-content">
+                <span class="info-box-text">Permisos</span>
+              </div>
+  
+            </div>
+          </div>
         </div>
 
         <div class="col-12">
