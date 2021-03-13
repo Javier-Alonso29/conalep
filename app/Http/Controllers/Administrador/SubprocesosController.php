@@ -33,11 +33,25 @@ class SubprocesosController extends Controller
      */
     public function index()
     {
-        $subprocesos = Subproceso::get();
+        $subprocesos = Subproceso::paginate(10);
 
         $procesos = Proceso::get();
             
         return view('administrador.subprocesos.index', compact('subprocesos', 'procesos'));
+    }
+
+    /**
+     * Muestra los subprocesos del proceso que se le esta pasando
+     */
+    public function indexbyProceso($id_proceso)
+    {
+        $proceso = Proceso::FindOrFail($id_proceso);
+
+        $subprocesos = $proceso->subprocesos;
+
+        return view('administrador.subprocesos.filtro.index', compact('proceso', 'subprocesos'));
+
+
     }
 
     /**
@@ -59,6 +73,14 @@ class SubprocesosController extends Controller
             return redirect()->route('subprocesos.index')->With('error', 'No se creo el directorio de nuevo subproceso');
 
         }
+    }
+
+    /**
+     * Metodo para crear un sub proceso del proceso
+     */
+    public function storebyProceso(CreateSubprocesoRequest $request)
+    {
+        dd($request);
     }
 
     /**
