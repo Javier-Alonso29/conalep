@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Auth::routes(['verify'=>true]);
+Auth::routes(['register' => false]);
 Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 Route::group(['middleware' => ['guest']], function () {
 	Route::get('/', function () {
@@ -52,6 +52,12 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 		Route::resource('/procesos','Administrador\ProcesosController');
 		Route::resource('/tipodocumento','Administrador\TipodocumentoController');
 		Route::post('/procesos/downloadFolder','Administrador\ZipController@downloadFolder')->name('procesos.download.folder');
+
+		/**
+		 * Sub procesos
+		 *  */
+		Route::get('/subprocesos/{id}','Administrador\SubprocesosController@indexbyProceso')->name('subproceso.byproceso');
+		Route::post('/subprocesos/create/','Administradores\SubprocesosController@storebyProceso')->name('subprocesos.create.byproceso');
 		Route::resource('/subprocesos','Administrador\SubprocesosController');
 		Route::post('/subprocesos/downloadFolder','Administrador\ZipController@downloadFolder')->name('subprocesos.download.folder');
 

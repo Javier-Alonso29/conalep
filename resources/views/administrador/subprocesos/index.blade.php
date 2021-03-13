@@ -72,6 +72,7 @@
                             <th>Nombre</th>
                             <th>Codigo</th>
                             <th>Proceso</th>
+                            <th>Tipo de documento</th>
                             <th>Operaciones</th>
                         </tr>
                     </thead>
@@ -82,6 +83,11 @@
                             <td>{{  $subproceso->nombre  }}</td>
                             <td>{{  $subproceso->codigo  }}</td>
                             <td>{{  $subproceso->proceso['nombre']  }}</td>
+                            <td>
+                                <a class="btn btn-success btn-circle btn-sm" href="#" role="button">
+                                    <i class="fas fa-angle-double-right"></i>
+                                </a>
+                            </td>
                             <td>
                                 <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar"  href="#" data-datos="{{$subproceso}}">
                                     <i class="fa fa-trash" ></i>
@@ -106,6 +112,9 @@
                 </table>
                 </div>
                 <!-- /.card-body -->
+                <div class="card-footer">
+                    {{$subprocesos->links()}}
+                </div>
             </div>
             <!-- /.card -->
         </div>

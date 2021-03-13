@@ -16,4 +16,13 @@ class Tipodocumento extends Model
         'nombre', 'codigo', 'descripcion',
     ];
 
+
+    /**
+     * Un tipo de documento puede tener muchos documentos
+     */
+    public function documento()
+    {
+        return $this->hasMany(Documento::class, 'id_tipodocumento');
+    }
+
 }
