@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('titulo','Tipos de documentos')
+@section('titulo','Subproceso')
 
 @section('contenido')
 <div class="content-header">
@@ -8,13 +8,14 @@
       <div class="row mb-2">
 
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Tipos de documentos</h1>
+            <h1 class="m-0 text-dark">Subprocesos del proceso <span class="badge badge-danger">{{$proceso->nombre}}</span></h1>
           </div>
 
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('inicio') }}">Inicio</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Tipos de documentos</li>
+              <li class="breadcrumb-item"><a href="{{ route('procesos.index') }}">Procesos</a></li>
+              <li class="breadcrumb-item active" aria-current="page">{{$proceso->nombre}}</li>
             </ol>
         </div>
 
@@ -27,7 +28,7 @@
         <div class="toast bg-navy fade show" role="alert" aria-live="assertive" aria-atomic="true" data-delay="6000">
             <div class="toast-header">
                 <strong class="mr-auto">¡Exito! ... </strong>
-                <small>Tipo de documento</small>
+                <small>Proceso</small>
                 <button data-dismiss="toast" type="button" class="ml-2 mb-1 close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="toast-body">{{session('success')}}</div>
@@ -56,7 +57,7 @@
         
             <div class="card ">
                 <div class="card-header bg-dark">
-                <h3 class="card-title">Tipo de documento</h3>
+                <h3 class="card-title">Subprocesos</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -71,35 +72,39 @@
                             <th>#</th>
                             <th>Nombre</th>
                             <th>Codigo</th>
+                            <th>Tipos de documento</th>
                             <th>Operaciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($tipodocumento as $tipo)
+                        @forelse($subprocesos as $subproceso)
                         <tr>
                             <td>{{  $loop->iteration  }}</td>
-                            <td>{{  $tipo->nombre  }}</td>
-                            <td>{{  $tipo->codigo  }}</td>
-                            <td>  </td>
+                            <td>{{  $subproceso->nombre  }}</td>
+                            <td>{{  $subproceso->codigo  }}</td>
                             <td>
-                                <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar-tipodocumento"  href="#" data-datos="{{$tipo}}">
-                                    <i class="fa fa-trash" ></i>
+                                <a class="btn btn-success btn-circle btn-sm" href="#" role="button">
+                                    <i class="fas fa-angle-double-right"></i>
                                 </a>
-                                
-
-                                <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar-tipodocumento" href="#" data-datos="{{$tipo}}" >
+                            </td>
+                            <td>
+                                <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" href="#" data-datos="{{$subproceso}}" >
                                     <i class="fa fa-edit" ></i>
                                 </a>
 
-                                <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#downloadFolder-tipodocumento" href="#" data-datos="{{$tipo}}" >
+                                <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#downloadFolder" href="#" data-datos="{{$subproceso}}" >
                                     <i class="fa fa-download"></i>
+                                </a>
+
+                                <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar"  href="#" data-datos="{{$subproceso}}">
+                                    <i class="fa fa-trash" ></i>
                                 </a>
 
                             </td>
                         </tr>
                         @empty
                         <tr>
-							<td colspan="5">Ningún tipo de documento registrado.</td>
+							<td colspan="5">Ningún subproceso registrado.</td>
 						</tr>
                         @endforelse
                     </tbody>
@@ -115,60 +120,51 @@
             <div class="card">
                 <div class="card-header bg-dark">Operaciones Generales</div>
                 <div class="card-body">
-                    <p class="card-text">Operaciones generales que puedes hacer a todos los tipos de documentos registrados</p>
+                    <p class="card-text">Operaciones generales que puedes hacer a todos los subprocesos registrados</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear-tipodocumento" class="btn btn-success btn-block">Nuevo tipo de documento</a></li>
+                        <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo subproceso</a></li>
                         <li class="list-group-item"><a href="#" class="btn btn-danger btn-block">Borrar todos</a></li>
                 </ul>
-                <div class="card-footer text-center">Tipos de documentos</div>
+                <div class="card-footer text-center">Subprocesos</div>
             </div>
         </div>
         <!-- Col -->
-
-        
 
     </div>
     <!-- Row -->
 </section>
 
 
-
-
-
-
-@include('administrador.tipodocumento.create')
-@include('administrador.tipodocumento.delete')
-@include('administrador.tipodocumento.edit')
-@include('administrador.tipodocumento.downloadFolder')
+@include('administrador.subprocesos.filtro.create')
 @endsection
 
 @section('scripts')
 <script type="text/javascript">
 
 
-	$('#eliminar-tipodocumento').on('show.bs.modal', function(e) {
-		var tipodocumento = $(e.relatedTarget).data().datos;
-		console.log(tipodocumento);
-        $('#eliminarId').val(tipodocumento.id);
-		$('#nombre_tipodocumento').text(tipodocumento.codigo);
+	$('#eliminar').on('show.bs.modal', function(e) {
+		var subproceso = $(e.relatedTarget).data().datos;
+		console.log(subproceso);
+        $('#eliminarId').val(subproceso.id);
+		$('#nombre_subproceso').text(subproceso.codigo);
 	});
 
-    $('#editar-tipodocumento').on('show.bs.modal', function(e) {
-		var tipodocumento = $(e.relatedTarget).data().datos;
-		console.log(tipodocumento);
-		$('#edit_tipodocumento').val(tipodocumento.nombre);
-		$('#edit_codigo').val(tipodocumento.codigo);
-        $('#edit_descripcion').val(tipodocumento.descripcion);
-		$('#id_tipodocumento').val(tipodocumento.id);
+    $('#editar').on('show.bs.modal', function(e) {
+		var subproceso = $(e.relatedTarget).data().datos;
+		console.log(subproceso);
+		$('#edit_subproceso').val(subproceso.nombre);
+		$('#edit_codigo').val(subproceso.codigo);
+        $('#edit_descripcion').val(subproceso.descripcion);
+		$('#id_subproceso').val(subproceso.id);
 	});
 
 
-    $('#downloadFolder-tipodocumento').on('show.bs.modal', function(e) {
-		var proceso = $(e.relatedTarget).data().datos;
-		console.log(tipodocumento);
-        $('#downloadFolder_id').val(tipodocumento.id);
-		$('#codigo_tipodocumento').text(tipodocumento.codigo);
+    $('#downloadFolder').on('show.bs.modal', function(e) {
+		var subproceso = $(e.relatedTarget).data().datos;
+		console.log(subproceso);
+        $('#downloadFolder_id').val(subproceso.id);
+		$('#codigo_subproceso').text(subproceso.codigo);
     });
     
 
@@ -177,7 +173,14 @@
 <script>
     $(document).ready(function(){
         $('.toast').toast('show')
-    })
+
+        $('#codigo_proceso').keypress(function(e){
+            datos = String.fromCharCode(e.charCode);
+            console.log(datos);
+            $('#campo_ruta').html(" "+datos);
+        });
+
+    });
 
 </script>
 

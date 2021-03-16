@@ -47,16 +47,7 @@
                 <!-- Cierre del from -->
 
               <div class="text-center">
-                <div class="text-center">
-                @if (Route::has('password.request'))
-                <a  href="{{ route('password.request') }}">
-                  {{ __('¿Olvidaste tu contraseña?') }}
-                </a>
-                  @endif
-                </div>
-                </div>
-                <div class="text-center">
-                  <a  href="{{ Route('register') }}">!Registrate!</a>
+                CONALEP
                 </div>
               </div>
             </div>
