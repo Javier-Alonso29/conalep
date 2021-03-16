@@ -30,12 +30,12 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         view()->composer('*', function ($view) {
-            $procesos= Proceso::all();
+            $procesos= Proceso::paginate(10);
             $view->with(compact('procesos'));
         });
 
         view()->composer('*', function ($view) {
-            $planteles= Planteles::all();
+            $planteles= Planteles::paginate(10);
             $view->with(compact('planteles'));
         });
 
