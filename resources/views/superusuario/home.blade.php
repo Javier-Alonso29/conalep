@@ -105,6 +105,33 @@
   
             </div>
           </div>
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+              
+              <a class="info-box-icon bg-warning elevation-1" href="{{ route('actividad.index') }}">
+                <i class="fas fa-file-invoice"></i>
+              </a>
+              <div class="info-box-content">
+                <span class="info-box-text">Historial de actividad</span>
+              </div>
+  
+            </div>
+          </div>
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+              
+              <a class="info-box-icon bg-warning elevation-1" href="{{ route('actividad.index') }}">
+                <i class="fas fa-mouse-pointer"></i>
+              </a>
+              <div class="info-box-content">
+                <span class="info-box-text">Accesos al sistema</span>
+              </div>
+  
+            </div>
+          </div>
+
         </div>
         @endif
 

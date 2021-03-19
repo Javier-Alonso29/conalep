@@ -11,6 +11,7 @@ use Auth;
 use App\Http\Requests\CreateProcesoRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use App\Models\ActividadesAdministradores;
 
 class TipodocumentoController extends Controller
 {
@@ -50,6 +51,21 @@ class TipodocumentoController extends Controller
 
         if($access === true ){
 
+            $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+            if ($actividades == null){
+                $actividad = new ActividadesAdministradores($request->all());
+                $actividad->id=1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Creó el tipo de documento "'.$request->nombre.'" ('.$request->codigo.')';
+                $actividad->save();
+            }else{
+                $actividad = new ActividadesAdministradores($request->all());
+                $actividad->id = ($actividades->id)+1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Creó el tipo de documento "'.$request->nombre.'" ('.$request->codigo.')';
+                $actividad->save();
+            }
+
             return redirect()->route('tipodocumento.index')->With('success', 'El tipo de documento '.$tipodocumento->codigo.' se creo con exito');
 
         }else{
@@ -86,6 +102,20 @@ class TipodocumentoController extends Controller
 
         $tipodocumento = Tipodocumento::FindOrFail($request->id);
         $access = Storage::deleteDirectory('public/'.$tipodocumento->codigo);
+        $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+            if ($actividades == null){
+                $actividad = new ActividadesAdministradores();
+                $actividad->id=1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Eliminó el tipo de documento "'.$tipodocumento->nombre.'" ('.$tipodocumento->codigo.')';
+                $actividad->save();
+            }else{
+                $actividad = new ActividadesAdministradores();
+                $actividad->id = ($actividades->id)+1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Eliminó el tipo de documento "'.$tipodocumento->nombre.'" ('.$tipodocumento->codigo.')';
+                $actividad->save();
+            }
         $tipodocumento->delete(); 
             
         return redirect()->route('tipodocumento.index')->With('success', 'Se borro correctamente el tipo de documento.');
@@ -132,6 +162,21 @@ class TipodocumentoController extends Controller
         
 
         if ($tipodocumento->save()) {
+
+            $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+            if ($actividades == null){
+                $actividad = new ActividadesAdministradores();
+                $actividad->id=1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Modificó el tipo de documento "'.$tipodocumento->nombre.'" ('.$tipodocumento->codigo.')';
+                $actividad->save();
+            }else{
+                $actividad = new ActividadesAdministradores();
+                $actividad->id = ($actividades->id)+1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Modificó el tipo de documento "'.$tipodocumento->nombre.'" ('.$tipodocumento->codigo.')';
+                $actividad->save();
+            }
 
             return redirect()->route('tipodocumento.index')->with("success","Tipo de documento actualizado correctamente!");
 

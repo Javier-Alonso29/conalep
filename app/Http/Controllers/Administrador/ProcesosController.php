@@ -11,6 +11,7 @@ use Auth;
 use App\Http\Requests\CreateProcesoRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use App\Models\ActividadesAdministradores;
 
 class ProcesosController extends Controller
 {
@@ -51,7 +52,23 @@ class ProcesosController extends Controller
 
         if($access === true ){
 
-            return redirect()->route('procesos.index')->With('success', 'El prceso '.$proceso->codigo.' se creo con exito');
+            $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+            if ($actividades == null){
+                $actividad = new ActividadesAdministradores($request->all());
+                $actividad->id=1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Creó el proceso "'.$request->nombre.'" ('.$request->codigo.')';
+                $actividad->save();
+            }else{
+                $actividad = new ActividadesAdministradores($request->all());
+                $actividad->id = ($actividades->id)+1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Creó el proceso "'.$request->nombre.'" ('.$request->codigo.')';
+                $actividad->save();
+            }
+            
+
+            return redirect()->route('procesos.index')->With('success', 'El proceso '.$proceso->codigo.' se creo con exito');
 
         }else{
 
@@ -86,9 +103,23 @@ class ProcesosController extends Controller
         }
 
         $proceso = Proceso::FindOrFail($request->id);
+        $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+            if ($actividades == null){
+                $actividad = new ActividadesAdministradores();
+                $actividad->id=1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Eliminó el proceso "'.$proceso->nombre.'" ('.$proceso->codigo.')';
+                $actividad->save();
+            }else{
+                $actividad = new ActividadesAdministradores();
+                $actividad->id = ($actividades->id)+1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Eliminó el proceso "'.$proceso->nombre.'" ('.$proceso->codigo.')';
+                $actividad->save();
+            }
         $access = Storage::deleteDirectory('public/'.$proceso->codigo);
         $proceso->delete(); 
-            
+
         return redirect()->route('procesos.index')->With('success', 'Se borro correctamente el proceso.');
 
         
@@ -133,6 +164,21 @@ class ProcesosController extends Controller
         
 
         if ($proceso->save()) {
+
+            $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+            if ($actividades == null){
+                $actividad = new ActividadesAdministradores();
+                $actividad->id=1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Modificó el proceso "'.$proceso->nombre.'" ('.$proceso->codigo.')';
+                $actividad->save();
+            }else{
+                $actividad = new ActividadesAdministradores();
+                $actividad->id = ($actividades->id)+1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Modificó el proceso "'.$proceso->nombre.'" ('.$proceso->codigo.')';
+                $actividad->save();
+            }
 
             return redirect()->route('procesos.index')->with("success","Proceso actualizado correctamente!");
 

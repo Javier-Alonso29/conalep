@@ -12,6 +12,7 @@ use Auth;
 use App\Http\Requests\CreateSubprocesoRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use App\Models\ActividadesAdministradores;
 
 class SubprocesosController extends Controller
 {
@@ -67,6 +68,22 @@ class SubprocesosController extends Controller
         Storage::setVisibility('public/'.$subproceso->proceso['nombre'].'/'.$subproceso->codigo,'public');
 
         if($access === true ){
+
+            $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+            if ($actividades == null){
+                $actividad = new ActividadesAdministradores($request->all());
+                $actividad->id=1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Creó el subproceso "'.$request->nombre.'" ('.$request->codigo.')';
+                $actividad->save();
+            }else{
+                $actividad = new ActividadesAdministradores($request->all());
+                $actividad->id = ($actividades->id)+1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Creó el subproceso "'.$request->nombre.'" ('.$request->codigo.')';
+                $actividad->save();
+            }
+
             return redirect()->route('subprocesos.index')->With('success', 'El subproceso '.$subproceso->codigo.' se creo con exito');
 
         }else{
@@ -110,6 +127,20 @@ class SubprocesosController extends Controller
 
         $subproceso = Subproceso::FindOrFail($request->id);
         $access = Storage::deleteDirectory('public/'.$subproceso->proceso['nombre'].'/'.$subproceso->codigo);
+        $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+            if ($actividades == null){
+                $actividad = new ActividadesAdministradores();
+                $actividad->id=1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Eliminó el subproceso "'.$subproceso->nombre.'" ('.$subproceso->codigo.')';
+                $actividad->save();
+            }else{
+                $actividad = new ActividadesAdministradores();
+                $actividad->id = ($actividades->id)+1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Eliminó el subproceso "'.$subproceso->nombre.'" ('.$subproceso->codigo.')';
+                $actividad->save();
+            }
         $subproceso->delete(); 
             
         return redirect()->route('subprocesos.index')->With('success', 'Se borro correctamente el subproceso.');
@@ -156,6 +187,21 @@ class SubprocesosController extends Controller
         
 
         if ($subproceso->save()) {
+
+            $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+            if ($actividades == null){
+                $actividad = new ActividadesAdministradores();
+                $actividad->id=1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Modificó el subproceso "'.$subproceso->nombre.'" ('.$subproceso->codigo.')';
+                $actividad->save();
+            }else{
+                $actividad = new ActividadesAdministradores();
+                $actividad->id = ($actividades->id)+1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Modificó el subproceso "'.$subproceso->nombre.'" ('.$subproceso->codigo.')';
+                $actividad->save();
+            }
 
             return redirect()->route('subprocesos.index')->with("success","Subproceso actualizado correctamente!");
 

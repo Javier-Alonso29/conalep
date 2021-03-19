@@ -10,6 +10,7 @@ use App\Http\Requests\CreatePlantelRequest;
 use Validator;
 use Illuminate\Support\Facades\Hash;
 use Auth;
+use App\Models\ActividadesAdministradores;
 
 class PlantelesController extends Controller
 {
@@ -35,6 +36,21 @@ class PlantelesController extends Controller
         $plantel = new Planteles($request->all());
         $plantel->municipio_id = $request->municipio;
         $plantel->save();
+
+        $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+        if ($actividades == null){
+            $actividad = new ActividadesAdministradores($request->all());
+            $actividad->id=1;
+            $actividad->id_user = $request->id_user;
+            $actividad->accion = 'Registró el plantel "'.$request->municipio->nombre.'" ('.$request->numero.')';
+            $actividad->save();
+        }else{
+            $actividad = new ActividadesAdministradores($request->all());
+            $actividad->id = ($actividades->id)+1;
+            $actividad->id_user = $request->id_user;
+            $actividad->accion = 'Registró el plantel "'.$request->municipio->nombre.'" ('.$request->numero.')';
+            $actividad->save();
+        }
 
         return redirect()->route('planteles.index')->With('success', 'El plantel '.$plantel->numero.' se creo con exito');
        
@@ -67,6 +83,22 @@ class PlantelesController extends Controller
         }
 
         $plantel = Planteles::FindOrFail($request->id_plantel);
+
+        $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+        if ($actividades == null){
+            $actividad = new ActividadesAdministradores();
+            $actividad->id=1;
+            $actividad->id_user = $request->id_user;
+            $actividad->accion = 'Eliminó el plantel "'.$plantel->municipio->nombre.'" ('.$plantel->numero.')';
+            $actividad->save();
+        }else{
+            $actividad = new ActividadesAdministradores();
+            $actividad->id = ($actividades->id)+1;
+            $actividad->id_user = $request->id_user;
+            $actividad->accion = 'Eliminó el plantel "'.$plantel->municipio->nombre.'" ('.$plantel->numero.')';
+            $actividad->save();
+        }
+
         $plantel->delete();
 
         //Debemos de borrar todo lo perteneciente al plantel, las carpetas que tiene dentro de el plantel
@@ -108,6 +140,22 @@ class PlantelesController extends Controller
         
 
         if ($plantel->save()) {
+
+            $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+            if ($actividades == null){
+                $actividad = new ActividadesAdministradores();
+                $actividad->id=1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Modificó el plantel "'.$plantel->municipio->nombre.'" ('.$plantel->numero.')';
+                $actividad->save();
+            }else{
+                $actividad = new ActividadesAdministradores();
+                $actividad->id = ($actividades->id)+1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Modificó el plantel "'.$plantel->municipio->nombre.'" ('.$plantel->numero.')';
+                $actividad->save();
+        }
+
             return redirect()->route('planteles.index')->with("success","¡Plantel actualizado correctamente!");
         }else{
             return redirect()->route('planteles.index')->with("error","¡Plantel no actualizado!");

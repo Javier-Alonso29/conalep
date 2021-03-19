@@ -73,6 +73,8 @@
                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required >
                     </div>
 
+					<input type="hidden" name="id_user" value={{Auth::user()->id}}>
+
 					<div class="modal-footer">
 						<div class="form-group">
 							<button type="submit" class="btn btn-success">Guardar</button>

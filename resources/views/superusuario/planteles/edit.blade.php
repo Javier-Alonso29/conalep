@@ -44,6 +44,8 @@
 						</span>
 						@endif
 					</div>
+
+					<input type="hidden" name="id_user" value={{Auth::user()->id}}>
 					
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-primary btn-block">Guardar</button>

@@ -37,6 +37,8 @@ Route::group(['middleware' => ['SuperUsuario','auth',]], function(){
 
 		Route::resource('/permisos','SuperUsuario\PermisosController');
 
+		Route::resource('/actividad','SuperUsuario\ActividadController');
+
 		//Route::get('/permisos/eliminar/{id_plantel}/{id_proceso}/{id_user}',[ 'as' => 'eliminar', 'uses' => 'SuperUsuario\PermisosController@eliminar'])->name('permisos.eliminar');
 		Route::get('/permisos/eliminar','SuperUsuario\PermisosController@eliminar')->name('permisos.eliminar');
 

@@ -21,6 +21,9 @@
 						@endif
 						<input type="hidden" name="id" id="eliminarId">
 				</div>
+
+				<input type="hidden" name="id_user" value={{Auth::user()->id}}>
+
 				<div class="modal-footer">
                         @csrf
                         @method('delete')

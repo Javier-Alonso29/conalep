@@ -126,6 +126,7 @@
   </nav>
   <!-- /.navbar -->
 
+
   <!-- Main Sidebar Container -->
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
@@ -162,7 +163,7 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item menu-open">
+          <li class="nav-item menu-close">
             <a href="#" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
@@ -193,11 +194,12 @@
           </li>
 
           @if ((Auth::user()->rol_id) == 1)
-          <li class="nav-item menu-open">
+          <li class="nav-item menu-close">
             <a href="#" class="nav-link active">
+              &nbsp;
               <i class="far fa-user"></i>
               <p>
-                Usuarios
+                &nbsp; &nbsp;Usuarios
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -214,15 +216,22 @@
                   <p>Permisos</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ route('actividad.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Historial de actvidad</p>
+                </a>
+              </li>
             </ul>
           </li>
 
-          <li class="nav-item menu-open">
+          <li class="nav-item menu-close">
             <a href="#" class="nav-link active">
+              &nbsp;
               <i class="far fa-building"></i>
               <p> </p>
               <p>
-                 Gestión de planteles
+                &nbsp; &nbsp;Gestión de planteles
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
@@ -243,6 +252,7 @@
     </div>
     <!-- /.sidebar -->
   </aside>
+
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">

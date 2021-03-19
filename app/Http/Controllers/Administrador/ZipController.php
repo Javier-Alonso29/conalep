@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Auth;
 use File;
+use App\Models\ActividadesAdministradores;
 
 class ZipController extends Controller
 {
@@ -92,6 +93,21 @@ class ZipController extends Controller
 
             // Cerramos el zip
             $zip->close();
+
+            $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+            if ($actividades == null){
+                $actividad = new ActividadesAdministradores($request->all());
+                $actividad->id=1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Descargó el proceso "'.$request->nombre.'" ('.$request->codigo.')';
+                $actividad->save();
+            }else{
+                $actividad = new ActividadesAdministradores($request->all());
+                $actividad->id = ($actividades->id)+1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Descargó el proceso "'.$request->nombre.'" ('.$request->codigo.')';
+                $actividad->save();
+            }
 
         }
 

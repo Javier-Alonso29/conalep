@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use App\Models\PermisosProcesos;
 use SebastianBergmann\Environment\Console;
+use App\Models\ActividadesAdministradores;
 
 class AdministradoresController extends Controller
 {
@@ -59,6 +60,21 @@ class AdministradoresController extends Controller
         $permisos->borrar = 0;
         $permisos->save();
 
+        $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+        if ($actividades == null){
+            $actividad = new ActividadesAdministradores($request->all());
+            $actividad->id=1;
+            $actividad->id_user = $request->id_user;
+            $actividad->accion = 'Registró al usuario "'.$request->name.' '.$request->apellido_paterno.' '.$request->apellido_materno.'"';
+            $actividad->save();
+        }else{
+            $actividad = new ActividadesAdministradores($request->all());
+            $actividad->id = ($actividades->id)+1;
+            $actividad->id_user = $request->id_user;
+            $actividad->accion = 'Registró al usuario "'.$request->name.' '.$request->apellido_paterno.' '.$request->apellido_materno.'"';
+            $actividad->save();
+        }
+
 
         return redirect()->route('administradores.index')->With('success', 'El administrador '.$usuario->name.' '.$usuario->ap_paterno.' se creo con exito');
        
@@ -90,6 +106,22 @@ class AdministradoresController extends Controller
         }
 
         $usuario = User::FindOrFail($request->id);
+
+        $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+        if ($actividades == null){
+            $actividad = new ActividadesAdministradores();
+            $actividad->id=1;
+            $actividad->id_user = $request->id_user;
+            $actividad->accion = 'Dio de baja al usuario "'.$usuario->name.' '.$usuario->apellido_paterno.' '.$usuario->apellido_materno.'"';
+            $actividad->save();
+        }else{
+            $actividad = new ActividadesAdministradores();
+            $actividad->id = ($actividades->id)+1;
+            $actividad->id_user = $request->id_user;
+            $actividad->accion = 'Dio de baja al usuario "'.$usuario->name.' '.$usuario->apellido_paterno.' '.$usuario->apellido_materno.'"';
+            $actividad->save();
+        }
+
         $usuario->delete();
 
         
@@ -128,6 +160,21 @@ class AdministradoresController extends Controller
 
         if ($usuario->save()) {
             
+            $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+        if ($actividades == null){
+            $actividad = new ActividadesAdministradores();
+            $actividad->id=1;
+            $actividad->id_user = $request->id_user;
+            $actividad->accion = 'Actualizó al usuario "'.$usuario->name.' '.$usuario->apellido_paterno.' '.$usuario->apellido_materno.'"';
+            $actividad->save();
+        }else{
+            $actividad = new ActividadesAdministradores();
+            $actividad->id = ($actividades->id)+1;
+            $actividad->id_user = $request->id_user;
+            $actividad->accion = 'Actualizó al usuario "'.$usuario->name.' '.$usuario->apellido_paterno.' '.$usuario->apellido_materno.'"';
+            $actividad->save();
+        }
+
             return redirect()->route('administradores.index')->with("success","Administrador actualizado correctamente!");
         }else{
             return redirect()->route('administradores.index')->with("error","Administrador no actualizado!!!! :(");

@@ -51,6 +51,8 @@
 						@endif
 					</div>
 
+					<input type="hidden" name="id_user" value={{Auth::user()->id}}>
+
 					<!-- from grup -->
 					<div class="modal-footer">
 						<div class="form-group">
