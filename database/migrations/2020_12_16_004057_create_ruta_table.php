@@ -15,11 +15,9 @@ class CreateRutaTable extends Migration
     {
         Schema::create('ruta', function (Blueprint $table) {
             $table->unsignedBigInteger('id_subproceso');
-            $table->foreign('id_subproceso')
-                 ->references('id')->on('subprocesos');
+            $table->foreign('id_subproceso')->references('id')->on('subprocesos');
             $table->unsignedBigInteger('id_documento');
-            $table->foreign('id_documento')
-                           ->references('id')->on('documento');
+            $table->foreign('id_documento')->references('id')->on('documento');
             $table->timestamps();
         });
     }

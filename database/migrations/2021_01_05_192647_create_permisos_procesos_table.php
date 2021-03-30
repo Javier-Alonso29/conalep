@@ -19,14 +19,11 @@ class CreatePermisosProcesosTable extends Migration
             $table->integer('subir');
             $table->integer('borrar');
             $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')
-                 ->references('id')->on('users');
+            $table->foreign('id_user')->references('id')->on('users');
             $table->unsignedBigInteger('id_proceso');
-            $table->foreign('id_proceso')
-                 ->references('id')->on('procesos');    
+            $table->foreign('id_proceso')->references('id')->on('procesos');    
             $table->unsignedBigInteger('id_plantel');
-            $table->foreign('id_plantel')
-                 ->references('id')->on('planteles');    
+            $table->foreign('id_plantel')->references('id')->on('planteles');    
             $table->timestamps();
         });
     }

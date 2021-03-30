@@ -56,10 +56,11 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 	Route::prefix('administrador')->middleware(['Administrador','auth',])->group(function (){
 
 		Route::resource('/procesos','Administrador\ProcesosController');
-		Route::resource('/tipodocumento','Administrador\TipodocumentoController');
 		Route::post('/procesos/downloadFolder','Administrador\ZipController@downloadFolder')->name('procesos.download.folder');
 		Route::resource('/subprocesos','Administrador\SubprocesosController');
 		Route::post('/subprocesos/downloadFolder','Administrador\ZipController@downloadFolder')->name('subprocesos.download.folder');
+		Route::resource('/documentos','Administrador\DocumentoController');
+		Route::resource('/tipodocumento','Administrador\TipodocumentoController');
 
 	});
 	

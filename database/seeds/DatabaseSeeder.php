@@ -18,7 +18,9 @@ class DatabaseSeeder extends Seeder
             'municipios',
             'planteles',
             'procesos',
-            'subprocesos'
+            'subprocesos',
+            'documento',
+            'tipodocumento'
         ]);
 
         $this->call(RolesSeeder::class);
@@ -28,6 +30,8 @@ class DatabaseSeeder extends Seeder
         $this->call(PlantelesSeeder::class);
         $this->call(ProcesosSeeder::class);
         $this->call(SubprocesosSeeder::class);
+        $this->call(TiposDocumentoSeeder::class);
+        $this->call(DocumentosSeeder::class);
         
     }
 

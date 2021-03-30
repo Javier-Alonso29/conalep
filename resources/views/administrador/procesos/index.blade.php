@@ -71,7 +71,6 @@
                             <th>#</th>
                             <th>Nombre</th>
                             <th>Codigo</th>
-                            <th>Sub procesos</th>
                             <th>Operaciones</th>
                         </tr>
                     </thead>
@@ -81,12 +80,10 @@
                             <td>{{  $loop->iteration  }}</td>
                             <td>{{  $proceso->nombre  }}</td>
                             <td>{{  $proceso->codigo  }}</td>
-                            <td>  </td>
                             <td>
                                 <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar"  href="#" data-datos="{{$proceso}}">
                                     <i class="fa fa-trash" ></i>
                                 </a>
-                                
 
                                 <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" href="#" data-datos="{{$proceso}}" >
                                     <i class="fa fa-edit" ></i>
@@ -107,9 +104,6 @@
                 </table>
                 </div>
                 <!-- /.card-body -->
-                <div class="card-footer">
-                    {{$procesos->links()}}
-                </div>
             </div>
             <!-- /.card -->
         </div>

@@ -17,9 +17,10 @@ class CreateDocumentoTable extends Migration
             $table->id();
             $table->string('nombre')->unique();
             $table->unsignedBigInteger('id_tipodocumento');
-            $table->foreign('id_tipodocumento')
-                      ->references('id')->on('tipodocumento');
-                      $table->timestamps();
+            $table->foreign('id_tipodocumento')->references('id')->on('tipodocumento');
+            $table->unsignedBigInteger('id_subproceso');
+            $table->foreign('id_subproceso')->references('id')->on('subprocesos');
+            $table->timestamps();
         });
     }
 
