@@ -35,4 +35,65 @@ class ActividadController extends Controller
     }
 
 
+    public function eliminar()
+    {
+        ActividadesAdministradores::truncate();
+
+        $actividades = ActividadesAdministradores::paginate(1000);
+
+        $planteles = Planteles::paginate(10);
+
+        $procesos = Proceso::paginate(10);
+
+        $administradores = User::where('rol_id',2)->get();
+
+        return view('superusuario.actividades.index', compact('actividades','planteles','procesos','administradores'));
+    }
+
+    public function filtrar(Request $request){
+        $opcion = $request->filtro_id;
+        $hoy = date("Y-m-d H:i:s");
+        $ayer = date("Y-m-d H:i:s", strtotime("yesterday"));
+        echo $opcion;
+
+        if ($opcion == 1){
+
+            $actividades = ActividadesAdministradores::paginate(1000)->where('created_at',$hoy);
+            $planteles = Planteles::paginate(10);
+            $procesos = Proceso::paginate(10);
+            $administradores = User::where('rol_id',2)->get();
+
+        }else if ($opcion == 2){
+
+            $actividades = ActividadesAdministradores::paginate(1000)->where('created_at',$ayer);
+            $planteles = Planteles::paginate(10);
+            $procesos = Proceso::paginate(10);
+            $administradores = User::where('rol_id',2)->get();
+
+        }else if ($opcion == 3){
+
+            $actividades = ActividadesAdministradores::paginate(1000);
+            $planteles = Planteles::paginate(10);
+            $procesos = Proceso::paginate(10);
+            $administradores = User::where('rol_id',2)->get();
+
+        }else if ($opcion == 4){
+
+            $actividades = ActividadesAdministradores::paginate(1000);
+            $planteles = Planteles::paginate(10);
+            $procesos = Proceso::paginate(10);
+            $administradores = User::where('rol_id',2)->get();
+
+        }else{
+
+            $actividades = ActividadesAdministradores::paginate(1000);
+            $planteles = Planteles::paginate(10);
+            $procesos = Proceso::paginate(10);
+            $administradores = User::where('rol_id',2)->get();
+
+        }
+        return view('superusuario.actividades.index', compact('actividades','planteles','procesos','administradores'));
+    }
+
+
 }

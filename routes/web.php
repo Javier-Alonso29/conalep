@@ -31,6 +31,10 @@ Route::group(['middleware' => ['SuperUsuario','auth',]], function(){
 
 	Route::prefix('superusuario')->middleware(['SuperUsuario','auth',])->group(function (){
 
+		Route::get('/actividad/eliminar','SuperUsuario\ActividadController@eliminar')->name('actividad.eliminar');
+
+		Route::get('/actividad/filtrar','SuperUsuario\ActividadController@filtrar')->name('actividad.filtrar');
+
 		Route::resource('/administradores','SuperUsuario\AdministradoresController');
 
 		Route::resource('/planteles','SuperUsuario\PlantelesController');
@@ -41,6 +45,8 @@ Route::group(['middleware' => ['SuperUsuario','auth',]], function(){
 
 		//Route::get('/permisos/eliminar/{id_plantel}/{id_proceso}/{id_user}',[ 'as' => 'eliminar', 'uses' => 'SuperUsuario\PermisosController@eliminar'])->name('permisos.eliminar');
 		Route::get('/permisos/eliminar','SuperUsuario\PermisosController@eliminar')->name('permisos.eliminar');
+
+		
 
 
 	});

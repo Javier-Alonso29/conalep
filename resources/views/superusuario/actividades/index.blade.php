@@ -52,6 +52,24 @@
                 <div class="card-header bg-dark">
                 <h3 class="card-title">Historial de actividad</h3>
 
+                <div class="card-tools">
+                    <div class="btn btn-tool">
+                        <select class="form-select form-select-sm" id="filtro_id" name="filtro_id">
+                            <option selected>----------</option>
+                            <option value="1">Fecha actual</option>
+                            <option value="2">Ayer</option>
+                            <option value="3">Esta semana</option>
+                            <option value="4">Este mes</option>
+                            <option value="5">Ultimos tres meses</option>
+                        </select>
+                    </div>
+                    <div class="btn btn-tool">
+                        <a href="" data-toggle="modal" data-target="#filtrar" class="btn btn-success btn-block">Aplicar filtro</a>
+                    </div>
+                    <div class="btn btn-tool">
+                        <a href="" data-toggle="modal" data-target="#eliminar" class="btn btn-danger btn-block">Eliminar historial</a>
+                    </div>
+                </div>
                
                 </div>
                 <div class="card-body p-0" style="display: block;">
@@ -97,8 +115,25 @@
 </section>
 
 
+@include('superusuario.actividades.eliminar')
+@include('superusuario.actividades.filtrar')
 @endsection
 
 @section('scripts')
+
+<script type="text/javascript">
+    $('#eliminar').on('show.bs.modal', function(e) {
+
+    });
+
+
+    $('#filtrar').on('show.bs.modal', function(e) {
+        var filtrar = document.getElementById("filtro_id").value;
+        $('#filtrar').val(filtrar);
+    });
+</script>
+
+
+
 
 @stop
