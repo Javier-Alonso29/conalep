@@ -29,4 +29,6 @@ class ActividadesAdministradores extends Model
 
     public $increments = true;
 
+    
+
 }

@@ -55,7 +55,7 @@
                 <div class="card-tools">
                     <div class="btn btn-tool">
                         <select class="form-select form-select-sm" id="filtro_id" name="filtro_id">
-                            <option selected>----------</option>
+                            <option >----------</option>
                             <option value="1">Fecha actual</option>
                             <option value="2">Ayer</option>
                             <option value="3">Esta semana</option>
@@ -103,7 +103,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    {{$actividades->links()}}
+                    
                 </div>
             </div>
             <!-- /.card -->
@@ -128,8 +128,10 @@
 
 
     $('#filtrar').on('show.bs.modal', function(e) {
-        var filtrar = document.getElementById("filtro_id").value;
-        $('#filtrar').val(filtrar);
+        var filtrar = document.getElementById("filtro_id");
+        console.log(filtrar.value);
+        var valor = filtrar.value;
+        $('#filtrar_id').val(valor);
     });
 </script>
 

@@ -12,7 +12,8 @@
 			<form  method="GET" action="{{ route('actividad.filtrar') }}" role="form" >
 
 
-				<input type="hidden" id="filtro_id" name="filtro_id" required>
+				<input type="hidden" id="filtrar_id" name="filtrar_id" value="{{ old('filtrar_id') }}" required>
+
 
 				<div class="modal-footer">
 						<button class="btn btn-danger" type="button" data-dismiss="modal">Cancelar</button>
