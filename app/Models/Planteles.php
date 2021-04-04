@@ -23,4 +23,12 @@ class Planteles extends Model
     {
         return $this->belongsTo(Municipios::class, 'municipio_id');
     }
+
+    /**
+     * Un plantel tiene muchos usuarios
+     */
+    public function usuarios()
+    {
+        return $this->hasMany(User::class,'id_plantel');
+    }
 }

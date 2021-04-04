@@ -13,20 +13,17 @@ class CreatePermisosProcesosTable extends Migration
      */
     public function up()
     {
-        Schema::create('permisos_procesos', function (Blueprint $table) {
-            $table->integer('leer');
-            $table->integer('descargar');
-            $table->integer('subir');
-            $table->integer('borrar');
-            $table->unsignedBigInteger('id_user');
-            $table->foreign('id_user')
+        Schema::create('proceso_user', function (Blueprint $table) {
+            $table->id();
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
                  ->references('id')->on('users');
-            $table->unsignedBigInteger('id_proceso');
-            $table->foreign('id_proceso')
+
+            $table->unsignedBigInteger('proceso_id');
+            $table->foreign('proceso_id')
                  ->references('id')->on('procesos');    
-            $table->unsignedBigInteger('id_plantel');
-            $table->foreign('id_plantel')
-                 ->references('id')->on('planteles');    
+
             $table->timestamps();
         });
     }

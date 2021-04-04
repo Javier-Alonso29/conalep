@@ -35,7 +35,7 @@
             </a>
             <div class="info-box-content">
               <span class="info-box-text">Procesos</span>
-              <span class="info-box-number">10</span>
+              <span class="info-box-number">{{$procesos_cantidad}}</span>
             </div>
 
           </div>
@@ -92,18 +92,7 @@
 
         <div class="row">
         
-          <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-              
-              <a class="info-box-icon bg-warning elevation-1" href="{{ route('permisos.index') }}">
-                <i class="fa fa-lock"></i>
-              </a>
-              <div class="info-box-content">
-                <span class="info-box-text">Permisos</span>
-              </div>
-  
-            </div>
-          </div>
+          
         </div>
 
         <div class="col-12">

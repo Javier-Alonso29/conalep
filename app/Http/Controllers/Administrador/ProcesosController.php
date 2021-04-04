@@ -11,6 +11,7 @@ use Auth;
 use App\Http\Requests\CreateProcesoRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use App\Models\Planteles;
 
 class ProcesosController extends Controller
 {
@@ -32,10 +33,11 @@ class ProcesosController extends Controller
      */
     public function index()
     {
-        $procesos = Proceso::paginate(10);
-
-        return view('administrador.procesos.index', compact('procesos'));
+        $procesos_a = Auth::user()->procesos;
+        
+        return view('administrador.procesos.index', compact('procesos_a'));
     }
+
 
     /**
      * Metodo para crear un proceso
@@ -48,6 +50,32 @@ class ProcesosController extends Controller
         $access = Storage::makeDirectory('public/'.$proceso->codigo);
 
         Storage::setVisibility('public/'.$proceso->codigo,'public');
+
+
+        // Asigamos el proceso al usuario logeado
+        Auth::user()->procesos()->attach($proceso->id);
+
+        // En caso de que el usuario logeado no sea el super usuario
+        // Es un administrador por lo que necesisitamos buscar al super usuario y asignarlo
+        if(Auth::user()->roles->id != 1){
+
+            $plantel = Planteles::find(Auth::user()->plantel->id); 
+            $usuarios_plantel = $plantel->usuarios;
+
+            foreach($usuarios_plantel as $usuario){
+
+                if($usuario->roles->id == 1){
+
+                    // Validar que el usuario sea el super usuario del plantel
+                    // Para asi asignar el nuevo proceso al super usuario
+                    $usuario->procesos()->attach($proceso->id);
+
+                }
+
+            }
+
+        }
+        
 
         if($access === true ){
 
@@ -62,6 +90,7 @@ class ProcesosController extends Controller
 
     /**
      * Metodo que elimina un proceso selecccionado
+     * Solo tiene permitido que el super usuario use este metodo
      */
     public function destroy(Request $request, $id)
     {
@@ -86,8 +115,15 @@ class ProcesosController extends Controller
         }
 
         $proceso = Proceso::FindOrFail($request->id);
+
+        /**
+         * Borramos la relacion del administrador con el proceso
+         * y la relacion del super usuario con el proceso
+        */
+        $proceso->usuarios()->detach();
+
         $access = Storage::deleteDirectory('public/'.$proceso->codigo);
-        $proceso->delete(); 
+        
             
         return redirect()->route('procesos.index')->With('success', 'Se borro correctamente el proceso.');
 

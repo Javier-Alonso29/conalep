@@ -8,7 +8,7 @@
       <div class="row mb-2">
 
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Permisos de administradores</h1>
+            <h1 class="m-0 text-dark">Asignacion de administradores a procesos</h1>
           </div>
 
         <div class="col-sm-6">
@@ -63,25 +63,17 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Plantel</th>
-                            <th>Proceso</th>
-                            <th>Usuario</th>
+                            <th>Administrador</th>
+                            <th>procesos</th>
                             <th>Operaciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($permisos as $permiso)
+                        @forelse($administradores as $administrador)
                         <tr>
                             <td>{{ $loop->iteration  }}</td>
-                            <td>{{ $permiso->plantel->clave_trabajo }}</td>
-                            <td>{{ $permiso->proceso->nombre }}</td>
-                            <td>{{ $permiso->usuario->name}} {{ $permiso->usuario->apellido_paterno}} {{ $permiso->usuario->apellido_materno}}</td>
-                            <td>
-
-                                <button  class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" id="btn-edit-plantel" href="#" data-datos="{{$permiso}}" >
-                                    <i class="fa fa-edit"></i>
-                                </button>
-                            </td>
+                            <td>{{ $administrador->name }} {{ $administrador->apellido_paterno }} {{ $administrador->apellido_materno }}</td>
+                            <td></td>
                         </tr>
                         @empty
                         <tr>

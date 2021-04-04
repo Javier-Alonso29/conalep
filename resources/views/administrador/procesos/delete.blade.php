@@ -24,6 +24,7 @@
 							</span>
 						@endif
 						<input type="hidden" name="id" id="eliminarId">
+						
 				</div>
 				<div class="modal-footer">
                         @csrf

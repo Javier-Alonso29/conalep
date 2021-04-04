@@ -47,17 +47,11 @@ class AdministradoresController extends Controller
         $usuario = new User($request->all());
         $usuario->password = bcrypt($request->password);
         $usuario->rol_id = 2;
+        # Saber que super usuario esta logeado y asi obtener el plantel al que pertenece
+        $plantel= Auth::user()->plantel_id;
+        $usuario->plantel_id = $plantel;
         $usuario->save();
-
-        $permisos = new PermisosProcesos($request->all());
-        $permisos->id_user = $usuario->id;
-        $permisos->id_plantel = 1;
-        $permisos->id_proceso = 1;
-        $permisos->leer = 0;
-        $permisos->subir = 0;
-        $permisos->descargar = 0;
-        $permisos->borrar = 0;
-        $permisos->save();
+         
 
 
         return redirect()->route('administradores.index')->With('success', 'El administrador '.$usuario->name.' '.$usuario->ap_paterno.' se creo con exito');
@@ -86,7 +80,7 @@ class AdministradoresController extends Controller
             return back()
             ->withErrors($validator,'delete')
             ->withInput()
-            ->With('error', 'Contraseña incorrecta, proceso no borrado.');
+            ->With('error', 'Contraseña incorrecta, administrador no borrado.');
         }
 
         $usuario = User::FindOrFail($request->id);
