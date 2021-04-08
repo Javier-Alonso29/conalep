@@ -52,6 +52,9 @@ class SesionesController extends Controller
                 $sesiones = Sesiones::where('date_time', '>=', today()->subDays(30))->get();
                 $administradores = User::where('rol_id',2)->get();
                 break;
+            default:
+                $sesiones = Sesiones::paginate(1000);
+                $administradores = User::where('rol_id',2)->get();
         }
         return view('superusuario.sesiones.index', compact('administradores','sesiones'));
     }
