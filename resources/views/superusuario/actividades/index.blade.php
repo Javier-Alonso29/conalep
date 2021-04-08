@@ -56,11 +56,11 @@
                     <div class="btn btn-tool">
                         <select class="form-select form-select-sm" id="filtro_id" name="filtro_id">
                             <option >----------</option>
-                            <option value="1">Fecha actual</option>
+                            <option value="1">Hoy</option>
                             <option value="2">Ayer</option>
-                            <option value="3">Esta semana</option>
+                            <option value="3">Últimos 7 días</option>
                             <option value="4">Este mes</option>
-                            <option value="5">Ultimos tres meses</option>
+                            <option value="5">Últimos tres meses</option>
                         </select>
                     </div>
                     <div class="btn btn-tool">
