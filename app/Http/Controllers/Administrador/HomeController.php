@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Administrador;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -25,6 +26,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('administrador.home');
+        $procesos = Auth::user()->procesos;
+        $procesos_cantidad = Auth::user()->procesos->count();
+        return view('administrador.home', compact('procesos_cantidad'));
     }
 }

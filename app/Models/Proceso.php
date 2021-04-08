@@ -12,7 +12,7 @@ class Proceso extends Model
      * @var array
      */
     protected $fillable = [
-        'nombre', 'codigo', 'descripcion',
+        'nombre', 'codigo', 'descripcion'
     ];
 
     /**
@@ -22,4 +22,13 @@ class Proceso extends Model
     {
         return $this->hasMany(Subproceso::class, 'id_proceso', 'id');
     }
+
+    /**
+     * Un proceso pertenece a varios usuarios
+     */
+    public function usuarios()
+    {
+        return $this->belongsToMany('App\User');
+    }
+
 }

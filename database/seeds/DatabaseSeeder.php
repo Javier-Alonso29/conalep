@@ -18,17 +18,18 @@ class DatabaseSeeder extends Seeder
             'municipios',
             'planteles',
             'procesos',
-            'subprocesos'
+            'subprocesos',
+            'proceso_user'
         ]);
 
         $this->call(RolesSeeder::class);
-        $this->call(UsuariosSeeder::class);
         $this->call(EstadosSeeder::class);
         $this->call(MunicipiosSeeder::class);
         $this->call(PlantelesSeeder::class);
         $this->call(ProcesosSeeder::class);
         $this->call(SubprocesosSeeder::class);
-        
+        $this->call(UsuariosSeeder::class);
+        $this->call(ProcesoUserSeeder::class);
     }
 
     protected function truncateTables(array $tables){

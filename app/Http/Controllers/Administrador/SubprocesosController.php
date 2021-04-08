@@ -34,7 +34,7 @@ class SubprocesosController extends Controller
      */
     public function index()
     {
-        $subprocesos = Subproceso::paginate(10);
+        $subprocesos = Subproceso::paginate(2);
 
         $procesos = Proceso::get();
             

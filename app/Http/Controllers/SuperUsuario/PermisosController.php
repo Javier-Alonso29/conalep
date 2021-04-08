@@ -11,7 +11,6 @@ use Auth;
 use App\Http\Requests\CreatePermisoRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use App\Models\PermisosProcesos;
 use App\Models\Planteles;
 use App\Models\Proceso;
 
@@ -26,181 +25,78 @@ class PermisosController extends Controller
      */
     public function index()
     {
-        $permisos = PermisosProcesos::paginate(10);
-        $planteles = Planteles::paginate(10);
-        $procesos = Proceso::paginate(10);
-        $administradores = User::where('rol_id',2)->get();
-
-        return view('superusuario.permisos.index', compact('permisos','planteles','procesos','administradores'));
+        return view('superusuario.permisos.index');
     }
 
     /**
-     * Metodo para crear un permiso
+     * Muestra un listado de los procesos que hay en el plantel y los procesos que tiene el administrador
+     * Esta vista solo debe de estar disponible para el super usuario del plantel
      */
-    public function store(CreatePermisoRequest $request)
+    public function indexasignarprocesos($id)
     {
-        $permiso = new PermisosProcesos($request->all());
-        $permiso->id_plantel = $request->id_plantel;
-        $permiso->id_proceso = $request->id_proceso;
-        $permiso->id_user = $request->id_user;
-        $permiso->leer = $request->leer;
-        $permiso->descargar = $request->descargar;
-        $permiso->subir = $request->subir;
-        $permiso->borrar = $request->borrar;
-
+        /**
+         * Debo de mostrar todos los procesos que tiene el plantel
+         * para poder asignarlos a los administradores del plantel
+         * y el super usuario tiene todos los procesos del plantel 
+         */
+        $procesos_plantel = Auth::user()->procesos;
         
-        
-        $permiso->save();
+        $administrador = User::find($id);
+        $procesos_administrador = $administrador->procesos;
 
-        return redirect()->route('permisos.index')->With('success', 'Al administrador se le otorgaron permiso con exito');
-       
-    }
+        return view('superusuario.permisos.asignar', compact('procesos_plantel','procesos_administrador','administrador'));
 
-      /**
-     * Metodo que elimina un permiso selecccionado
-     */
-    public function destroy(Request $request,$id)
-    {
-        
-        $validator = Validator::make($request->all(), [
-            'contraseña' => [
-                'required',
-                function ($attribute, $value, $fail) {
-                    if (Hash::check($value, Auth::user()->password)) {
-                    }
-                    else{
-                        $fail('Contraseña Incorrecta');
-                    }
-                },
-            ],
-        ]);
-
-        if ($validator->fails()) {
-            return back()
-            ->withErrors($validator,'delete')
-            ->withInput()
-            ->With('error', 'Contraseña incorrecta, permisos no borrados.');
-        }
-
-        $permiso = PermisosProcesos::where(['id_plantel' => $request->id_plantel,
-                                            'id_user' => $request->id_user,
-                                            'id_proceso' => $request->id_proceso]);
-
-        
-        $permiso->delete();
-
-        
-        return redirect()->route('permisos.index')->With('success', 'Se quitaron correctamente los permisos a el administrador');
-        
-    }
-    
-    /**
-     * Metodo que elimina un permiso selecccionado
-     */
-    public function eliminar(Request $request,$id)
-    {
-        
-        $validator = Validator::make($request->all(), [
-            'contraseña' => [
-                'required',
-                function ($attribute, $value, $fail) {
-                    if (Hash::check($value, Auth::user()->password)) {
-                    }
-                    else{
-                        $fail('Contraseña Incorrecta');
-                    }
-                },
-            ],
-        ]);
-
-        if ($validator->fails()) {
-            return back()
-            ->withErrors($validator,'eliminar')
-            ->withInput()
-            ->With('error', 'Contraseña incorrecta, permisos no borrados.');
-        }
-
-        $permiso = PermisosProcesos::where(['id_plantel' => $request->id_plantel,
-                                            'id_user' => $request->id_user,
-                                            'id_proceso' => $request->id_proceso]);
-
-        
-        $permiso->delete();
-
-        
-        return redirect()->route('permisos.index')->With('success', 'Se quitaron correctamente los permisos a el administrador');
-        
     }
 
     /**
-     * Metodo para editar un admin
+     * Asigna el proceso a un administrador
      */
-    public function update(Request $request)
+    public function asignarproceso($id, $id_proceso)
     {
+        // Validar que el administrador no tenga ese proceso ya asignado anteriormente
+        $administrador = User::findOrFail($id);
+        $proceso_n = Proceso::findOrFail($id_proceso);
+        $procesos_administrador = $administrador->procesos;
 
-        //Valida que el admin tenga un nombre
-        $validator = Validator::make($request->all(), [
-            'id_plantel' => 'required',
-            'id_proceso' => 'required',
-            'id_user'=>'required',
-        ],[
-            'id_plantel' => 'Debes de asignar un plantel al administrador',
-            'id_proceso' => 'Debes de asignar un proceso al administrador',
-            'id_user'=>'Debes de asignar un administrador al cual otorgarle los permisos',
-        ]);
-
-        if ($validator->fails())
-        {
-            return back()->withErrors($validator)
-            ->withInput()->With('error', 'Permisos del administrador no actualizados');
-        }
-
-        $permiso = PermisosProcesos::where(['id_plantel' => $request->id_plantel,
-                                            'id_user' => $request->id_user,
-                                            'id_proceso' => $request->id_proceso],)->first();
-
-        
-        $permiso->id_plantel = $request->id_plantel;
-        $permiso->id_proceso = $request->id_proceso;
-        $permiso->id_user = $request->id_user;
-        $permiso->leer = $request->leer;
-        $permiso->descargar = $request->descargar;
-        $permiso->subir = $request->subir;
-        $permiso->borrar = $request->borrar;
-        
-        
-        if ($permiso->save()) {
+        // Busca en los procesos del administrador el nuevo proceso que se quiere asignar 
+        // En caso de que se encuentre quiere decir que el administrador ya tiene ese proceso
+        // Por lo que no se puede volver a asignar 
+        foreach($procesos_administrador as $proceso_a){
             
-            return redirect()->route('permisos.index')->with("success","Permisos del administrador actualizados correctamente!");
-        }else{
-            return redirect()->route('permisos.index')->with("error","Permisos del administrador no actualizados correctamente!");
+            if( $proceso_a->is($proceso_n) ){
+                
+                return back()->With('error', 'El proceso '.$proceso_n->nombre.' ya pertenece al administrador '.$administrador->name);
+
+            }
         }
+
+        // En caso de que el proceso no este asignado al usuario
+        $administrador->procesos()->attach($proceso_n->id);
+
+        return back()->With('success', 'El proceso '.$proceso_n->nombre.' se asigno correctamente al administrador '.$administrador->name);
+        
     }
 
-
-     /**
-     * Metodo que regresa una lista de planteles
-     */
-    public function api_planteles()
+    public function quitarprocerso($id_admi, $id_proceso)
     {
-        return Planteles::get();
-    }
+        $administrador = User::findOrFail($id_admi);
+        $proceso = Proceso::findOrFail($id_proceso);
+        $procesos_administrador = $administrador->procesos;
 
+        foreach($procesos_administrador as $proceso_a){
 
-     /**
-     * Metodo que regresa una lista de procesos
-     */
-    public function api_procesos()
-    {
-        return Proceso::get();
-    }
+            if($proceso->is($proceso_a) ){
+                
+                $administrador->procesos()->detach($proceso_a->id);
 
-     /**
-     * Metodo que regresa una lista de usuarios
-     */
-    public function api_usuarios()
-    {
-        return User::get();
+                return back()->With('success', 'El proceso '.$proceso->nombre.' se desaigno correctamente del administrador '.$administrador->name);
+
+            }
+
+        }
+
+        return back()->With('error', 'El proceso '.$proceso->nombre.' no esta asignado al administrador '.$administrador->name);
+        
     }
 
 }

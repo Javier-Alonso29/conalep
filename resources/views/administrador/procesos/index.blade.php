@@ -56,7 +56,7 @@
         
             <div class="card ">
                 <div class="card-header bg-dark">
-                <h3 class="card-title">Procesos</h3>
+                <h3 class="card-title">Tus procesos</h3>
 
                 <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -76,7 +76,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($procesos as $proceso)
+                    
+                        @forelse($procesos_a as $proceso)
                         <tr>
                             <td>{{  $loop->iteration  }}</td>
                             <td>{{  $proceso->nombre  }}</td>
@@ -87,10 +88,12 @@
                                 </a>
                             </td>
                             <td>
-                                <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar"  href="#" data-datos="{{$proceso}}">
-                                    <i class="fa fa-trash" ></i>
-                                </a>
                                 
+                                    <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar"  href="#" data-datos="{{$proceso}}">
+                                        <i class="fa fa-trash" ></i>
+                                    </a>
+                                
+
                                 <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" href="#" data-datos="{{$proceso}}" >
                                     <i class="fa fa-edit" ></i>
                                 </a>
@@ -126,7 +129,9 @@
                 </div>
                 <ul class="list-group list-group-flush">
                         <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo proceso</a></li>
-                        <li class="list-group-item"><a href="#" class="btn btn-danger btn-block">Borrar todos</a></li>
+                        @if (Auth::user()->rol_id == 1)
+                            <li class="list-group-item"><a href="#" class="btn btn-danger btn-block">Borrar todos</a></li>
+                        @endif
                 </ul>
                 <div class="card-footer text-center">Procesos</div>
             </div>
@@ -188,7 +193,7 @@
 
 </script>
 
-@stop
+@endsection
 
 
 

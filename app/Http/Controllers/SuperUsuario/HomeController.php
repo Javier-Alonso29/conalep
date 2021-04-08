@@ -5,6 +5,7 @@ namespace App\Http\Controllers\SuperUsuario;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
+use Auth;
 use App\Models\Planteles;
 
 class HomeController extends Controller
@@ -31,8 +32,12 @@ class HomeController extends Controller
 
         $planteles = Planteles::get();
         $cantidad_planteles = Planteles::count(); 
+
+        $procesos = Auth::user()->procesos;
+        
+        $procesos_cantidad = Auth::user()->procesos->count();
         
 
-        return view('superusuario.home', compact('admin','cantidad_admins','planteles','cantidad_planteles'));
+        return view('superusuario.home', compact('admin','cantidad_admins','planteles','cantidad_planteles','procesos_cantidad'));
     }
 }

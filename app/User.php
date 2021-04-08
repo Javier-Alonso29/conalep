@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Roles;
+use App\Models\Planteles;
 
 class User extends Authenticatable
 {
@@ -17,7 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name','apellido_paterno', 'apellido_materno', 'email', 'password','rol_id','created_at'
+        'name','apellido_paterno', 'apellido_materno', 'email', 'password','rol_id','plantel_id','created_at'
     ];
 
     /**
@@ -44,5 +45,21 @@ class User extends Authenticatable
     public function roles()
     {
         return $this->belongsTo(Roles::class, 'rol_id');
+    }
+
+    /**
+     * Un usuario pertenece a un plantel
+     */
+    public function plantel()
+    {
+        return $this->belongsTo(Planteles::class, 'id_plantel');
+    }
+
+    /**
+     * Un usuario tiene muchos procesos
+     */
+    public function procesos()
+    {
+        return $this->belongsToMany('App\Models\Proceso');
     }
 }

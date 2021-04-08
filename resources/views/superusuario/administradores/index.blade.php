@@ -64,8 +64,9 @@
                         <tr>
                             <th>#</th>
                             <th>Nombre</th>
+                            <th>Correo</th>
                             <th>Fecha registro</th>
-                            <th>E-Mail</th>
+                            <th>Procesos</th>
                             <th>Operaciones</th>
                         </tr>
                     </thead>
@@ -74,8 +75,13 @@
                         <tr>
                             <td>{{  $loop->iteration  }}</td>
                             <td>{{  $admin->name  }} {{  $admin->apellido_paterno  }} {{  $admin->apellido_materno  }}</td>
-                            <td>{{ $admin->created_at }}</td>
                             <td>{{  $admin->email  }}</td>
+                            <td>{{ $admin->created_at }}</td>
+                            <td>
+                                <a href="{{route('usuario.asigna.permisos', $admin->id)}}" class="btn btn-success btn-circle btn-sm">
+                                    Gestionar
+                                </a>
+                            </td>
                             <td>
                                 <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar"  href="#" data-datos="{{$admin}}">
                                     <i class="fa fa-trash" ></i>
