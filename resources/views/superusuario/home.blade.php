@@ -122,7 +122,7 @@
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box">
               
-              <a class="info-box-icon bg-warning elevation-1" href="{{ route('actividad.index') }}">
+              <a class="info-box-icon bg-warning elevation-1" href="{{ route('sesion.index') }}">
                 <i class="fas fa-mouse-pointer"></i>
               </a>
               <div class="info-box-content">
