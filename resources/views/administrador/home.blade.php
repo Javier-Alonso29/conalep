@@ -5,22 +5,22 @@
 @section('contenido')
 <!-- Vista principal del administrador -->
 <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
+  <div class="container-fluid">
+    <div class="row mb-2">
 
-        <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Panel de control</h1>
-          </div>
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Panel de control</h1>
+      </div>
 
-        <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="{{ route('inicio') }}">Inicio</a></li>
-              <li class="breadcrumb-item active"></li>
-            </ol>
-        </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="{{ route('inicio') }}">Inicio</a></li>
+          <li class="breadcrumb-item active"></li>
+        </ol>
+      </div>
 
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
 </div>
 
 
@@ -75,9 +75,9 @@
           <!-- /.col -->
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
-              <a class="info-box-icon bg-primary elevation-1">
+            <a class="info-box-icon bg-primary elevation-1" href="{{ route('documentos.index') }}">
               <i class="fas fa-file"></i>
-              </a>
+            </a>
 
               <div class="info-box-content">
                 <span class="info-box-text">Documentos</span>
@@ -89,5 +89,11 @@
           </div>
           <!-- /.col -->
         </div>
+        <!-- /.info-box-content -->
+      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+  </div>
 </div>
 @endsection

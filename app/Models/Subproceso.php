@@ -16,10 +16,18 @@ class Subproceso extends Model
     ];
 
     /**
-     * Un subproceso tiene un proceso
+     * Un subproceso pertenece a un proceso
      */
     public function proceso()
     {
         return $this->belongsTo(Proceso::class, 'id_proceso');
+    }
+
+    /**
+     * Un subproceso tiene muchos documentos
+     */
+    public function documentos()
+    {
+        return $this->hasMany(Documento::class, 'id_subproceso', 'id');
     }
 }

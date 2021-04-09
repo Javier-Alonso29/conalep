@@ -34,6 +34,7 @@ class TipodocumentoController extends Controller
     public function index()
     {
         $tipodocumento = Tipodocumento::get();
+
         return view('administrador.tipodocumento.index', compact('tipodocumento'));
     }
 
@@ -44,11 +45,8 @@ class TipodocumentoController extends Controller
     {
 
         $tipodocumento = Tipodocumento::create($request->all());
-        
         $access = Storage::makeDirectory('public/'.$tipodocumento->codigo);
-
         Storage::setVisibility('public/'.$tipodocumento->codigo,'public');
-
         if($access === true ){
 
             $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
@@ -67,11 +65,8 @@ class TipodocumentoController extends Controller
             }
 
             return redirect()->route('tipodocumento.index')->With('success', 'El tipo de documento '.$tipodocumento->codigo.' se creo con exito');
-
         }else{
-
             return redirect()->route('tipodocumento.index')->With('error', 'No se creo el directorio del nuevo tipo de documento');
-
         }
     }
 
@@ -179,7 +174,6 @@ class TipodocumentoController extends Controller
             }
 
             return redirect()->route('tipodocumento.index')->with("success","Tipo de documento actualizado correctamente!");
-
         }else{
             return redirect()->route('tipodocumento.index')->with("error","Tipo de documento no actualizado!");
         }

@@ -99,9 +99,13 @@ class ProcesosController extends Controller
             return redirect()->route('procesos.index')->With('success', 'El proceso '.$proceso->codigo.' se creo con exito');
 
         }else{
+        
 
-            return redirect()->route('procesos.index')->With('error', 'No se creo el directorio de nuevo proceso');
-
+            if ($access === true) {
+                return redirect()->route('procesos.index')->With('success', 'El prceso ' . $proceso->codigo . ' se creo con exito');
+            } else {
+                return redirect()->route('procesos.index')->With('error', 'No se creo el directorio de nuevo proceso');
+            }
         }
     }
 
@@ -116,8 +120,7 @@ class ProcesosController extends Controller
                 'required',
                 function ($attribute, $value, $fail) {
                     if (Hash::check($value, Auth::user()->password)) {
-                    }
-                    else{
+                    } else {
                         $fail('Contraseña Incorrecta');
                     }
                 },
@@ -126,9 +129,9 @@ class ProcesosController extends Controller
 
         if ($validator->fails()) {
             return back()
-            ->withErrors($validator,'delete')
-            ->withInput()
-            ->With('error', 'Contraseña incorrecta, proceso no borrado.');
+                ->withErrors($validator, 'delete')
+                ->withInput()
+                ->With('error', 'Contraseña incorrecta, proceso no borrado.');
         }
 
         $proceso = Proceso::FindOrFail($request->id);
@@ -159,12 +162,10 @@ class ProcesosController extends Controller
         // Eliminamos el proceso
         $proceso->delete(); 
 
-        $access = Storage::deleteDirectory('public/'.$proceso->codigo);
-        
-            
-        return redirect()->route('procesos.index')->With('success', 'Se borro correctamente el proceso.');
+        $access = Storage::deleteDirectory('public/' . $proceso->codigo);
+        $proceso->delete();
 
-        
+        return redirect()->route('procesos.index')->With('success', 'Se borro correctamente el proceso.');
     }
 
     /**
@@ -172,39 +173,33 @@ class ProcesosController extends Controller
      */
     public function update(Request $request)
     {
-
         // Valida que el proceso tenga un nombre o un codigo
         $validator = Validator::make($request->all(), [
-            'nombre' => ['required',Rule::unique('procesos','nombre')->ignore($request->id)],
-            'codigo' => ['required',Rule::unique('procesos','codigo')->ignore($request->id)]
-        ],[
-            'nombre.required'=>'Debes asignar un nombre al proceso',
+            'nombre' => ['required', Rule::unique('procesos', 'nombre')->ignore($request->id)],
+            'codigo' => ['required', Rule::unique('procesos', 'codigo')->ignore($request->id)]
+        ], [
+            'nombre.required' => 'Debes asignar un nombre al proceso',
             'nombre.unique' => 'Ya existe un proceso con este nombre',
             'codigo.required' => 'Debes de asegnar un codigo al proceso',
             'codigo.unique' => 'Ya existe un proceso con este codigo'
         ]);
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return back()
-            ->withErrors($validator)
-            ->withInput()
-            ->With('error', 'El proceso no pudo ser actualizado.');
+                ->withErrors($validator)
+                ->withInput()
+                ->With('error', 'El proceso no pudo ser actualizado.');
         }
 
         $proceso = Proceso::FindOrFail($request->id);
         $codigo_anterior = $proceso->codigo;
         $proceso->fill($request->all());
 
-        /**
-         * Cambiar el nombre del codigo debe de cambiar el nombre de 
-         * la carpeta 
-         */
-        if($codigo_anterior != $proceso->codigo){
-            Storage::move('public/'.$codigo_anterior, 'public/'.$proceso->codigo);
-        }
-        
+        // Cambiar el nombre del codigo debe de cambiar el nombre de  la carpeta 
 
+        if ($codigo_anterior != $proceso->codigo) {
+            Storage::move('public/' . $codigo_anterior, 'public/' . $proceso->codigo);
+        }
         if ($proceso->save()) {
 
             $actividades = ActividadesAdministradores::orderBy('id','desc')->first();

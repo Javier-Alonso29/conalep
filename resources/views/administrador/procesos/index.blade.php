@@ -71,7 +71,6 @@
                             <th>#</th>
                             <th>Nombre</th>
                             <th>Codigo</th>
-                            <th>Sub procesos</th>
                             <th>Operaciones</th>
                         </tr>
                     </thead>

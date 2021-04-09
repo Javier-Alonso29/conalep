@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::get('/planteles/municipio','SuperUsuario\PlantelesController@api_municipios');
+Route::get('/documento/tipo_documento','SuperUsuario\PlantelesController@api_tipos_documentos');
+Route::get('/documento/subproceso','SuperUsuario\PlantelesController@api_subprocesos');
 
 Route::get('/permisos/planteles','SuperUsuario\PermisosController@api_planteles');
 Route::get('/permisos/procesos','SuperUsuario\PermisosController@api_procesos');

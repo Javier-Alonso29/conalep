@@ -37,7 +37,7 @@ class SubprocesosController extends Controller
         $subprocesos = Subproceso::paginate(2);
 
         $procesos = Proceso::get();
-            
+
         return view('administrador.subprocesos.index', compact('subprocesos', 'procesos'));
     }
 
@@ -60,12 +60,9 @@ class SubprocesosController extends Controller
      */
     public function store(CreateSubprocesoRequest $request)
     {
-
         $subproceso = Subproceso::create($request->all());
-        
-        $access = Storage::makeDirectory('public/'.$subproceso->proceso['nombre'].'/'.$subproceso->codigo);
-
-        Storage::setVisibility('public/'.$subproceso->proceso['nombre'].'/'.$subproceso->codigo,'public');
+        $access = Storage::makeDirectory('public/' . $subproceso->proceso['codigo'] . '/' . $subproceso->codigo);
+        Storage::setVisibility('public/' . $subproceso->proceso['codigo'] . '/' . $subproceso->codigo, 'public');
 
         if($access === true ){
 
@@ -88,7 +85,6 @@ class SubprocesosController extends Controller
 
         }else{
             return redirect()->route('subprocesos.index')->With('error', 'No se creo el directorio de nuevo subproceso');
-
         }
     }
 
@@ -156,21 +152,20 @@ class SubprocesosController extends Controller
 
         // Valida que el subproceso tenga un nombre o un codigo
         $validator = Validator::make($request->all(), [
-            'nombre' => ['required',Rule::unique('subprocesos','nombre')->ignore($request->id)],
-            'codigo' => ['required',Rule::unique('subprocesos','codigo')->ignore($request->id)]
-        ],[
-            'nombre.required'=>'Debes asignar un nombre al subproceso',
+            'nombre' => ['required', Rule::unique('subprocesos', 'nombre')->ignore($request->id)],
+            'codigo' => ['required', Rule::unique('subprocesos', 'codigo')->ignore($request->id)]
+        ], [
+            'nombre.required' => 'Debes asignar un nombre al subproceso',
             'nombre.unique' => 'Ya existe un subproceso con este nombre',
             'codigo.required' => 'Debes de asegnar un codigo al subproceso',
             'codigo.unique' => 'Ya existe un subproceso con este codigo'
         ]);
 
-        if ($validator->fails())
-        {
+        if ($validator->fails()) {
             return back()
-            ->withErrors($validator)
-            ->withInput()
-            ->With('error', 'El subproceso no pudo ser actualizado.');
+                ->withErrors($validator)
+                ->withInput()
+                ->With('error', 'El subproceso no pudo ser actualizado.');
         }
 
         $subproceso = Subproceso::FindOrFail($request->id);
@@ -181,10 +176,10 @@ class SubprocesosController extends Controller
          * Cambiar el nombre del codigo debe de cambiar el nombre de 
          * la carpeta 
          */
-        if($codigo_anterior != $subproceso->codigo){
-            Storage::move('public/'.$subproceso->proceso['nombre'].'/'.$codigo_anterior, 'public/'.$subproceso->proceso['nombre'].'/'.$subproceso->codigo);
+        if ($codigo_anterior != $subproceso->codigo) {
+            Storage::move('public/' . $subproceso->proceso['codigo'] . '/' . $codigo_anterior, 'public/' . $subproceso->proceso['codigo'] . '/' . $subproceso->codigo);
         }
-        
+
 
         if ($subproceso->save()) {
 
@@ -203,10 +198,10 @@ class SubprocesosController extends Controller
                 $actividad->save();
             }
 
-            return redirect()->route('subprocesos.index')->with("success","Subproceso actualizado correctamente!");
-
-        }else{
-            return redirect()->route('subprocesos.index')->with("error","Subproceso no actualizada!");
+            return redirect()->route('subprocesos.index')->with("success", "Subproceso actualizado correctamente!");
+        } else {
+            return redirect()->route('subprocesos.index')->with("error", "Subproceso no actualizada!");
         }
     }
+
 }

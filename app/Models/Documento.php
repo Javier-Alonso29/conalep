@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Documentos extends Model
+class Documento extends Model
 {
     public $table = 'documento';
     /**
@@ -13,15 +13,22 @@ class Documentos extends Model
      * @var array
      */
     protected $fillable = [
-        'nombre', 'id_tipodocumento'
+        'nombre', 'id_tipodocumento', 'id_subproceso',
     ];
 
     /**
-     * Un documento pertenece a un tipo de documento
+     * Un documento pertenece a un tipo
      */
-    public function tipo_documento()
+    public function tipodocumento()
     {
         return $this->belongsTo(Tipodocumento::class, 'id_tipodocumento');
     }
 
+    /**
+     * Un documento pertenece a un subproceso
+     */
+    public function subproceso()
+    {
+        return $this->belongsTo(Subproceso::class, 'id_subproceso');
+    }
 }

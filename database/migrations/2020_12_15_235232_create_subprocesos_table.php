@@ -16,8 +16,7 @@ class CreateSubprocesosTable extends Migration
         Schema::create('subprocesos', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_proceso');
-            $table->foreign('id_proceso')
-                 ->references('id')->on('procesos');
+            $table->foreign('id_proceso')->references('id')->on('procesos');
             $table->string('nombre')->unique();
             $table->string('codigo')->unique();
             $table->longText("descripcion")->nullable();

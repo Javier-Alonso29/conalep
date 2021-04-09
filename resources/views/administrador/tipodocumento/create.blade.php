@@ -3,19 +3,19 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header bg-dark">
-				<h5 class="modal-title" id="exampleModalLabel">Registrar nuevo proceso</h5>
-				<span class="badge badge-danger" class="close"  data-dismiss="modal" aria-label="Close">
-                        <i class="fas fa-times fa-lg" style="color:#fff"></i>
-                </span>
+				<h5 class="modal-title" id="exampleModalLabel">Registrar nuevo tipo de documento</h5>
+				<span class="badge badge-danger" class="close" data-dismiss="modal" aria-label="Close">
+					<i class="fas fa-times fa-lg" style="color:#fff"></i>
+				</span>
 			</div>
 			<div class="modal-body">
 				<form method="POST" action="{{ route('tipodocumento.store') }}">
 					@csrf
 
-                    <!-- from grup -->
+					<!-- from grup -->
 					<div class="form-group">
 						<label for="inicio">Nombre del tipo de documento</label>
-						<input type="text" name="nombre" class="form-control {{ $errors->has('nombre') ? ' is-invalid' : '' }}" autocomplete="off" >
+						<input type="text" name="nombre" class="form-control {{ $errors->has('nombre') ? ' is-invalid' : '' }}" autocomplete="off">
 						@if ($errors->has('nombre'))
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $errors->first('nombre') }}</strong>
@@ -23,10 +23,10 @@
 						@endif
 					</div>
 
-                    <!-- from grup -->
+					<!-- from grup -->
 					<div class="form-group">
 						<label for="inicio">Codigo del tipo de documento</label>
-						<input type="text" name="codigo" class="form-control {{ $errors->has('codigo') ? ' is-invalid' : '' }}" autocomplete="off" >
+						<input type="text" name="codigo" class="form-control {{ $errors->has('codigo') ? ' is-invalid' : '' }}" autocomplete="off">
 						@if ($errors->has('codigo'))
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $errors->first('codigo') }}</strong>

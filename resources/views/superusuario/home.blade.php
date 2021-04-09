@@ -75,7 +75,7 @@
           <!-- /.col -->
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box mb-3">
-              <a class="info-box-icon bg-primary elevation-1">
+              <a class="info-box-icon bg-primary elevation-1" href="{{ route('documentos.index') }}">
               <i class="fas fa-file"></i>
               </a>
 

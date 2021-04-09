@@ -6,11 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Planteles;
 use App\Models\Municipios;
-use App\Http\Requests\CreatePlantelRequest;
 use Validator;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 use App\Models\ActividadesAdministradores;
+use App\Http\Requests\CreatePlantelRequest;
 
 class PlantelesController extends Controller
 {
@@ -23,9 +23,9 @@ class PlantelesController extends Controller
     public function index()
     {
         $planteles = Planteles::paginate(10);
-        $municipios = Municipios::orderBy('nombre','DESC')->get();
+        $municipios = Municipios::orderBy('nombre', 'DESC')->get();
 
-        return view('superusuario.planteles.index', compact('planteles','municipios'));
+        return view('superusuario.planteles.index', compact('planteles', 'municipios'));
     }
 
     /**
@@ -55,20 +55,18 @@ class PlantelesController extends Controller
         return redirect()->route('planteles.index')->With('success', 'El plantel '.$plantel->numero.' se creo con exito');
        
     }
-    
+
     /**
      * Metodo que elimina un plantel selecccionado
      */
     public function destroy(Request $request, $id)
     {
-
         $validator = Validator::make($request->all(), [
             'contraseña' => [
                 'required',
                 function ($attribute, $value, $fail) {
                     if (Hash::check($value, Auth::user()->password)) {
-                    }
-                    else{
+                    } else {
                         $fail('Contraseña Incorrecta');
                     }
                 },
@@ -77,9 +75,9 @@ class PlantelesController extends Controller
 
         if ($validator->fails()) {
             return back()
-            ->withErrors($validator,'delete')
-            ->withInput()
-            ->With('error', 'Contraseña incorrecta, plantel no borrado.');
+                ->withErrors($validator, 'delete')
+                ->withInput()
+                ->With('error', 'Contraseña incorrecta, plantel no borrado.');
         }
 
         $plantel = Planteles::FindOrFail($request->id_plantel);
@@ -101,11 +99,7 @@ class PlantelesController extends Controller
 
         $plantel->delete();
 
-        //Debemos de borrar todo lo perteneciente al plantel, las carpetas que tiene dentro de el plantel
-
-        
         return redirect()->route('planteles.index')->With('success', 'Se borro correctamente el plantel');
-        
     }
 
     /**
@@ -113,31 +107,31 @@ class PlantelesController extends Controller
      */
     public function update(Request $request)
     {
-        //Valida los datos del plantel
+        // Valida los datos del plantel
         $validator = Validator::make($request->all(), [
             'numero' => 'required|integer|digits:10',
             'id_plantel' => 'required',
             'clave_trabajo' => 'required',
             'municipio' => 'required',
-        ],[
-            'numero.required'=>'El plantel debe de tener un numero de plantel',
-            'numero.integer'=>'Debes de ingresar un numero',
-            'numero.digits'=>'El numero de plantel debe de ser de 10 caracteres',
+        ], [
+            'numero.required' => 'El plantel debe de tener un numero de plantel',
+            'numero.integer' => 'Debes de ingresar un numero',
+            'numero.digits' => 'El numero de plantel debe de ser de 10 caracteres',
             'clave_trabajo.required' => 'El plantel debe de tener una clave de trabajo'
         ]);
 
-        if ($validator->fails())
-        {
-            return back()->withErrors($validator)
-            ->withInput()->With('error', '¡Plantel no actualizado!');
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput()
+                ->With('error', '¡Plantel no actualizado!');
         }
 
         $plantel = Planteles::FindOrFail($request->id_plantel);
         $plantel->fill($request->all());
-
         $plantel->municipio_id = $request->municipio;
         $plantel->save();
-        
+
 
         if ($plantel->save()) {
 
@@ -168,6 +162,6 @@ class PlantelesController extends Controller
      */
     public function api_municipios()
     {
-        return Municipios::orderBy('nombre','DESC')->get();
+        return Municipios::orderBy('nombre', 'DESC')->get();
     }
 }
