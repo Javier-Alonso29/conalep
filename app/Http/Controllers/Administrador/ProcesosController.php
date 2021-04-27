@@ -34,6 +34,7 @@ class ProcesosController extends Controller
      */
     public function index()
     {
+        // Obtenemos los procesos del usuario logeado
         $procesos_a = Auth::user()->procesos;
         
         return view('administrador.procesos.index', compact('procesos_a'));
@@ -45,12 +46,11 @@ class ProcesosController extends Controller
      */
     public function store(CreateProcesoRequest $request)
     {
-
+        // Creamos el proceso 
         $proceso = Proceso::create($request->all());
         
+        // Hacemos el directorio
         $access = Storage::makeDirectory('public/'.$proceso->codigo);
-
-        Storage::setVisibility('public/'.$proceso->codigo,'public');
 
 
         // Asigamos el proceso al usuario logeado
@@ -58,11 +58,15 @@ class ProcesosController extends Controller
 
         // En caso de que el usuario logeado no sea el super usuario
         // Es un administrador por lo que necesisitamos buscar al super usuario y asignarlo
-        if(Auth::user()->roles->id != 1){
+        if(Auth::user()->roles->id == 2){
 
+            // Obtenemos el plantel del usuario logeado
             $plantel = Planteles::find(Auth::user()->plantel->id); 
+
+            // Obtenemos los usuarios del plantel
             $usuarios_plantel = $plantel->usuarios;
 
+            // Recorremos esos usuarios hasta encontrar al usuario con el rol de super usuario
             foreach($usuarios_plantel as $usuario){
 
                 if($usuario->roles->id == 1){
@@ -78,34 +82,20 @@ class ProcesosController extends Controller
         }
         
 
+        // Hacemos el registro de actividad
         if($access === true ){
-
-            $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
-            if ($actividades == null){
-                $actividad = new ActividadesAdministradores($request->all());
-                $actividad->id=1;
-                $actividad->id_user = $request->id_user;
-                $actividad->accion = 'Creó el proceso "'.$request->nombre.'" ('.$request->codigo.')';
-                $actividad->save();
-            }else{
-                $actividad = new ActividadesAdministradores($request->all());
-                $actividad->id = ($actividades->id)+1;
-                $actividad->id_user = $request->id_user;
-                $actividad->accion = 'Creó el proceso "'.$request->nombre.'" ('.$request->codigo.')';
-                $actividad->save();
-            }
             
-
+            $actividad = new ActividadesAdministradores($request->all());
+            $actividad->id_user = $request->id_user;
+            $actividad->accion = 'Creó el proceso "'.$request->nombre.'" ('.$request->codigo.')';
+            $actividad->save();
+           
             return redirect()->route('procesos.index')->With('success', 'El proceso '.$proceso->codigo.' se creo con exito');
 
         }else{
         
+            return redirect()->route('procesos.index')->With('error', 'No se creo el directorio de nuevo proceso');
 
-            if ($access === true) {
-                return redirect()->route('procesos.index')->With('success', 'El prceso ' . $proceso->codigo . ' se creo con exito');
-            } else {
-                return redirect()->route('procesos.index')->With('error', 'No se creo el directorio de nuevo proceso');
-            }
         }
     }
 
@@ -115,6 +105,9 @@ class ProcesosController extends Controller
      */
     public function destroy(Request $request, $id)
     {
+        /**
+         * Valida que la contraseña sea la contraseña del usurio logeado
+         */
         $validator = Validator::make($request->all(), [
             'contraseña' => [
                 'required',
@@ -127,6 +120,9 @@ class ProcesosController extends Controller
             ],
         ]);
 
+        /**
+         * En caso de que falle regresara al usuario con un mensaje de error
+         */
         if ($validator->fails()) {
             return back()
                 ->withErrors($validator, 'delete')
@@ -134,37 +130,34 @@ class ProcesosController extends Controller
                 ->With('error', 'Contraseña incorrecta, proceso no borrado.');
         }
 
+        /**
+         * Encuentra el proceso o da un 404
+         */
         $proceso = Proceso::FindOrFail($request->id);
-        $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
-            if ($actividades == null){
-                $actividad = new ActividadesAdministradores();
-                $actividad->id=1;
-                $actividad->id_user = $request->id_user;
-                $actividad->accion = 'Eliminó el proceso "'.$proceso->nombre.'" ('.$proceso->codigo.')';
-                $actividad->save();
-            }else{
-                $actividad = new ActividadesAdministradores();
-                $actividad->id = ($actividades->id)+1;
-                $actividad->id_user = $request->id_user;
-                $actividad->accion = 'Eliminó el proceso "'.$proceso->nombre.'" ('.$proceso->codigo.')';
-                $actividad->save();
-            }
-        $access = Storage::deleteDirectory('public/'.$proceso->codigo);
-        
-
 
         /**
-         * Borramos la relacion del administrador con el proceso
-         * y la relacion del super usuario con el proceso
+         * Hace un registro de actividad
+         */
+        $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+
+
+        $actividad = new ActividadesAdministradores();
+        $actividad->id_user = $request->id_user;
+        $actividad->accion = 'Eliminó el proceso "'.$proceso->nombre.'" ('.$proceso->codigo.')';
+        $actividad->save();
+           
+        /**
+        * Se elimina el directorio con el codigo del nuevo proceso
         */
+        $access = Storage::deleteDirectory('public/'.$proceso->codigo);
+            
         $proceso->usuarios()->detach();
-        
-        // Eliminamos el proceso
-        $proceso->delete(); 
 
-        $access = Storage::deleteDirectory('public/' . $proceso->codigo);
+        // En caso de que solo se tenga que borrar de un admin pero queda pendiente
+        // $proceso->usuarios()->detach(Auth::user()->id);
+
         $proceso->delete();
-
+        
         return redirect()->route('procesos.index')->With('success', 'Se borro correctamente el proceso.');
     }
 
@@ -184,6 +177,7 @@ class ProcesosController extends Controller
             'codigo.unique' => 'Ya existe un proceso con este codigo'
         ]);
 
+        // En caso de que falle el validador regresa a la vista con mensaje de error
         if ($validator->fails()) {
             return back()
                 ->withErrors($validator)
@@ -191,31 +185,26 @@ class ProcesosController extends Controller
                 ->With('error', 'El proceso no pudo ser actualizado.');
         }
 
+        // Se encuentra el proceso o da 404
         $proceso = Proceso::FindOrFail($request->id);
+        // obtenemos el codigo actual del proceso
         $codigo_anterior = $proceso->codigo;
+        // Actualizamos los datos del proceso
         $proceso->fill($request->all());
 
         // Cambiar el nombre del codigo debe de cambiar el nombre de  la carpeta 
-
         if ($codigo_anterior != $proceso->codigo) {
             Storage::move('public/' . $codigo_anterior, 'public/' . $proceso->codigo);
         }
+
+        // En caso de que el proceso sea guardado correctamente hace el registro de actividad
         if ($proceso->save()) {
 
-            $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
-            if ($actividades == null){
-                $actividad = new ActividadesAdministradores();
-                $actividad->id=1;
-                $actividad->id_user = $request->id_user;
-                $actividad->accion = 'Modificó el proceso "'.$proceso->nombre.'" ('.$proceso->codigo.')';
-                $actividad->save();
-            }else{
-                $actividad = new ActividadesAdministradores();
-                $actividad->id = ($actividades->id)+1;
-                $actividad->id_user = $request->id_user;
-                $actividad->accion = 'Modificó el proceso "'.$proceso->nombre.'" ('.$proceso->codigo.')';
-                $actividad->save();
-            }
+            $actividad = new ActividadesAdministradores();
+            $actividad->id_user = $request->id_user;
+            $actividad->accion = 'Modificó el proceso "'.$proceso->nombre.'" ('.$proceso->codigo.')';
+            $actividad->save();
+
 
             return redirect()->route('procesos.index')->with("success","Proceso actualizado correctamente!");
 

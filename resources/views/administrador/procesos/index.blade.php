@@ -23,28 +23,25 @@
 </div>
 
 @if(session('success'))
-<div id="toastsContainerTopRight" class="toasts-top-right fixed">
-        <div class="toast bg-navy fade show" role="alert" aria-live="assertive" aria-atomic="true" data-delay="6000">
-            <div class="toast-header">
-                <strong class="mr-auto">¡Exito! ... </strong>
-                <small>Proceso</small>
-                <button data-dismiss="toast" type="button" class="ml-2 mb-1 close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="toast-body">{{session('success')}}</div>
+    <div class="col-sm-12">
+        <div class="alert  alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
         </div>
-</div>
+    </div>
 @endif
 
 @if(session('error'))
-<div id="toastsContainerTopRight" class="toasts-top-right fixed"><div class="toast bg-danger fade show" role="alert" aria-live="assertive" aria-atomic="true" data-delay="6000">
-    <div class="toast-header">
-        <strong class="mr-auto">¡Error! ...</strong>
-        <small>Proceso</small>
-        <button data-dismiss="toast" type="button" class="ml-2 mb-1 close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <div class="col-sm-12">
+        <div class="alert  alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
         </div>
-        <div class="toast-body">{{session('error')}}</div>
     </div>
-</div>
 @endif
 
 
@@ -52,16 +49,19 @@
 
 <section class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-12">
         
             <div class="card ">
                 <div class="card-header bg-dark">
                 <h3 class="card-title">Tus procesos</h3>
 
                 <div class="card-tools">
+                    <a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo proceso</a>
+
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                    <i class="fas fa-minus"></i>
+                        <i class="fas fa-minus"></i>
                     </button>
+
                 </div>
                 </div>
                 <div class="card-body p-0" style="display: block;">
@@ -71,6 +71,8 @@
                             <th>#</th>
                             <th>Nombre</th>
                             <th>Codigo</th>
+                            <th>Descripción</th>
+                            <th>Subprocesos</th>
                             <th>Operaciones</th>
                         </tr>
                     </thead>
@@ -81,6 +83,11 @@
                             <td>{{  $loop->iteration  }}</td>
                             <td>{{  $proceso->nombre  }}</td>
                             <td>{{  $proceso->codigo  }}</td>
+                            <td>
+                                <button type="button" class="btn btn-success btn-circle btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ $proceso->descripcion }}">
+                                    <i class="far fa-eye"></i>
+                                </button>
+                            </td>
                             <td>
                                 <a class="btn btn-success btn-circle btn-sm" href="{{route('subproceso.byproceso',$proceso->id)}}" role="button">
                                     <i class="fas fa-angle-double-right"></i>
@@ -105,7 +112,7 @@
                         </tr>
                         @empty
                         <tr>
-							<td colspan="5">Ningún proceso registrado.</td>
+							<td colspan="6">Ningún proceso registrado.</td>
 						</tr>
                         @endforelse
                     </tbody>
@@ -120,22 +127,6 @@
         </div>
         <!-- Col -->
 
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header bg-dark">Operaciones Generales</div>
-                <div class="card-body">
-                    <p class="card-text">Operaciones generales que puedes hacer a todos los procesos registrados</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo proceso</a></li>
-                        @if (Auth::user()->rol_id == 1)
-                            <li class="list-group-item"><a href="#" class="btn btn-danger btn-block">Borrar todos</a></li>
-                        @endif
-                </ul>
-                <div class="card-footer text-center">Procesos</div>
-            </div>
-        </div>
-        <!-- Col -->
 
         
 
@@ -144,7 +135,9 @@
 </section>
 
 
-
+<a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success back-to-top" role="button">
+    <i class="fas fa-plus fa-lg"></i>
+</a>
 
 
 
@@ -156,6 +149,11 @@
 
 @section('scripts')
 <script type="text/javascript">
+
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+
 
 
 	$('#eliminar').on('show.bs.modal', function(e) {

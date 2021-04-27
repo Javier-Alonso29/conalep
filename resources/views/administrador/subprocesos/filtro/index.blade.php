@@ -172,11 +172,17 @@
 
 <script>
     $(document).ready(function(){
-        $('.toast').toast('show')
+        $('.toast').toast('show');
+
+        var ruta = document.getElementById('campo_ruta').value;
+
+        console.log(ruta);
 
         $('#codigo_proceso').keypress(function(e){
             datos = String.fromCharCode(e.charCode);
-            console.log(datos);
+            
+            
+            
             $('#campo_ruta').html(" "+datos);
         });
 
