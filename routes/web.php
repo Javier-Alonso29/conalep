@@ -68,7 +68,7 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 		 * Sub procesos
 		 *  */
 		Route::get('/subprocesos/{id}','Administrador\SubprocesosController@indexbyProceso')->name('subproceso.byproceso');
-		Route::post('/subprocesos/create/','Administradores\SubprocesosController@storebyProceso')->name('subprocesos.create.byproceso');
+		Route::post('/subprocesos/create/','Administrador\SubprocesosController@storebyProceso')->name('subprocesos.create.byproceso');
 		Route::resource('/subprocesos','Administrador\SubprocesosController');
 		Route::post('/subprocesos/downloadFolder','Administrador\ZipController@downloadFolder')->name('subprocesos.download.folder');
 		Route::resource('/documentos','Administrador\DocumentoController');

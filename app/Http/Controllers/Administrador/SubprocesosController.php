@@ -34,7 +34,7 @@ class SubprocesosController extends Controller
      */
     public function index()
     {
-        $subprocesos = Subproceso::paginate(2);
+        $subprocesos = Subproceso::paginate(20);
 
         $procesos = Proceso::get();
 
@@ -93,7 +93,37 @@ class SubprocesosController extends Controller
      */
     public function storebyProceso(CreateSubprocesoRequest $request)
     {
-        dd($request);
+        $proceso = Proceso::FindOrFail($request->proceso_id);
+        $subprocesos = $proceso->subprocesos;
+
+        $subproceso = new Subproceso($request->all());
+        $subproceso->id_proceso = $request->proceso_id;
+        $subproceso->save();
+        $access = Storage::makeDirectory('public/' . $subproceso->proceso['codigo'] . '/' . $subproceso->codigo);
+        Storage::setVisibility('public/' . $subproceso->proceso['codigo'] . '/' . $subproceso->codigo, 'public');
+
+        if($access === true ){
+
+            $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+            if ($actividades == null){
+                $actividad = new ActividadesAdministradores($request->all());
+                $actividad->id=1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Creó el subproceso "'.$request->nombre.'" ('.$request->codigo.')';
+                $actividad->save();
+            }else{
+                $actividad = new ActividadesAdministradores($request->all());
+                $actividad->id = ($actividades->id)+1;
+                $actividad->id_user = $request->id_user;
+                $actividad->accion = 'Creó el subproceso "'.$request->nombre.'" ('.$request->codigo.')';
+                $actividad->save();
+            }
+
+            return redirect()->route('subproceso.byproceso',$subproceso->id_proceso);
+
+        }else{
+            return redirect()->route('subproceso.byproceso',$subproceso->id_proceso);
+        }
     }
 
     /**
