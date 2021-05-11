@@ -43,6 +43,9 @@
 						<textarea class="form-control" aria-label="With textarea" name="descripcion"></textarea>
 					</div>
 
+					<input type="hidden" name="proceso_id" id="proceso_id" value={{$proceso->id}}>
+					<input type="hidden" name="id_user" value={{Auth::user()->id}}>
+
 					<div class="modal-footer">
 						<div class="form-group">
 							<button type="submit" class="btn btn-success">Guardar</button>
