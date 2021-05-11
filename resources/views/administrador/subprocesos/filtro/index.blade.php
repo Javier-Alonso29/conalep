@@ -72,7 +72,6 @@
                             <th>#</th>
                             <th>Nombre</th>
                             <th>Codigo</th>
-                            <th>Tipos de documento</th>
                             <th>Operaciones</th>
                         </tr>
                     </thead>
@@ -83,11 +82,6 @@
                             <td>{{  $subproceso->nombre  }}</td>
                             <td>{{  $subproceso->codigo  }}</td>
                             <td>
-                                <a class="btn btn-success btn-circle btn-sm" href="#" role="button">
-                                    <i class="fas fa-angle-double-right"></i>
-                                </a>
-                            </td>
-                            <td>
                                 <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" href="#" data-datos="{{$subproceso}}" >
                                     <i class="fa fa-edit" ></i>
                                 </a>
@@ -96,7 +90,7 @@
                                     <i class="fa fa-download"></i>
                                 </a>
 
-                                <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar"  href="#" data-datos="{{$subproceso}}">
+                                <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar_fitro_subproceso"  href="#" data-datos="{{$subproceso}}">
                                     <i class="fa fa-trash" ></i>
                                 </a>
 
@@ -137,19 +131,18 @@
 
 
 @include('administrador.subprocesos.filtro.create')
+@include('administrador.subprocesos.filtro.delete')
+@include('administrador.subprocesos.filtro.edit')
 @endsection
 
 @section('scripts')
 <script type="text/javascript">
-
-
-	$('#eliminar').on('show.bs.modal', function(e) {
+	$('#eliminar_fitro_subproceso').on('show.bs.modal', function(e) {
 		var subproceso = $(e.relatedTarget).data().datos;
 		console.log(subproceso);
         $('#eliminarId').val(subproceso.id);
 		$('#nombre_subproceso').text(subproceso.codigo);
 	});
-
     $('#editar').on('show.bs.modal', function(e) {
 		var subproceso = $(e.relatedTarget).data().datos;
 		console.log(subproceso);
@@ -158,8 +151,6 @@
         $('#edit_descripcion').val(subproceso.descripcion);
 		$('#id_subproceso').val(subproceso.id);
 	});
-
-
     $('#downloadFolder').on('show.bs.modal', function(e) {
 		var subproceso = $(e.relatedTarget).data().datos;
 		console.log(subproceso);
@@ -167,27 +158,17 @@
 		$('#codigo_subproceso').text(subproceso.codigo);
     });
     
-
 </script>
 
 <script>
     $(document).ready(function(){
-        $('.toast').toast('show');
-
-        var ruta = document.getElementById('campo_ruta').value;
-
-        console.log(ruta);
-
+        $('.toast').toast('show')
         $('#codigo_proceso').keypress(function(e){
             datos = String.fromCharCode(e.charCode);
-            
-            
-            
-            $('#campo_ruta').html(" "+datos);
+            console.log(datos);
+            $('#campo_ruta').append(datos);
         });
-
     });
-
 </script>
 
 @stop
