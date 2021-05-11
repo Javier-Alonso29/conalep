@@ -33,27 +33,14 @@ class ActividadController extends Controller
         $planteles = Planteles::paginate(10);
         $procesos = Proceso::paginate(10);
         $administradores = User::where('rol_id',2)->get();
-        return view('superusuario.actividades.index', compact('actividades','planteles','procesos','administradores'));
+        $post='';
+        return view('superusuario.actividades.index', compact('actividades','planteles','procesos','administradores','post'));
     }
 
-
-    public function eliminar()
-    {
-        ActividadesAdministradores::truncate();
-
-        $actividades = ActividadesAdministradores::paginate(1000);
-
-        $planteles = Planteles::paginate(10);
-
-        $procesos = Proceso::paginate(10);
-
-        $administradores = User::where('rol_id',2)->get();
-
-        return view('superusuario.actividades.index', compact('actividades','planteles','procesos','administradores'));
-    }
 
     public function filtrar(Request $request){
-        $opcion = $request->filtrar_id;      
+        $opcion = $request->filtrar_id; 
+        $post=$opcion;   
         
         switch($opcion){
             case 1:
@@ -92,7 +79,7 @@ class ActividadController extends Controller
                 $procesos = Proceso::paginate(10);
                 $administradores = User::where('rol_id',2)->get();
             }
-        return view('superusuario.actividades.index', compact('actividades','planteles','procesos','administradores'));
+        return view('superusuario.actividades.index', compact('actividades','planteles','procesos','administradores','post'));
     }
 
 
