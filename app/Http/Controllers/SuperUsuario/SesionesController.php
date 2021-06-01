@@ -15,6 +15,18 @@ use Carbon\Carbon;
 
 class SesionesController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('SuperUsuario');
+    }
+
     /**
      *  Muestra los administradores que el superusuario puede editar
      *

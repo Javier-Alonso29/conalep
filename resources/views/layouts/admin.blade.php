@@ -12,6 +12,7 @@
       = Carlos Javier Alonso Caldera email=kAlonso835@gmail.com                 =
       = Eduardo Agular Yáñez email=eduardoay115@gmail.com                       =
       = Francisco Vargas de la Llata Ibarra email=frankvli427@gmail.com         =
+      = Miguel Ángel Valadez Piñón email=miguel.angel.vp.98@gmail.com         =
       ==========================================================================*/
   -->
 
@@ -174,6 +175,12 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="{{ route('vistaArbol')}}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Vista de procesos</p>
+                </a>
+              </li>
               <li class="nav-item">
                 <a href="{{ route('procesos.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

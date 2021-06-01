@@ -120,10 +120,26 @@
                 <div class="card-body">
                     <p class="card-text">Operaciones generales que puedes hacer a todos los subprocesos registrados</p>
                 </div>
+                @if ((Auth::user()->rol_id) == 3)
+
                 <ul class="list-group list-group-flush">
                         <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo subproceso</a></li>
                         <li class="list-group-item"><a href="#" class="btn btn-danger btn-block">Borrar todos</a></li>
                 </ul>
+                    
+                @elseif ((Auth::user()->rol_id) == 1)
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo subproceso</a></li>
+                </ul>
+                    
+                @else
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nueva carpeta</a></li>
+                </ul>
+
+                @endif
                 <div class="card-footer text-center">Subprocesos</div>
             </div>
         </div>

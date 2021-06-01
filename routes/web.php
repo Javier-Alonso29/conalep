@@ -40,13 +40,13 @@ Route::group(['middleware' => ['SuperUsuario','auth',]], function(){
 		Route::resource('/sesion', 'SuperUsuario\SesionesController');
 		
 		Route::resource('/administradores','SuperUsuario\AdministradoresController');
-		Route::resource('/planteles','SuperUsuario\PlantelesController');
+		
 		Route::resource('/actividad','SuperUsuario\ActividadController');
 		Route::get('/permisos/administrador/{id}', 'SuperUsuario\PermisosController@indexasignarprocesos')->name('usuario.asigna.permisos');
 		Route::get('/permisos/administrador/asignar/{id}/{id_proceso}','SuperUsuario\PermisosController@asignarproceso')->name('usuario.asignar.proceso');
 		Route::get('/permisos/administrador/quitar/{id_administrador}/{id_proceso}', 'SuperUsuario\PermisosController@quitarprocerso')->name('usuario.quitar.proceso');
 		
-
+		Route::get('/VistaArbol', 'SuperUsuario\ArbolController@arbol')->name('vistaArbol');
 	});
 	
 });
@@ -75,6 +75,29 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 		Route::post('/subprocesos/downloadFolder','Administrador\ZipController@downloadFolder')->name('subprocesos.download.folder');
 		Route::resource('/documentos','Administrador\DocumentoController');
 		Route::resource('/tipodocumento','Administrador\TipodocumentoController');
+
+	});
+	
+});
+
+
+/**
+* Rutas del super usuario estatal
+*/
+Route::group(['middleware' => ['SUEstatal','auth',]], function(){
+
+	Route::get('/SUEstatal', 'SUEstatal\HomeController@index')->name('SUEstatal');
+	
+	Route::prefix('SUEstatal')->middleware(['SUEstatal','auth',])->group(function (){
+
+		
+		Route::resource('/planteles','SuperUsuario\PlantelesController');
+
+		Route::resource('/administradores','SuperUsuario\AdministradoresController');
+		Route::get('/permisos/administrador/{id}', 'SuperUsuario\PermisosController@indexasignarprocesos')->name('usuario.asigna.permisos');
+		Route::get('/permisos/administrador/asignar/{id}/{id_proceso}','SuperUsuario\PermisosController@asignarproceso')->name('usuario.asignar.proceso');
+		Route::get('/permisos/administrador/quitar/{id_administrador}/{id_proceso}', 'SuperUsuario\PermisosController@quitarprocerso')->name('usuario.quitar.proceso');
+		
 
 	});
 	

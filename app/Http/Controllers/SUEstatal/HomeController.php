@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\SuperUsuario;
+namespace App\Http\Controllers\SUEstatal;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,21 +10,6 @@ use App\Models\Planteles;
 
 class HomeController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
     public function index()
     {
         $admin = User::where('rol_id',2)->get();
@@ -38,6 +23,6 @@ class HomeController extends Controller
         $procesos_cantidad = Auth::user()->procesos->count();
         
 
-        return view('superusuario.home', compact('admin','cantidad_admins','procesos_cantidad'));
+        return view('SUEstatal.home', compact('admin','cantidad_admins','planteles','cantidad_planteles','procesos_cantidad'));
     }
 }
