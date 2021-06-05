@@ -76,6 +76,13 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 		Route::resource('/documentos','Administrador\DocumentoController');
 		Route::resource('/tipodocumento','Administrador\TipodocumentoController');
 
+		/**
+		 * Procesos personales que puede realizar el administrador
+		 */
+		Route::get('/misCarpetas/{id}', 'Administrador\ProcesosPersonalesController@indexbySubproceso')->name('misCarpetas.bySubproceso');
+		Route::resource('/misCarpetas', 'Administrador\ProcesosPersonalesController');
+
+
 	});
 	
 });

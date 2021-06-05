@@ -28,6 +28,17 @@ class HomeController extends Controller
     {
         $procesos = Auth::user()->procesos;
         $procesos_cantidad = Auth::user()->procesos->count();
+
+        // Obtener los documentos del usuario
+
+        // $docs = array();
+
+        // foreach($procesos as $proceso){
+
+        //     $proceso->subproceso->
+
+        // }
+
         return view('administrador.home', compact('procesos_cantidad'));
     }
 }
