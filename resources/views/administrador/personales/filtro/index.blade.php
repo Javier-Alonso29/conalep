@@ -75,7 +75,7 @@
                             <th>Nombre</th>
                             <th>Codigo</th>
                             <th>Descripcion</th>
-                            <th>Tipos de documentos</th>
+                            <th>Documentos</th>
                             <th>Operaciones</th>
                         </tr>
                     </thead>
@@ -91,7 +91,7 @@
                                 </button>
                             </td>
                             <td>
-                                <a class="btn btn-success btn-circle btn-sm" href="" role="button">
+                                <a class="btn btn-success btn-circle btn-sm" href="{{ route('documentos.byProcesoPersonal', $proceso->id) }}" role="button">
                                     <i class="fas fa-angle-double-right"></i>
                                 </a>
                             </td>

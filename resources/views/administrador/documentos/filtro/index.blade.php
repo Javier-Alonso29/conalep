@@ -72,33 +72,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($documentos_array as $collection)
-                                @foreach($collection as $docu)
+                            @forelse($documentos_array as $documento)
+                                
                                     <tr>
                                         <td>{{ $loop->iteration  }}</td>
-                                        <td>{{ $docu->nombre  }}</td>
-                                        <td>{{ $docu->tipodocumento->codigo  }}</td>
+                                        <td>{{ $documento->nombre  }}</td>
+                                        <td>{{ $documento->tipodocumento->codigo  }}</td>
                                         <td>
-                                            <a class="btn btn-success btn-circle btn-sm" href="{{route('misCarpetas.bySubproceso',$docu->id)}}" role="button">
+                                            <a class="btn btn-success btn-circle btn-sm" href="{{route('misCarpetas.bySubproceso',$documento->id)}}" role="button">
                                                 <i class="fas fa-angle-double-left"></i>
                                             </a>
                                         </td>
                                         <td>
-                                            <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar-documento" href="#" data-datos="{{$docu}}">
+                                            <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar-documento" href="#" data-datos="{{$documento}}">
                                                 <i class="fa fa-trash"></i>
                                             </a>
 
-                                            <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar-documento" href="#" data-datos="{{$docu}}">
+                                            <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar-documento" href="#" data-datos="{{$documento}}">
                                                 <i class="fa fa-edit"></i>
                                             </a>
 
-                                            <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#download-documento" href="#" data-datos="{{$docu}}">
+                                            <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#download-documento" href="#" data-datos="{{$documento}}">
                                                 <i class="fa fa-download"></i>
                                             </a>
 
                                         </td>
                                     </tr>
-                                @endforeach
+                                
                             @empty
                             <tr>
                                 <td colspan="5">Ningún documento registrado.</td>
@@ -120,9 +120,12 @@
     <i class="fas fa-plus fa-lg"></i>
 </a>
 
-@include('administrador.documentos.create')
+@include('administrador.documentos.filtro.create')
+
 
 @endsection
+
+
 
 @section('scripts')
 <script type="text/javascript">
@@ -147,19 +150,19 @@
             $('#tipodocumento_select').html(html_select);
         });
 
-        $.get('/api/documento/subproceso', function(data) {
-            var subproc = documento.subproceso.nombre;
-            var html_select;
-            for (var i = 0; i < data.length; i++)
-                if (subproc == data[i].nombre)
-                    html_select += '<option value="' + data[i].id + '" selected>' + data[i].nombre + '</option>';
-                else
-                    html_select += '<option value="' + data[i].id + '">' + data[i].nombre + '</option>';
-            $('#subproceso_select').html(html_select);
-        });
+        // $.get('/api/documento/subproceso', function(data) {
+        //     var subproc = documento.subproceso.nombre;
+        //     var html_select;
+        //     for (var i = 0; i < data.length; i++)
+        //         if (subproc == data[i].nombre)
+        //             html_select += '<option value="' + data[i].id + '" selected>' + data[i].nombre + '</option>';
+        //         else
+        //             html_select += '<option value="' + data[i].id + '">' + data[i].nombre + '</option>';
+        //     $('#subproceso_select').html(html_select);
+        // });
 
-        $('#documento_nombre').val(documento.nombre);
-        $('#documento_id').val(documento.id);
+        // $('#documento_nombre').val(documento.nombre);
+        // $('#documento_id').val(documento.id);
     });
 
     $('#download-documento').on('show.bs.modal', function(e) {

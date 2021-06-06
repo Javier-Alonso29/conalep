@@ -61,6 +61,9 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 
 	Route::prefix('administrador')->middleware(['Administrador','auth',])->group(function (){
 
+		/**
+		 * Procesos
+		 */
 		Route::resource('/procesos','Administrador\ProcesosController');
 		Route::post('/procesos/downloadFolder','Administrador\ZipController@downloadFolder')->name('procesos.download.folder');
 
@@ -73,14 +76,23 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 		Route::post('/subprocesos/update/{id}','Administrador\SubprocesosController@updatebyProceso')->name('subprocesos.update.byproceso');
 		Route::resource('/subprocesos','Administrador\SubprocesosController');
 		Route::post('/subprocesos/downloadFolder','Administrador\ZipController@downloadFolder')->name('subprocesos.download.folder');
-		Route::resource('/documentos','Administrador\DocumentoController');
-		Route::resource('/tipodocumento','Administrador\TipodocumentoController');
 
 		/**
-		 * Procesos personales que puede realizar el administrador
+		 * Procesos personales
 		 */
 		Route::get('/misCarpetas/{id}', 'Administrador\ProcesosPersonalesController@indexbySubproceso')->name('misCarpetas.bySubproceso');
 		Route::resource('/misCarpetas', 'Administrador\ProcesosPersonalesController');
+
+		/**
+		 * Tipos de documentos
+		 */
+		Route::resource('/tipodocumento','Administrador\TipodocumentoController');
+
+		/**
+		 * Documentos
+		 */
+		Route::get('/documentos/{id}','Administrador\DocumentoController@indexByProcesoPersonal')->name('documentos.byProcesoPersonal');
+		Route::resource('/documentos','Administrador\DocumentoController');		
 
 
 	});

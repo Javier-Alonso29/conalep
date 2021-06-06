@@ -36,7 +36,7 @@
     <div class="col-12 col-sm-6 col-md-3">
       <div class="info-box">
           <a class="info-box-icon bg-info elevation-1" href="{{ route('procesos.index') }}">
-            <i class="fas fa-cog"></i>
+          <i class="fas fa-folder"></i>
           </a>
           <div class="info-box-content">
             <span class="info-box-text">Procesos</span>
@@ -48,7 +48,7 @@
     <div class="col-12 col-sm-6 col-md-3">
       <div class="info-box mb-3">
         <a class="info-box-icon bg-danger elevation-1" href="{{ route('subprocesos.index') }}">
-          <i class="fas fa-cogs"></i>
+        <i class="fas fa-folder"></i>
         </a>
         <div class="info-box-content">
           <span class="info-box-text">Subprocesos</span>
@@ -61,7 +61,7 @@
     <div class="col-12 col-sm-6 col-md-3">
       <div class="info-box mb-3">
         <a class="info-box-icon bg-primary elevation-1" href="{{ route('misCarpetas.index') }}">
-          <i class="fas fa-archive"></i>
+          <i class="fas fa-folder"></i>
         </a>
         <div class="info-box-content">
             <span class="info-box-text">Procesos personales</span>
@@ -83,6 +83,22 @@
 
       </div>
     </div>
+
+    <div class="col-lg-12 col-12">
+      <!-- small box -->
+      <div class="small-box bg-success">
+        <div class="inner">
+          <h3>Documentos</h3>
+
+            <p>3</p>
+        </div>
+        <div class="icon">
+        <i class="fas fa-file"></i>
+        </div>
+        <a href="{{ route('documentos.index') }}" class="small-box-footer">Ver mas <i class="fas fa-arrow-circle-right"></i></a>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -110,19 +126,33 @@
           
           <div class="row row-cols-1 row-cols-md-3">
 
-              <div class="col mb-4">
+            @forelse($documentos_array as $collection)
+                @foreach($collection as $documento)
 
-                  <!-- Tarjeta donde se muestran los documentos -->
-                  <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                      <h5 class="card-title">Special title treatment</h5>
-                      <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                      <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
+                <div class="col mb-6">
+                  <div class="card text-center mb-3" style="width: 18rem;">
+                  <!-- Se puede cambiar la imagen, file es de color verde y file2 es de color azul -->
+                      <img src="{{ asset('imagenes/file.png') }}" class="card-img-top" alt="{{ $documento->nombre }}" >
+                      <div class="card-body">
+                      </div>
+                        <a href="Descargar doc" class="list-group-item list-group-item-action active" aria-current="true">
+                          <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">{{$documento->nombre}}</h5>
+                            <small>{{ $documento->created_at }}</small>
+                          </div>
+                          <hr>
+                          <p class="mb-1">Proceso: {{ $documento->procesopersonal->codigo }}</p>
+                          <p class="mb-1">Tipo de documento: {{ $documento->tipodocumento->nombre }}</p>
+                          <small>{{Auth::user()->name}}</small>
+                        </a>
+
+                        
                   </div>
-
-              </div>
-
+                </div>
+                  @endforeach
+            @empty 
+              
+            @endforelse
 
           </div>
 

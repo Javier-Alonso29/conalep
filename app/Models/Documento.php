@@ -13,7 +13,7 @@ class Documento extends Model
      * @var array
      */
     protected $fillable = [
-        'nombre', 'id_tipodocumento', 'id_proceso_personal',
+        'nombre', 'id_tipodocumento', 'id_proceso_personal','created_at', 'updated_at'
     ];
 
     /**

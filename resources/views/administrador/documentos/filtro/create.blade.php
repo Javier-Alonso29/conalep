@@ -3,7 +3,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header bg-dark">
-				<h5 class="modal-title" id="exampleModalLabel">Registrar nuevo documento</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Registrar nuevo documento en <samp></samp></h5>
 				<span class="badge badge-danger" class="close" data-dismiss="modal" aria-label="Close">
 					<i class="fas fa-times fa-lg" style="color:#fff"></i>
 				</span>
@@ -58,11 +58,7 @@
 							<div class="col">
 								<label for="id_subproceso">Proceso personal</label>
 								<select class="custom-select mr-sm-2" name="proceso_personal" required>
-									@foreach($procesos_personales_array as $collection)
-										@foreach($collection as $proceso_personal)
-											<option value="{{$proceso_personal->id}}">{{$proceso_personal->codigo}}</option>
-										@endforeach
-									@endforeach
+									<option value="{{$proceso_personal->id}}">{{$proceso_personal->codigo}}</option>
 								</select>
 							</div>
 						</div>

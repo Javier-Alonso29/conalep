@@ -12,6 +12,7 @@ use App\Http\Requests\CreateProcesoRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use App\Models\ActividadesAdministradores;
+use App\Models\ProcesoPersonal;
 
 class TipodocumentoController extends Controller
 {
