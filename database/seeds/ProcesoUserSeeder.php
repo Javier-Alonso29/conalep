@@ -22,8 +22,6 @@ class ProcesoUserSeeder extends Seeder
         DB::table('proceso_user')->insert(['user_id'=>$super_user_seeder->id,'proceso_id'=>3]);
         DB::table('proceso_user')->insert(['user_id'=>$super_user_seeder->id,'proceso_id'=>4]);
         DB::table('proceso_user')->insert(['user_id'=>$super_user_seeder->id,'proceso_id'=>5]);
-
-
         DB::table('proceso_user')->insert(['user_id'=>$user_seeder->id,'proceso_id'=>1]);
         DB::table('proceso_user')->insert(['user_id'=>$user_seeder->id,'proceso_id'=>2]);
         DB::table('proceso_user')->insert(['user_id'=>$user_seeder->id,'proceso_id'=>3]);

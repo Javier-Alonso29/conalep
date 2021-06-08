@@ -13,6 +13,7 @@ use Auth;
 use App\Http\Requests\CreateDocumentoRequest;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Kyslik\ColumnSortable\Sortable;
 
 class DocumentoController extends Controller
 {

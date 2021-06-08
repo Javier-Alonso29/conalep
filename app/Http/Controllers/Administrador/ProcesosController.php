@@ -34,9 +34,9 @@ class ProcesosController extends Controller
      */
     public function index()
     {
-        $procesos_a = Auth::user()->procesos;
+        $procesos = Auth::user()->procesos;
         
-        return view('administrador.procesos.index', compact('procesos_a'));
+        return view('administrador.procesos.index', compact('procesos'));
     }
 
 
@@ -45,13 +45,9 @@ class ProcesosController extends Controller
      */
     public function store(CreateProcesoRequest $request)
     {
-
         $proceso = Proceso::create($request->all());
-        
-        $access = Storage::makeDirectory('public/'.$proceso->codigo);
-
-        Storage::setVisibility('public/'.$proceso->codigo,'public');
-
+        $access = Storage::makeDirectory('public/' . $proceso->codigo);
+        Storage::setVisibility('public/' . $proceso->codigo,'public');
 
         // Asigamos el proceso al usuario logeado
         Auth::user()->procesos()->attach($proceso->id);
@@ -76,7 +72,6 @@ class ProcesosController extends Controller
             }
 
         }
-        
 
         if($access === true ){
 
@@ -94,7 +89,6 @@ class ProcesosController extends Controller
                 $actividad->accion = 'Creó el proceso "'.$request->nombre.'" ('.$request->codigo.')';
                 $actividad->save();
             }
-            
 
             return redirect()->route('procesos.index')->With('success', 'El proceso '.$proceso->codigo.' se creo con exito');
 

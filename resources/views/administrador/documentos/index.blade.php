@@ -63,8 +63,8 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nombre</th>
-                                <th>Tipo de Documento</th>
-                                <th>Subproceso</th>
+                                <th>@sortablelink('id_tipodocumento', 'Tipo de Documento')</th>
+                                <th>@sortablelink('id_subproceso', 'Subproceso')</th>
                                 <th>Operaciones</th>
                             </tr>
                         </thead>
@@ -111,7 +111,6 @@
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear-documento" class="btn btn-success btn-block">Nuevo documento</a></li>
-                    <li class="list-group-item"><a href="#" class="btn btn-danger btn-block">Borrar todos</a></li>
                 </ul>
                 <div class="card-footer text-center">Documentos</div>
             </div>

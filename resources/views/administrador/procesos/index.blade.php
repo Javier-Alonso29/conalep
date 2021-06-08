@@ -76,7 +76,7 @@
                     </thead>
                     <tbody>
                     
-                        @forelse($procesos_a as $proceso)
+                        @forelse($procesos as $proceso)
                         <tr>
                             <td>{{  $loop->iteration  }}</td>
                             <td>{{  $proceso->nombre  }}</td>
@@ -128,9 +128,6 @@
                 </div>
                 <ul class="list-group list-group-flush">
                         <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo proceso</a></li>
-                        @if (Auth::user()->rol_id == 1)
-                            <li class="list-group-item"><a href="#" class="btn btn-danger btn-block">Borrar todos</a></li>
-                        @endif
                 </ul>
                 <div class="card-footer text-center">Procesos</div>
             </div>
