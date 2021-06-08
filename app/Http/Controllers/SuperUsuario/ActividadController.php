@@ -17,6 +17,7 @@ use App\Models\Proceso;
 use App\Models\ActividadesAdministradores;
 use Carbon\Carbon;
 use CreateActividadesAdministradoresTable;
+use Illuminate\Notifications\Action;
 
 class ActividadController extends Controller
 {
@@ -29,6 +30,7 @@ class ActividadController extends Controller
      */
     public function index()
     {
+        ActividadesAdministradores::whereYear('created_at','<',now()->toDateTimeString('Y'))->delete();
         $actividades = ActividadesAdministradores::paginate(1000);
         $planteles = Planteles::paginate(10);
         $procesos = Proceso::paginate(10);
