@@ -30,7 +30,8 @@ class ActividadController extends Controller
      */
     public function index()
     {
-        ActividadesAdministradores::whereYear('created_at','<',now()->toDateTimeString('Y'))->delete();
+        $fecha_actual = date('Y');
+        ActividadesAdministradores::whereYear('created_at','<',$fecha_actual)->delete();
         $actividades = ActividadesAdministradores::paginate(1000);
         $planteles = Planteles::paginate(10);
         $procesos = Proceso::paginate(10);

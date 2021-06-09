@@ -22,7 +22,8 @@ class SesionesController extends Controller
      */
     public function index()
     {
-        Sesiones::whereYear('created_at','<',now()->toDateTimeString('Y'))->delete();
+        $fecha_actual = date('Y');
+        Sesiones::whereYear('date_time','<',$fecha_actual)->delete();
         $sesiones = Sesiones::paginate(1000);
         $administradores = User::where('rol_id',2)->get();
         return view('superusuario.sesiones.index', compact('administradores','sesiones'));
