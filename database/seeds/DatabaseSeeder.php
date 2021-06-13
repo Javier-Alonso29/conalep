@@ -26,18 +26,17 @@ class DatabaseSeeder extends Seeder
             'tipodocumento'
         ]);
 
+        $this->call(RolesSeeder::class);
         $this->call(EstadosSeeder::class);
         $this->call(MunicipiosSeeder::class);
         $this->call(PlantelesSeeder::class);
-        
-        $this->call(RolesSeeder::class);
         $this->call(UsuariosSeeder::class);
-        
         $this->call(ProcesosSeeder::class);
         $this->call(SubprocesosSeeder::class);
         $this->call(ProcesoPersonal::class);
         $this->call(ProcesoUserSeeder::class);
         $this->call(DocumentosSeeder::class);
+        $this->call(TiposDocumentoSeeder::class);
     }
 
     protected function truncateTables(array $tables){

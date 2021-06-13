@@ -19,7 +19,7 @@ class Documento extends Model
     ];
 
     public $sortable = [
-        'id_tipodocumento', 'id_subproceso'
+        'id_tipodocumento', 'id_proceso_personal'
     ]; 
 
     /**
