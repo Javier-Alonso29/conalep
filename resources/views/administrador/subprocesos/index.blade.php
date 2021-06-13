@@ -72,7 +72,6 @@
                             <th>Nombre</th>
                             <th>Codigo</th>
                             <th>Proceso</th>
-                            <th>Tipo de documento</th>
                             <th>Operaciones</th>
                         </tr>
                     </thead>
@@ -83,11 +82,6 @@
                             <td>{{  $subproceso->nombre  }}</td>
                             <td>{{  $subproceso->codigo  }}</td>
                             <td>{{  $subproceso->proceso['nombre']  }}</td>
-                            <td>
-                                <a class="btn btn-success btn-circle btn-sm" href="#" role="button">
-                                    <i class="fas fa-angle-double-right"></i>
-                                </a>
-                            </td>
                             <td>
                                 <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar"  href="#" data-datos="{{$subproceso}}">
                                     <i class="fa fa-trash" ></i>
@@ -126,9 +120,25 @@
                 <div class="card-body">
                     <p class="card-text">Operaciones generales que puedes hacer a todos los subprocesos registrados</p>
                 </div>
+                @if ((Auth::user()->rol_id) == 3)
+
                 <ul class="list-group list-group-flush">
                         <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo subproceso</a></li>
                 </ul>
+                    
+                @elseif ((Auth::user()->rol_id) == 1)
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo subproceso</a></li>
+                </ul>
+                    
+                @else
+
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nueva carpeta</a></li>
+                </ul>
+
+                @endif
                 <div class="card-footer text-center">Subprocesos</div>
             </div>
         </div>

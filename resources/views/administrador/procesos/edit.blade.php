@@ -24,9 +24,12 @@
 						@endif
 					</div>
 
-					<div class="form-group">
-						<label for="inicio">Codigo del proceso</label>
-						<input required type="text" id="edit_codigo" name="codigo" class="form-control {{ $errors->has('codigo') ? ' is-invalid' : '' }}" autocomplete="off" value="{{ old('codigo') }}" >
+					<label for="basic-url">Codigo del proceso</label>
+					<div class="input-group mb-3">
+						<div class="input-group-prepend">
+							<span class="input-group-text" id="basic-addon3">{{ Auth::user()->plantel->municipio->estado->id }} / {{ Auth::user()->plantel->municipio->id }} / {{Auth::user()->plantel->numero}} / </span>
+						</div>
+						<input required name="codigo" id="edit_codigo" class="form-control {{ $errors->has('codigo') ? ' is-invalid' : '' }}" autocomplete="off">
 						@if ($errors->has('codigo'))
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $errors->first('codigo') }}</strong>

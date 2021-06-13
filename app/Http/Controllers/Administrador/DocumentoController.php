@@ -11,6 +11,8 @@ use Validator;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 use App\Http\Requests\CreateDocumentoRequest;
+use App\Models\Proceso;
+use App\Models\ProcesoPersonal;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Kyslik\ColumnSortable\Sortable;
@@ -37,16 +39,63 @@ class DocumentoController extends Controller
     {
         $documentos = Documento::get();
         $tipodocumentos = Tipodocumento::orderBy('codigo', 'ASC')->get();
-        $subprocesos = Subproceso::orderBy('codigo', 'ASC')->get();
-        return view('administrador.documentos.index', compact('documentos', 'tipodocumentos', 'subprocesos'));
+
+        $procesos = Auth::user()->procesos;
+
+        $subprocesos_array = array();
+
+        foreach($procesos as $proceso){
+            $subprocesos = $proceso->subprocesos;
+            array_push($subprocesos_array, $subprocesos);
+        }
+
+        $procesos_personales_array = array();
+
+        foreach($subprocesos_array as $collection){
+            
+
+            foreach($collection as $subproceso){
+
+                $procesos_personales = $subproceso->procesospersonales;
+                array_push($procesos_personales_array, $procesos_personales);
+
+            }
+
+        }
+
+        $documentos_array = array();
+
+        foreach($procesos_personales_array as $collection){
+
+            foreach($collection as $proceso_personal){
+
+                $documentos = $proceso_personal->documentos;
+
+                array_push($documentos_array, $documentos);
+
+            }
+        }
+
+        return view('administrador.documentos.index', compact('documentos_array', 'tipodocumentos', 'procesos_personales_array'));
+    }
+
+    public function indexByProcesoPersonal($id)
+    {
+        $proceso_personal = ProcesoPersonal::FindOrFail($id);
+        $tipodocumentos = Tipodocumento::orderBy('codigo', 'ASC')->get();
+
+        $documentos_array = $proceso_personal->documentos;
+
+        // dd($documentos_array);
+
+        return view('administrador.documentos.filtro.index', compact('documentos_array', 'tipodocumentos', 'proceso_personal'));
     }
 
     /**
      * Metodo para crear un documento
      */
-    public function store(CreateDocumentoRequest $request)
+    public function store(Request $request)
     {
-        //dd($request->all());
 
         if (!$request->hasFile('archivo')) {
             return redirect()->route('documentos.index')->With('error', 'El documento no se creo');
@@ -54,13 +103,17 @@ class DocumentoController extends Controller
 
         $documento = new Documento($request->all());
 
+        $documento->id_proceso_personal = $request->proceso_personal;
         $ext = $request->file('archivo')->extension();
         $name = $request->nombre.'.'.$ext;
         $documento->nombre = $name;
 
-        $documento->save();
-        
-        $request->file('archivo')->storeAs($documento->subproceso->proceso['codigo'] . '/' . $documento->subproceso->codigo, $name, 'public');
+       
+        $assces = $request->file('archivo')->storeAs($documento->procesopersonal->subproceso->proceso['codigo'] . '/' . $documento->procesopersonal->subproceso->codigo.'/'.$documento->procesopersonal->codigo, $name, 'public');
+
+        if($assces){
+            $documento->save();
+        }
 
         return redirect()->route('documentos.index')->With('success', 'El documento se creo con exito');
     }

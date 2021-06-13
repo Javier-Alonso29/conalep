@@ -15,11 +15,11 @@ class CreateDocumentoTable extends Migration
     {
         Schema::create('documento', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre')->unique();
             $table->unsignedBigInteger('id_tipodocumento');
             $table->foreign('id_tipodocumento')->references('id')->on('tipodocumento');
-            $table->unsignedBigInteger('id_subproceso');
-            $table->foreign('id_subproceso')->references('id')->on('subprocesos');
+            $table->unsignedBigInteger('id_proceso_personal');
+            $table->foreign('id_proceso_personal')->references('id')->on('proceso_personal');
+            $table->string('nombre')->unique();
             $table->timestamps();
         });
     }

@@ -16,7 +16,7 @@ class CreatePlantelRequest extends FormRequest
         /**
          * Para saber si el usuario que esta haciendo la peticion es un superusuario
          */
-        return $this->user()->roles->name === 'Super Usuario';
+        return ($this->user()->roles->name === 'SuperUsuario Estatal');
     }
 
     /**

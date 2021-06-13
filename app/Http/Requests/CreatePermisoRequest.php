@@ -14,9 +14,9 @@ class CreatePermisoRequest extends FormRequest
     public function authorize()
     {
         /**
-         * Para saber si el usuario que esta haciendo la peticion es un superusuario
+         * Para saber si el usuario que esta haciendo la peticion es un superusuario o uno estatal
          */
-        return $this->user()->roles->name === 'Super Usuario';
+        return ($this->user()->roles->name === 'Super Usuario' || $this->user()->roles->name === 'SuperUsuario Estatal';
     }
 
     /**

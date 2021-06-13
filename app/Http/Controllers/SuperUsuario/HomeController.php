@@ -38,6 +38,6 @@ class HomeController extends Controller
         $procesos_cantidad = Auth::user()->procesos->count();
         
 
-        return view('superusuario.home', compact('admin','cantidad_admins','planteles','cantidad_planteles','procesos_cantidad'));
+        return view('superusuario.home', compact('admin','cantidad_admins','procesos_cantidad'));
     }
 }

@@ -22,7 +22,7 @@ class SuperUsuario
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->user()->rol_id === 1) {
+        if ($this->auth->user()->rol_id === 1 || $this->auth->user()->rol_id === 3) {
 
            return $next($request); 
 

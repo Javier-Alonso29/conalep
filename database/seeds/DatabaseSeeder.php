@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
             'planteles',
             'procesos',
             'subprocesos',
+            'proceso_personal',
             'proceso_user',
             'documento',
             'tipodocumento'
@@ -32,12 +34,10 @@ class DatabaseSeeder extends Seeder
         $this->call(UsuariosSeeder::class);
         
         $this->call(ProcesosSeeder::class);
-        //$this->call(ProcesoUserSeeder::class);
         $this->call(SubprocesosSeeder::class);
-
-        $this->call(TiposDocumentoSeeder::class);
+        $this->call(ProcesoPersonal::class);
+        $this->call(ProcesoUserSeeder::class);
         $this->call(DocumentosSeeder::class);
-        
     }
 
     protected function truncateTables(array $tables){

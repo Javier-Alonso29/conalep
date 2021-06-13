@@ -49,8 +49,8 @@ class AdministradoresController extends Controller
         $usuario->password = bcrypt($request->password);
         $usuario->rol_id = 2;
         # Saber que super usuario esta logeado y asi obtener el plantel al que pertenece
-        $plantel= Auth::user()->plantel_id;
-        $usuario->plantel_id = $plantel;
+        $plantel = Auth::user()->plantel;
+        $usuario->id_plantel = $plantel->id;
         $usuario->save();
          
 

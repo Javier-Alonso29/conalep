@@ -1,5 +1,5 @@
 <!--Modal Crear -->
-<div class="modal fade" id="crear-documento" tabindex="-1" role="dialog" aria-hidden="true">
+<div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header bg-dark">
@@ -56,10 +56,12 @@
 					<div class="form-group">
 						<div class="row">
 							<div class="col">
-								<label for="id_subproceso">Subproceso</label>
-								<select class="custom-select mr-sm-2" name="id_subproceso" required>
-									@foreach($subprocesos as $subp)
-									<option value="{{$subp->id}}">{{$subp->nombre}}</option>
+								<label for="id_subproceso">Proceso personal</label>
+								<select class="custom-select mr-sm-2" name="proceso_personal" required>
+									@foreach($procesos_personales_array as $collection)
+										@foreach($collection as $proceso_personal)
+											<option value="{{$proceso_personal->id}}">{{$proceso_personal->codigo}}</option>
+										@endforeach
 									@endforeach
 								</select>
 							</div>

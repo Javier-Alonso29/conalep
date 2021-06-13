@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Documentos</h1>
+                <h1 class="m-0 text-dark">Mis Documentos</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -47,15 +47,18 @@
 
 <section class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-12">
             <div class="card ">
                 <div class="card-header bg-dark">
                     <h3 class="card-title">Documentos</h3>
                     <div class="card-tools">
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                            <i class="fas fa-minus"></i>
-                        </button>
-                    </div>
+                    <a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo documento</a>
+
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+
+                </div>
                 </div>
                 <div class="card-body p-0" style="display: block;">
                     <table class="table table-striped projects table-sm">
@@ -69,27 +72,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($documentos as $docu)
-                            <tr>
-                                <td>{{ $loop->iteration  }}</td>
-                                <td>{{ $docu->nombre  }}</td>
-                                <td>{{ $docu->tipodocumento->codigo  }}</td>
-                                <td>{{ $docu->subproceso->codigo  }}</td>
-                                <td>
-                                    <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar-documento" href="#" data-datos="{{$docu}}">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
+                            @forelse($documentos_array as $collection)
+                                @foreach($collection as $docu)
+                                    <tr>
+                                        <td>{{ $loop->iteration  }}</td>
+                                        <td>{{ $docu->nombre  }}</td>
+                                        <td>{{ $docu->tipodocumento->codigo  }}</td>
+                                        <td>
+                                            <a class="btn btn-success btn-circle btn-sm" href="{{route('misCarpetas.bySubproceso',$docu->id)}}" role="button">
+                                                <i class="fas fa-angle-double-left"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar-documento" href="#" data-datos="{{$docu}}">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
 
-                                    <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar-documento" href="#" data-datos="{{$docu}}">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
+                                            <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar-documento" href="#" data-datos="{{$docu}}">
+                                                <i class="fa fa-edit"></i>
+                                            </a>
 
-                                    <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#download-documento" href="#" data-datos="{{$docu}}">
-                                        <i class="fa fa-download"></i>
-                                    </a>
+                                            <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#download-documento" href="#" data-datos="{{$docu}}">
+                                                <i class="fa fa-download"></i>
+                                            </a>
 
-                                </td>
-                            </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             @empty
                             <tr>
                                 <td colspan="5">Ningún documento registrado.</td>
@@ -102,33 +111,17 @@
             </div>
             <!-- /.card -->
         </div>
-        <!-- Col -->
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header bg-dark">Operaciones Generales</div>
-                <div class="card-body">
-                    <p class="card-text">Operaciones generales que puedes hacer a todos documentos registrados</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear-documento" class="btn btn-success btn-block">Nuevo documento</a></li>
-                </ul>
-                <div class="card-footer text-center">Documentos</div>
-            </div>
-        </div>
-        <!-- Col -->
+        
     </div>
     <!-- Row -->
 </section>
 
-
-
-
-
+<a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success back-to-top" role="button">
+    <i class="fas fa-plus fa-lg"></i>
+</a>
 
 @include('administrador.documentos.create')
-@include('administrador.documentos.delete')
-@include('administrador.documentos.edit')
-@include('administrador.documentos.download')
+
 @endsection
 
 @section('scripts')

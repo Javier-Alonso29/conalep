@@ -16,7 +16,7 @@ class CreateSubprocesoRequest extends FormRequest
         /**
          * Para saber si el usuario que esta haciendo la peticion es un administrador
          */
-        return ($this->user()->roles->name === 'Administrador' || $this->user()->roles->name === 'Super Usuario');
+        return ($this->user()->roles->name === 'SuperUsuario Estatal');
     }
 
     /**

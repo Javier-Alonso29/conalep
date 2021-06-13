@@ -17,43 +17,48 @@ use App\Models\Proceso;
 use App\Models\ActividadesAdministradores;
 use Carbon\Carbon;
 use CreateActividadesAdministradoresTable;
+use Illuminate\Notifications\Action;
 
 class ActividadController extends Controller
 {
-    
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('SuperUsuario');
+    }
 
     /**
-     *  Muestra los administradores que el superusuario puede editar
+     *  Muestra las actividades realizadas por los usuarios del sistema
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
+        $fecha_actual = date('Y');
+        /* Elminación automática de historial por año*/
+        ActividadesAdministradores::whereYear('created_at','<',$fecha_actual)->delete();
         $actividades = ActividadesAdministradores::paginate(1000);
         $planteles = Planteles::paginate(10);
         $procesos = Proceso::paginate(10);
         $administradores = User::where('rol_id',2)->get();
-        return view('superusuario.actividades.index', compact('actividades','planteles','procesos','administradores'));
+        $post='';
+        return view('superusuario.actividades.index', compact('actividades','planteles','procesos','administradores','post'));
     }
 
 
-    public function eliminar()
-    {
-        ActividadesAdministradores::truncate();
-
-        $actividades = ActividadesAdministradores::paginate(1000);
-
-        $planteles = Planteles::paginate(10);
-
-        $procesos = Proceso::paginate(10);
-
-        $administradores = User::where('rol_id',2)->get();
-
-        return view('superusuario.actividades.index', compact('actividades','planteles','procesos','administradores'));
-    }
-
+    /**
+     *  Muestra las actividades realizadas por los usuarios del sistema segun el filtro de tiempo seleccionado
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function filtrar(Request $request){
-        $opcion = $request->filtrar_id;      
+        $opcion = $request->filtrar_id; 
+        $post=$opcion;   
         
         switch($opcion){
             case 1:
@@ -92,7 +97,7 @@ class ActividadController extends Controller
                 $procesos = Proceso::paginate(10);
                 $administradores = User::where('rol_id',2)->get();
             }
-        return view('superusuario.actividades.index', compact('actividades','planteles','procesos','administradores'));
+        return view('superusuario.actividades.index', compact('actividades','planteles','procesos','administradores','post'));
     }
 
 

@@ -15,22 +15,44 @@ use Carbon\Carbon;
 
 class SesionesController extends Controller
 {
+
     /**
-     *  Muestra los administradores que el superusuario puede editar
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('SuperUsuario');
+    }
+
+    /**
+     *  Muestra las sesiones iniciadas por los usuarios
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
+        $fecha_actual = date('Y');
+        /* Elminación automática de historial por año*/
+        Sesiones::whereYear('date_time','<',$fecha_actual)->delete();
         $sesiones = Sesiones::paginate(1000);
+        //Se obtiene el registro de todos los administradores que han iniciado sesión.
         $administradores = User::where('rol_id',2)->get();
         return view('superusuario.sesiones.index', compact('administradores','sesiones'));
     }
 
+    /**
+     *  Muestra las sesiones iniciadas por los usuarios segun el filtro de tiempo seleccionado
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function filtrar(Request $request){
 
         $opcion = $request->filtrar_id;
         
+        //Hacemos filtros gracias a carbon que nos permitan acceder a fechas o periodos de tiempo relevantes.
         switch($opcion){
             case 1:
                 $sesiones = Sesiones::whereDate('date_time', today())->get();

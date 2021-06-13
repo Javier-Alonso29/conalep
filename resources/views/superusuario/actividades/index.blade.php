@@ -56,18 +56,15 @@
                     <div class="btn btn-tool">
                         <select class="form-select form-select-sm" id="filtro_id" name="filtro_id">
                             <option >----------</option>
-                            <option value="1">Hoy</option>
-                            <option value="2">Ayer</option>
-                            <option value="3">Últimos 7 días</option>
-                            <option value="4">Este mes</option>
-                            <option value="5">Últimos tres meses</option>
+                            <option value="1" @if(old('filtro_id', $post) === "1")  selected @endif>Hoy</option>
+                            <option value="2" @if(old('filtro_id', $post) === "2")  selected @endif>Ayer</option>
+                            <option value="3" @if(old('filtro_id', $post) === "3")  selected @endif>Últimos 7 días</option>
+                            <option value="4" @if(old('filtro_id', $post) === "4")  selected @endif>Este mes</option>
+                            <option value="5" @if(old('filtro_id', $post) === "5")  selected @endif>Últimos tres meses</option>
                         </select>
                     </div>
                     <div class="btn btn-tool">
                         <a href="" data-toggle="modal" data-target="#filtrar" class="btn btn-success btn-block">Aplicar filtro</a>
-                    </div>
-                    <div class="btn btn-tool">
-                        <a href="" data-toggle="modal" data-target="#eliminar" class="btn btn-danger btn-block">Eliminar historial</a>
                     </div>
                 </div>
                
@@ -94,7 +91,7 @@
                         </tr>
                         @empty
                         <tr>
-							<td colspan="5">Ningúna actividad se ha realizado.</td>
+							<td colspan="5">Ninguna actividad se ha realizado.</td>
 						</tr>
                         @endforelse
                     </tbody>
@@ -115,7 +112,6 @@
 </section>
 
 
-@include('superusuario.actividades.eliminar')
 @include('superusuario.actividades.filtrar')
 @endsection
 
