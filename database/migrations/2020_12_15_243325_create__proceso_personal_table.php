@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDocumentoTable extends Migration
+class CreateProcesoPersonalTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateDocumentoTable extends Migration
      */
     public function up()
     {
-        Schema::create('documento', function (Blueprint $table) {
+        Schema::create('proceso_personal', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_tipodocumento');
-            $table->foreign('id_tipodocumento')->references('id')->on('tipodocumento');
-            $table->unsignedBigInteger('id_proceso_personal');
-            $table->foreign('id_proceso_personal')->references('id')->on('proceso_personal');
+            $table->unsignedBigInteger('id_subproceso');
+            $table->foreign('id_subproceso')->references('id')->on('subprocesos');
             $table->string('nombre')->unique();
+            $table->string('codigo')->unique();
+            $table->longText("descripcion")->nullable();
             $table->timestamps();
         });
     }
@@ -31,6 +31,6 @@ class CreateDocumentoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('documento');
+        Schema::dropIfExists('_proceso_personal');
     }
 }

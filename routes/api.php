@@ -18,6 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/procesos/{id}/procesospersonales', 'Administrador\ProcesosPersonalesController@api_sub_procesos');
 
 Route::get('/planteles/municipio','SuperUsuario\PlantelesController@api_municipios');
 Route::get('/documento/tipo_documento','SuperUsuario\PlantelesController@api_tipos_documentos');

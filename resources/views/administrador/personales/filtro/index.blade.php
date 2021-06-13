@@ -8,14 +8,15 @@
       <div class="row mb-2">
 
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Subprocesos del proceso <span class="badge badge-danger">{{$proceso->nombre}}</span></h1>
+            <h1 class="m-0 text-dark">Procesos personales del subproceso <span class="badge badge-danger">{{$subproceso->nombre}}</span></h1>
           </div>
 
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('inicio') }}">Inicio</a></li>
               <li class="breadcrumb-item"><a href="{{ route('procesos.index') }}">Procesos</a></li>
-              <li class="breadcrumb-item active" aria-current="page">{{$proceso->nombre}}</li>
+              <li class="breadcrumb-item"><a href="{{ route('subproceso.byproceso', $subproceso->proceso->id) }}">{{$subproceso->proceso->nombre}}</a></li>
+              <li class="breadcrumb-item active" aria-current="page">{{$subproceso->nombre}}</li>
             </ol>
         </div>
 
@@ -53,13 +54,14 @@
 
 <section class="container">
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-12">
         
             <div class="card ">
                 <div class="card-header bg-dark">
-                <h3 class="card-title">Subprocesos</h3>
+                <h3 class="card-title">Procesos personales</h3>
 
                 <div class="card-tools">
+                <a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo proceso</a>
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
                     </button>
@@ -72,31 +74,37 @@
                             <th>#</th>
                             <th>Nombre</th>
                             <th>Codigo</th>
-                            <th>Procesos personales</th>
+                            <th>Descripcion</th>
+                            <th>Documentos</th>
                             <th>Operaciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($subprocesos as $subproceso)
+                        @forelse($procesos_personales as $proceso)
                         <tr>
                             <td>{{  $loop->iteration  }}</td>
-                            <td>{{  $subproceso->nombre  }}</td>
-                            <td>{{  $subproceso->codigo  }}</td>
+                            <td>{{  $proceso->nombre  }}</td>
+                            <td>{{  $proceso->codigo  }}</td>
                             <td>
-                                <a class="btn btn-success btn-circle btn-sm" href="{{route('misCarpetas.bySubproceso', $subproceso->id)}}" role="button">
+                                <button type="button" class="btn btn-success btn-circle btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ $proceso->descripcion }}">
+                                    <i class="far fa-eye"></i>
+                                </button>
+                            </td>
+                            <td>
+                                <a class="btn btn-success btn-circle btn-sm" href="{{ route('documentos.byProcesoPersonal', $proceso->id) }}" role="button">
                                     <i class="fas fa-angle-double-right"></i>
                                 </a>
                             </td>
                             <td>
-                                <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" href="#" data-datos="{{$subproceso}}" >
+                                <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" href="#" data-datos="{{$proceso}}" >
                                     <i class="fa fa-edit" ></i>
                                 </a>
 
-                                <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#downloadFolder" href="#" data-datos="{{$subproceso}}" >
+                                <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#downloadFolder" href="#" data-datos="{{$proceso}}" >
                                     <i class="fa fa-download"></i>
                                 </a>
 
-                                <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar_fitro_subproceso"  href="#" data-datos="{{$subproceso}}">
+                                <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar_fitro_subproceso"  href="#" data-datos="{{$proceso}}">
                                     <i class="fa fa-trash" ></i>
                                 </a>
 
@@ -116,33 +124,25 @@
         </div>
         <!-- Col -->
 
-        <div class="col-md-4">
-            <div class="card">
-                <div class="card-header bg-dark">Operaciones Generales</div>
-                <div class="card-body">
-                    <p class="card-text">Operaciones generales que puedes hacer a todos los subprocesos registrados</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo subproceso</a></li>
-                        <li class="list-group-item"><a href="#" class="btn btn-danger btn-block">Borrar todos</a></li>
-                </ul>
-                <div class="card-footer text-center">Subprocesos</div>
-            </div>
-        </div>
-        <!-- Col -->
-
     </div>
     <!-- Row -->
 </section>
 
+<a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success back-to-top" role="button">
+    <i class="fas fa-plus fa-lg"></i>
+</a>
 
-@include('administrador.subprocesos.filtro.create')
-@include('administrador.subprocesos.filtro.delete')
-@include('administrador.subprocesos.filtro.edit')
+@include('administrador.personales.filtro.create')
+
 @endsection
 
 @section('scripts')
 <script type="text/javascript">
+
+    $(function () {
+        $('[data-toggle="popover"]').popover()
+    })
+
 	$('#eliminar_fitro_subproceso').on('show.bs.modal', function(e) {
 		var subproceso = $(e.relatedTarget).data().datos;
 		console.log(subproceso);

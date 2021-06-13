@@ -13,7 +13,7 @@ class Documento extends Model
      * @var array
      */
     protected $fillable = [
-        'nombre', 'id_tipodocumento', 'id_subproceso',
+        'nombre', 'id_tipodocumento', 'id_proceso_personal','created_at', 'updated_at'
     ];
 
     /**
@@ -25,10 +25,10 @@ class Documento extends Model
     }
 
     /**
-     * Un documento pertenece a un subproceso
+     * Un documento pertenece a un proceso personal
      */
-    public function subproceso()
+    public function procesopersonal()
     {
-        return $this->belongsTo(Subproceso::class, 'id_subproceso');
+        return $this->belongsTo(ProcesoPersonal::class, 'id_proceso_personal');
     }
 }
