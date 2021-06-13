@@ -32,19 +32,23 @@ class ArbolController extends Controller
      */
     public function arbol()
     {
-
+        // Se crea un arreglo de subprocesos.
         $subprocesos = array();
+        // Se obtienen
         $procesos = Auth::user()->procesos;
         $documentos = array();
         foreach($procesos as $proceso)
         {
+            // Se obtienen todos los procesos registrados.
             $subproceso = $proceso->subprocesos;
-            
+            // Se obtienen los subprocesos que cada proceso tiene.
             array_push($subprocesos, $subproceso);
-
+            // Se crea un ciclo para obtener los documentos registrados en cada subproceso.
             foreach($subproceso as $sb)
             {
+                // Se obtiene el objeto de arreglo de documentos por subproceso.
                 $documento = $sb->documentos;
+                // Se almacena el arreglo dentro de otro arreglo de arreglos
                 array_push($documentos, $documento);
             }
         } 

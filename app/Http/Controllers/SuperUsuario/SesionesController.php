@@ -35,6 +35,7 @@ class SesionesController extends Controller
     public function index()
     {
         $sesiones = Sesiones::paginate(1000);
+        //Se obtiene el registro de todos los administradores que han iniciado sesión.
         $administradores = User::where('rol_id',2)->get();
         return view('superusuario.sesiones.index', compact('administradores','sesiones'));
     }
@@ -43,6 +44,7 @@ class SesionesController extends Controller
 
         $opcion = $request->filtrar_id;
         
+        //Hacemos filtros gracias a carbon que nos permitan acceder a fechas o periodos de tiempo relevantes.
         switch($opcion){
             case 1:
                 $sesiones = Sesiones::whereDate('date_time', today())->get();
