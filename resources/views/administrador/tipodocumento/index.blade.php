@@ -101,6 +101,8 @@
             <!-- /.card -->
         </div>
         <!-- Col -->
+        @if ((Auth::user()->rol_id) == 3)
+        
         <div class="col-md-4">
             <div class="card">
                 <div class="card-header bg-dark">Operaciones Generales</div>
@@ -114,6 +116,8 @@
                 <div class="card-footer text-center">Tipos de documentos</div>
             </div>
         </div>
+        
+        @endif
         <!-- Col -->
     </div>
     <!-- Row -->

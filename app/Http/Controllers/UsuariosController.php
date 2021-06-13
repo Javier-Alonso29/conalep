@@ -35,6 +35,10 @@ class UsuariosController extends Controller
 
             return redirect('/administrador');
 
+        }elseif($user->rol_id == 3){
+            
+            return redirect('/SUEstatal');
+
         }else{
             return view('404');
         }

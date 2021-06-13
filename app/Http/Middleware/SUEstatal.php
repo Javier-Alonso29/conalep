@@ -5,10 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Guard;
 
-class Administrador
+class SUEstatal
 {
     private $auth;
-
 
     public function __construct(Guard $auth){
         $this->auth = $auth;
@@ -22,7 +21,7 @@ class Administrador
      */
     public function handle($request, Closure $next)
     {
-        if ($this->auth->user()->rol_id === 2 || $this->auth->user()->rol_id === 1 || $this->auth->user()->rol_id === 3) {
+        if ($this->auth->user()->rol_id === 3) {
 
            return $next($request); 
 

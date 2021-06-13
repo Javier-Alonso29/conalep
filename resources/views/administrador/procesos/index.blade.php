@@ -54,7 +54,7 @@
             <div class="card ">
                 <div class="card-header bg-dark">
                 <h3 class="card-title">Tus procesos</h3>
-
+                @if ((Auth::user()->rol_id) == 3)
                 <div class="card-tools">
                     <a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo proceso</a>
 
@@ -63,6 +63,7 @@
                     </button>
 
                 </div>
+                @endif
                 </div>
                 <div class="card-body p-0" style="display: block;">
                 <table class="table table-striped projects table-sm">
@@ -134,11 +135,11 @@
     <!-- Row -->
 </section>
 
-
+@if ((Auth::user()->rol_id) == 3)
 <a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success back-to-top" role="button">
     <i class="fas fa-plus fa-lg"></i>
 </a>
-
+@endif
 
 
 @include('administrador.procesos.create')

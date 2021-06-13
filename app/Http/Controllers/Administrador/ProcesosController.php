@@ -24,7 +24,7 @@ class ProcesosController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('Administrador');
+        $this->middleware('SuperUsuario');
     }
 
     /**
