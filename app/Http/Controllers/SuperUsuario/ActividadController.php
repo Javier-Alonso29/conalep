@@ -24,13 +24,14 @@ class ActividadController extends Controller
     
 
     /**
-     *  Muestra los administradores que el superusuario puede editar
+     *  Muestra las actividades realizadas por los usuarios del sistema
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
         $fecha_actual = date('Y');
+        /* Elminación automática de historial por año*/
         ActividadesAdministradores::whereYear('created_at','<',$fecha_actual)->delete();
         $actividades = ActividadesAdministradores::paginate(1000);
         $planteles = Planteles::paginate(10);
@@ -41,6 +42,11 @@ class ActividadController extends Controller
     }
 
 
+    /**
+     *  Muestra las actividades realizadas por los usuarios del sistema segun el filtro de tiempo seleccionado
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function filtrar(Request $request){
         $opcion = $request->filtrar_id; 
         $post=$opcion;   
