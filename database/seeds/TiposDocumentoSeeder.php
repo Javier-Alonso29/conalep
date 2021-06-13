@@ -12,7 +12,9 @@ class TiposDocumentoSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('tipodocumento')->insert(['nombre'=>'PDF','codigo'=>'PDF','descripcion'=>'Archivos tipo PDF']);
-        DB::table('tipodocumento')->insert(['nombre'=>'TXT','codigo'=>'TXT','descripcion'=>'Archivos tipo TXT']);
+        DB::table('tipodocumento')->insert(['nombre'=>'TipoDoc1','codigo'=>'TDC1','descripcion'=>'Tipo de Documento 1']);
+        DB::table('tipodocumento')->insert(['nombre'=>'TipoDoc2','codigo'=>'TDC2','descripcion'=>'Tipo de Documento 2']);
+        DB::table('tipodocumento')->insert(['nombre'=>'TipoDoc3','codigo'=>'TDC3','descripcion'=>'Tipo de Documento 3']);
+        DB::table('tipodocumento')->insert(['nombre'=>'TipoDoc4','codigo'=>'TDC4','descripcion'=>'Tipo de Documento 4']);
     }
 }

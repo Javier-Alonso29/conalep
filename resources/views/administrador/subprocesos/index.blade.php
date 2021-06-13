@@ -124,7 +124,6 @@
 
                 <ul class="list-group list-group-flush">
                         <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo subproceso</a></li>
-                        <li class="list-group-item"><a href="#" class="btn btn-danger btn-block">Borrar todos</a></li>
                 </ul>
                     
                 @elseif ((Auth::user()->rol_id) == 1)

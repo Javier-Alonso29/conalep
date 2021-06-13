@@ -15,6 +15,7 @@ use App\Models\Proceso;
 use App\Models\ProcesoPersonal;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Kyslik\ColumnSortable\Sortable;
 
 class DocumentoController extends Controller
 {

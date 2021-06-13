@@ -79,7 +79,7 @@
                     </thead>
                     <tbody>
                     
-                        @forelse($procesos_a as $proceso)
+                        @forelse($procesos as $proceso)
                         <tr>
                             <td>{{  $loop->iteration  }}</td>
                             <td>{{  $proceso->nombre  }}</td>

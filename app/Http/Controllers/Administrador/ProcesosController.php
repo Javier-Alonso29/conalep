@@ -34,10 +34,9 @@ class ProcesosController extends Controller
      */
     public function index()
     {
-        // Obtenemos los procesos del usuario logeado
-        $procesos_a = Auth::user()->procesos;
+        $procesos = Auth::user()->procesos;
         
-        return view('administrador.procesos.index', compact('procesos_a'));
+        return view('administrador.procesos.index', compact('procesos'));
     }
 
 
@@ -46,12 +45,9 @@ class ProcesosController extends Controller
      */
     public function store(CreateProcesoRequest $request)
     {
-        // Creamos el proceso 
         $proceso = Proceso::create($request->all());
-        
-        // Hacemos el directorio
-        $access = Storage::makeDirectory('public/'.$proceso->codigo);
-
+        $access = Storage::makeDirectory('public/' . $proceso->codigo);
+        Storage::setVisibility('public/' . $proceso->codigo,'public');
 
         // Asigamos el proceso al usuario logeado
         Auth::user()->procesos()->attach($proceso->id);
@@ -80,7 +76,6 @@ class ProcesosController extends Controller
             }
 
         }
-        
 
         // Hacemos el registro de actividad
         if($access === true ){

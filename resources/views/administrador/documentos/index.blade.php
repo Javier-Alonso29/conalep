@@ -66,8 +66,8 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nombre</th>
-                                <th>Tipo de Documento</th>
-                                <th>Proceso Personal</th>
+                                <th>@sortablelink('id_tipodocumento', 'Tipo de Documento')</th>
+                                <th>@sortablelink('id_subproceso', 'Subproceso')</th>
                                 <th>Operaciones</th>
                             </tr>
                         </thead>

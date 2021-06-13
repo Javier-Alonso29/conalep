@@ -35,6 +35,8 @@ class DatabaseSeeder extends Seeder
         $this->call(SubprocesosSeeder::class);
         $this->call(ProcesoPersonal::class);
         $this->call(ProcesoUserSeeder::class);
+        $this->call(DocumentosSeeder::class);
+        $this->call(TiposDocumentoSeeder::class);
     }
 
     protected function truncateTables(array $tables){
