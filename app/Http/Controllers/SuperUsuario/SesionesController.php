@@ -28,18 +28,26 @@ class SesionesController extends Controller
     }
 
     /**
-     *  Muestra los administradores que el superusuario puede editar
+     *  Muestra las sesiones iniciadas por los usuarios
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
     {
+        $fecha_actual = date('Y');
+        /* Elminación automática de historial por año*/
+        Sesiones::whereYear('date_time','<',$fecha_actual)->delete();
         $sesiones = Sesiones::paginate(1000);
         //Se obtiene el registro de todos los administradores que han iniciado sesión.
         $administradores = User::where('rol_id',2)->get();
         return view('superusuario.sesiones.index', compact('administradores','sesiones'));
     }
 
+    /**
+     *  Muestra las sesiones iniciadas por los usuarios segun el filtro de tiempo seleccionado
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function filtrar(Request $request){
 
         $opcion = $request->filtrar_id;
