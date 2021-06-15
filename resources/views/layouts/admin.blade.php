@@ -217,13 +217,14 @@
                 </a>
               </li>
 
-
+              @if ((Auth::user()->rol_id) == 2)
               <li class="nav-item">
                 <a href="{{ route('misCarpetas.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Procesos personales</p>
                 </a>
               </li>
+              @endif
             </ul>
           </li>
 
