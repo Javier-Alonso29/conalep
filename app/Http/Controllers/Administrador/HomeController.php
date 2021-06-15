@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Administrador;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
+use App\Models\Subproceso;
+use App\Models\Tipodocumento;
 
 class HomeController extends Controller
 {
@@ -35,8 +37,9 @@ class HomeController extends Controller
             $subprocesos = $proceso->subprocesos;
             array_push($subprocesos_array, $subprocesos);
         }
-
+        
         $procesos_personales_array = array();
+        $cantidad_procesos = 0;
 
         foreach($subprocesos_array as $collection){
             foreach($collection as $subproceso){
@@ -45,17 +48,25 @@ class HomeController extends Controller
             }
         }
 
+        // Se obtienen la cantidad de subprocesos dentro de los registros.
+        $subprocesos_cantidad = Subproceso::all()->count();
+        // Se obtienen la cantidad de tipos de documentos dentro de los registros.
+        $cantidad_tipos_documentos = Tipodocumento::all()->count();
+
+
         $documentos_array = array();
         
         foreach($procesos_personales_array as $collection){
             foreach($collection as $proceso_personal){
                 $documentos = $proceso_personal->documentos;
                 array_push($documentos_array, $documentos);
+                $cantidad_procesos++;
             }
         }
 
         
 
-        return view('administrador.home', compact('procesos_cantidad', 'documentos_array'));
+        return view('administrador.home', compact('procesos_cantidad', 'documentos_array', 'subprocesos_cantidad',
+                                                    'cantidad_procesos', 'cantidad_tipos_documentos'));
     }
 }

@@ -175,6 +175,7 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+
               @if ((Auth::user()->rol_id) == 3)
               <li class="nav-item">
                 <a href="{{ route('vistaArbol')}}" class="nav-link">
@@ -184,30 +185,45 @@
               </li>
               @endif
 
+              @if (((Auth::user()->rol_id) == 3 || (Auth::user()->rol_id) == 1))
               <li class="nav-item">
                 <a href="{{ route('procesos.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Procesos</p>
                 </a>
               </li>
+              @endif
+
               <li class="nav-item">
                 <a href="{{ route('subprocesos.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Sub procesos</p>
                 </a>
               </li>
+              
+              @if (((Auth::user()->rol_id) == 3 || (Auth::user()->rol_id) == 1))
               <li class="nav-item">
-                  <a href="{{ route('documentos.index') }}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Documentos</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="{{ route('tipodocumento.index') }}" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Tipos de documentos</p>
-                  </a>
-                </li>
+                <a href="{{ route('documentos.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Documentos</p>
+                </a>
+              </li>
+              @endif
+
+              <li class="nav-item">
+                <a href="{{ route('tipodocumento.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Tipos de documentos</p>
+                </a>
+              </li>
+
+
+              <li class="nav-item">
+                <a href="{{ route('misCarpetas.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Procesos personales</p>
+                </a>
+              </li>
             </ul>
           </li>
 
