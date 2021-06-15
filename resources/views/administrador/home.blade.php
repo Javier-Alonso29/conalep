@@ -32,18 +32,6 @@
   <div class="row">
 
   <div class="clearfix hidden-md-up"></div>
-        
-    <div class="col-12 col-sm-6 col-md-3">
-      <div class="info-box">
-          <a class="info-box-icon bg-info elevation-1" href="{{ route('procesos.index') }}">
-          <i class="fas fa-folder"></i>
-          </a>
-          <div class="info-box-content">
-            <span class="info-box-text">Procesos</span>
-            <span class="info-box-number">{{$procesos_cantidad}}</span>
-          </div>
-      </div>
-    </div>
 
     <div class="col-12 col-sm-6 col-md-3">
       <div class="info-box mb-3">
@@ -52,7 +40,7 @@
         </a>
         <div class="info-box-content">
           <span class="info-box-text">Subprocesos</span>
-          <span class="info-box-number">41,410</span>
+          <span class="info-box-number">{{$subprocesos_cantidad}}</span>
         </div> 
       </div>
     </div>
@@ -65,7 +53,7 @@
         </a>
         <div class="info-box-content">
             <span class="info-box-text">Procesos personales</span>
-            <span class="info-box-number">2,000</span>
+            <span class="info-box-number">{{$cantidad_procesos}}</span>
         </div>
       </div>
     </div>
@@ -78,7 +66,7 @@
 
         <div class="info-box-content">
           <span class="info-box-text">Tipos de documentos</span>
-          <span class="info-box-number">760</span>
+          <span class="info-box-number">{{$cantidad_tipos_documentos}}</span>
         </div>
 
       </div>
