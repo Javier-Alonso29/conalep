@@ -175,12 +175,15 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
+              @if ((Auth::user()->rol_id) == 3)
               <li class="nav-item">
                 <a href="{{ route('vistaArbol')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Vista de procesos</p>
                 </a>
               </li>
+              @endif
+
               <li class="nav-item">
                 <a href="{{ route('procesos.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
@@ -208,7 +211,7 @@
             </ul>
           </li>
 
-          @if ((Auth::user()->rol_id) == 1)
+          @if ((Auth::user()->rol_id) == 3 || (Auth::user()->rol_id) == 1)
           <li class="nav-item menu-close">
             <a href="#" class="nav-link active">
               &nbsp;
@@ -228,12 +231,14 @@
               <li class="nav-item">
                 <a href="{{ route('actividad.index') }}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Historial de actvidad</p>
+                  <p>Historial de actividad</p>
                 </a>
               </li>
             </ul>
           </li>
 
+          @if ((Auth::user()->rol_id) == 3)
+              
           <li class="nav-item menu-close">
             <a href="#" class="nav-link active">
               &nbsp;
@@ -253,6 +258,7 @@
               </li>
             </ul>
           </li>
+          @endif
 					@endif
           
         </ul>

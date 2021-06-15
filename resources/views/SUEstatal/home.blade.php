@@ -49,7 +49,7 @@
             </a>
             <div class="info-box-content">
               <span class="info-box-text">Subprocesos</span>
-              <span class="info-box-number">41,410</span>
+              <span class="info-box-number">{{$subprocesos_cantidad}}</span>
             </div>
             
           </div>
@@ -66,7 +66,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Tipos de documentos</span>
-                <span class="info-box-number">760</span>
+                <span class="info-box-number">{{$cantidad_tipos_documentos}}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -81,7 +81,7 @@
 
               <div class="info-box-content">
                 <span class="info-box-text">Documentos</span>
-                <span class="info-box-number">2,000</span>
+                <span class="info-box-number">{{$cantidad_documentos}}</span>
               </div>
               <!-- /.info-box-content -->
             </div>
