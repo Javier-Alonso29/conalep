@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 class EstadosSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Seeder encargado de cargar todos los estados del país.
      *
      * @return void
      */

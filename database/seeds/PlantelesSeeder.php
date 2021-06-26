@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 class PlantelesSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Seeder encargado de cargar todos los planteles que hay en el estado de Zacatecas.
      *
      * @return void
      */

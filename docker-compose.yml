@@ -1,10 +1,10 @@
-version: "0.1"
+version: "3.3"
 
 services:
     db:
         image: mariadb
         restart: always
-        enviroment:
+        environment:
             MYSQL_ROOT_PASSWORD: RootMaster123@!
             MYSQL_DATABASE: conalep
             MYSQL_USER: conalep
@@ -18,9 +18,8 @@ services:
             context: ./
             dockerfile: Dockerfile
         ports:
-            - 8080:80
-        volumes:
-            - ./respaldo
+            - 8081:80
+
 
 volumes:
     db:

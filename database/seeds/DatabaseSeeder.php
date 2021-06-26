@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 class DatabaseSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Clase que ejecuta todos los seeders del sistema.
      *
      * @return void
      */
