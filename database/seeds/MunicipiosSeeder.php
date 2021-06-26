@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 class MunicipiosSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Seeder encargado de cargar todos los municipios del estado de Zacatecas.
      *
      * @return void
      */

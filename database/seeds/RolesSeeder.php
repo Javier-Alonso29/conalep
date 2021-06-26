@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\DB;
 class RolesSeeder extends Seeder
 {
     /**
-     * Run the database seeds.
+     * Seeder encargado de cargar todos los roles predefinidos.
      *
      * @return void
      */
