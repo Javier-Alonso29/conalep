@@ -34,9 +34,9 @@ class ProcesosController extends Controller
      */
     public function index()
     {
-        $procesos = Auth::user()->procesos;
+        $process = Proceso::all();
         
-        return view('administrador.procesos.index', compact('procesos'));
+        return view('administrador.procesos.index', compact('process'));
     }
 
 

@@ -24,13 +24,22 @@ class ProcesosPersonalesController extends Controller
      */
     public function index()
     {
-        $primer_proceso = Auth::user()->procesos[0];
-        $primer_subproceso = $primer_proceso->subprocesos[0];
-
-        $procesos_personales = $primer_subproceso->procesospersonales;
-        
         $procesos_p = Auth::user()->procesos;
-        
+        $arreglo_subprocesos = array();
+        foreach($procesos_p as $proceso)
+        {
+            $subproceso = $proceso->subprocesos;
+            array_push($arreglo_subprocesos, $subproceso);
+        }
+        $procesos_personales = array();
+        foreach($arreglo_subprocesos as $subprocesos)
+        {
+            foreach($subprocesos as $subproceso)
+            {
+                $proceso_personal = $subproceso->procesospersonales;
+                array_push($procesos_personales, $proceso_personal);
+            }
+        }
         return view('administrador.personales.index', compact('procesos_personales','procesos_p'));
     }
 
