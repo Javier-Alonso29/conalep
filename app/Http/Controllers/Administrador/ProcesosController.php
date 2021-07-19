@@ -34,6 +34,8 @@ class ProcesosController extends Controller
      */
     public function index()
     {
+        $procesos = Proceso::paginate(10);
+        
         $procesos = Auth::user()->procesos;
         
         return view('administrador.procesos.index', compact('procesos'));

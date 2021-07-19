@@ -34,6 +34,7 @@ class TipodocumentoController extends Controller
      */
     public function index()
     {
+        #$tipodocumento = Tipodocumento::paginate(10);
         $tipodocumento = Tipodocumento::get();
 
         return view('administrador.tipodocumento.index', compact('tipodocumento'));
