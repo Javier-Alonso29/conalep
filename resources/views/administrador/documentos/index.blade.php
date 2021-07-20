@@ -66,36 +66,33 @@
                             <tr>
                                 <th>#</th>
                                 <th>Nombre</th>
-                                <th>@sortablelink('id_tipodocumento', 'Tipo de Documento')</th>
-                                <th>@sortablelink('id_subproceso', 'Subproceso')</th>
+                                <th>Tipo de Documento</th>
+                                <th>Subproceso</th>
                                 <th>Operaciones</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($documentos_array as $collection)
-                                @foreach($collection as $docu)
+                                @foreach($collection as $documento)
                                     <tr>
                                         <td>{{ $loop->iteration  }}</td>
-                                        <td>{{ $docu->nombre  }}</td>
-                                        <td>{{ $docu->tipodocumento->codigo  }}</td>
+                                        <td>{{ $documento->nombre  }}</td>
+                                        <td>{{ $documento->tipodocumento->codigo  }}</td>
                                         <td>
-                                            <a class="btn btn-success btn-circle btn-sm" href="{{route('misCarpetas.bySubproceso',$docu->id)}}" role="button">
-                                                <i class="fas fa-angle-double-left"></i>
+                                            <a class="btn btn-success btn-circle btn-sm" href="{{route('misCarpetas.bySubproceso',$documento->id)}}" role="button">
+                                                <i class="fas fa-angle-double-left"> {{ $documento->procesopersonal->codigo  }}</i>
                                             </a>
                                         </td>
                                         <td>
-                                            <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar-documento" href="#" data-datos="{{$docu}}">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-
-                                            <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar-documento" href="#" data-datos="{{$docu}}">
+                                            <a href="" data-toggle="modal" data-target="#editar-documento" class="btn btn-info btn-circle btn-sm" data-datos="{{$documento}}">
                                                 <i class="fa fa-edit"></i>
                                             </a>
-
-                                            <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#download-documento" href="#" data-datos="{{$docu}}">
+                                            <a href="" data-toggle="modal" data-target="#download-documento" class="btn btn-primary btn-circle btn-sm" data-datos="{{$documento}}">
                                                 <i class="fa fa-download"></i>
                                             </a>
-
+                                            <a href="" data-toggle="modal" data-target="#eliminar-documento" class="btn btn-danger btn-circle btn-sm" data-datos="{{$documento}}">
+                                                <i class="fa fa-trash"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -116,11 +113,16 @@
     <!-- Row -->
 </section>
 
-<a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success back-to-top" role="button">
+<a href="" data-toggle="modal" data-target="#crear" class="btn btn-success back-to-top" role="button">
     <i class="fas fa-plus fa-lg"></i>
 </a>
 
+
+
 @include('administrador.documentos.create')
+@include('administrador.documentos.delete')
+@include('administrador.documentos.download')
+@include('administrador.documentos.edit')
 
 @endsection
 
@@ -147,15 +149,15 @@
             $('#tipodocumento_select').html(html_select);
         });
 
-        $.get('/api/documento/subproceso', function(data) {
-            var subproc = documento.subproceso.nombre;
+        $.get('/api/documento/api_procesos_personal', function(data) {
+            var procper = documento.procesopersonal.codigo;
             var html_select;
             for (var i = 0; i < data.length; i++)
-                if (subproc == data[i].nombre)
-                    html_select += '<option value="' + data[i].id + '" selected>' + data[i].nombre + '</option>';
+                if (procper == data[i].codigo)
+                    html_select += '<option value="' + data[i].id + '" selected>' + data[i].codigo + '</option>';
                 else
-                    html_select += '<option value="' + data[i].id + '">' + data[i].nombre + '</option>';
-            $('#subproceso_select').html(html_select);
+                    html_select += '<option value="' + data[i].id + '">' + data[i].codigo + '</option>';
+            $('#procesopersonal_select').html(html_select);
         });
 
         $('#documento_nombre').val(documento.nombre);

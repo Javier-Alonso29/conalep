@@ -15,7 +15,6 @@ use App\Models\Proceso;
 use App\Models\ProcesoPersonal;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
-use Kyslik\ColumnSortable\Sortable;
 
 class DocumentoController extends Controller
 {
@@ -142,19 +141,24 @@ class DocumentoController extends Controller
         }
 
         $documento = Documento::FindOrFail($request->id);
-        $subproceso = Subproceso::FindOrFail($request->subproceso);
-
-        $nombre_anterior = $documento->nombre;
-        $subproceso_anterior = $documento->subproceso;
+        
+        $nombre_doc_anterior = $documento->nombre;
+        $procper_doc_anterior = ProcesoPersonal::FindOrFail($documento->id_proceso_personal);
+        $subproceso_doc_anterior = Subproceso::FindOrFail($procper_doc_anterior->id_subproceso);
+        $proceso_doc_anterior = Proceso::FindOrFail($subproceso_doc_anterior->id_proceso);
 
         $documento->id_tipodocumento = $request->tipo_documento;
-        $documento->id_subproceso = $subproceso['id'];
+        $documento->id_proceso_personal = $request->proceso_personal;
         $documento->fill($request->all());
+        
+        $procper_doc_nuevo = ProcesoPersonal::FindOrFail($request->proceso_personal);
+        $subproceso_doc_nuevo = Subproceso::FindOrFail($procper_doc_nuevo->id_subproceso);
+        $proceso_doc_nuevo = Proceso::FindOrFail($subproceso_doc_nuevo->id_proceso);
 
-        if (($subproceso_anterior->id_proceso != $subproceso['id']) || ($nombre_anterior != $documento->nombre)) {
+        if (($procper_doc_anterior['id'] != $procper_doc_nuevo['id']) || ($nombre_doc_anterior != $documento->nombre)) {
             Storage::move(
-                '/public'.'/'.$subproceso_anterior->proceso['codigo'].'/'.$subproceso_anterior->codigo.'/'.$nombre_anterior,
-                '/public'.'/'.$subproceso->proceso['codigo'].'/'.$subproceso->codigo.'/'.$request->nombre
+                '/public'.'/'.$proceso_doc_anterior['codigo'].'/'.$subproceso_doc_anterior['codigo'].'/'.$procper_doc_anterior['codigo'].'/'.$nombre_doc_anterior,
+                '/public'.'/'.$proceso_doc_nuevo['codigo'].'/'.$subproceso_doc_nuevo['codigo'].'/'.$procper_doc_nuevo['codigo'].'/'.$request->nombre
             );
         }
 
@@ -192,11 +196,14 @@ class DocumentoController extends Controller
         }
 
         $documento = Documento::FindOrFail($request->id);
-        $subproceso = Subproceso::FindOrFail($documento->id_subproceso);
+        $procper_doc = ProcesoPersonal::FindOrFail($documento->id_proceso_personal);
+        $subproceso_doc = Subproceso::FindOrFail($procper_doc->id_subproceso);
+        $proceso_doc = Proceso::FindOrFail($subproceso_doc->id_proceso);
+
         $documento->delete();
 
         Storage::delete(
-            '/public'.'/'.$subproceso->proceso['codigo'].'/'.$subproceso->codigo.'/'.$documento->nombre
+            '/public'.'/'.$proceso_doc['codigo'].'/'.$subproceso_doc['codigo'].'/'.$procper_doc['codigo'].'/'.$documento->nombre
         );
 
         return redirect()->route('documentos.index')->With('success', 'Se borro correctamente el documento.');
@@ -213,10 +220,10 @@ class DocumentoController extends Controller
 
 
     /**
-     * Metodo que regresa una lista de subprocesos
+     * Metodo que regresa una lista de procesos personales
      */
-    public function api_subprocesos()
+    public function api_procesos_personal()
     {
-        return Subproceso::orderBy('nombre', 'DESC')->get();
+        return ProcesoPersonal::orderBy('nombre', 'DESC')->get();
     }
 }

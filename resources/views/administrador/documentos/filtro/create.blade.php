@@ -58,7 +58,11 @@
 							<div class="col">
 								<label for="id_subproceso">Proceso personal</label>
 								<select class="custom-select mr-sm-2" name="proceso_personal" required>
+									
+									
 									<option value="{{$proceso_personal->id}}">{{$proceso_personal->codigo}}</option>
+								
+								
 								</select>
 							</div>
 						</div>
