@@ -39,7 +39,7 @@ class PermisosController extends Controller
          * para poder asignarlos a los administradores del plantel
          * y el super usuario tiene todos los procesos del plantel 
          */
-        $procesos_plantel = Auth::user()->procesos;
+        $procesos_plantel = Proceso::all();
         
         $administrador = User::find($id);
         $procesos_administrador = $administrador->procesos;
