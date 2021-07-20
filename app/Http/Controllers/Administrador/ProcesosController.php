@@ -34,11 +34,10 @@ class ProcesosController extends Controller
      */
     public function index()
     {
-        $procesos = Proceso::paginate(10);
+        $process = Proceso::paginate(10);
+        $process = Proceso::all();
         
-        $procesos = Auth::user()->procesos;
-        
-        return view('administrador.procesos.index', compact('procesos'));
+        return view('administrador.procesos.index', compact('process'));
     }
 
 
