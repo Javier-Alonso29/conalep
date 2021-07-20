@@ -121,7 +121,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    
+                    {{ $procesos->links() }}
                 </div>
             </div>
             <!-- /.card -->
