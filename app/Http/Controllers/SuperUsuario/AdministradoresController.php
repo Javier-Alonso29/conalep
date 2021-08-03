@@ -176,5 +176,67 @@ class AdministradoresController extends Controller
     }
 
 
+    /**
+     * Metodo para cambiar contraseña de un admin
+     */
+    public function cambiarpass(Request $request)
+    {
+
+
+        //Valida que el admin tenga un nombre
+        $validator = Validator::make($request->all(), [
+            'new_password' => 'required',
+            'confirm_password' => 'required',
+        ],[
+            'new_password.required'=>'Debes de ingresar la nueva contraseña del administrador',
+            'confirm_password.required'=>'Debes de confirmar la nueva contraseña del administrador',
+        ]);
+
+        
+
+        if ($validator->fails())
+        {
+            return back()->withErrors($validator)
+            ->withInput()->With('error', 'Administrador no actualizado');
+        }
+        
+
+        
+
+        $usuario = User::FindOrFail($request->id);
+
+        if($request->new_password != $request->confirm_password){
+            return redirect()->route('administradores.index')->with('error', 'Administrador no actualizado, contraseñas no coinciden');
+        }
+
+        if(Hash::check($request->new_password,$usuario->password)){
+            return redirect()->route('administradores.index')->with('error', 'Administrador no actualizado, La nueva contraseña no debe ser igual a la anterior');
+        }
+
+        $usuario->password = Hash::make($request->new_password);
+        
+
+        if ($usuario->save()) {
+            
+            $actividades = ActividadesAdministradores::orderBy('id','desc')->first();
+        if ($actividades == null){
+            $actividad = new ActividadesAdministradores();
+            $actividad->id=1;
+            $actividad->id_user = $request->id_user;
+            $actividad->accion = 'Cambio la contraseña del usuario "'.$usuario->name.' '.$usuario->apellido_paterno.' '.$usuario->apellido_materno.'"';
+            $actividad->save();
+        }else{
+            $actividad = new ActividadesAdministradores();
+            $actividad->id = ($actividades->id)+1;
+            $actividad->id_user = $request->id_user;
+            $actividad->accion = 'Cambio la contraseña del usuario "'.$usuario->name.' '.$usuario->apellido_paterno.' '.$usuario->apellido_materno.'"';
+            $actividad->save();
+        }
+
+            return redirect()->route('administradores.index')->with("success","Administrador actualizado correctamente!");
+        }else{
+            return redirect()->route('administradores.index')->with("error","Administrador no actualizado!!!! :(");
+        }
+    }
 
 }

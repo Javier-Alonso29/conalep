@@ -90,6 +90,11 @@
                                 <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" href="#" data-datos="{{$admin}}" >
                                     <i class="fa fa-edit" ></i>
                                 </a>
+
+                                <a class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#cambiar-pass" href="#" data-datos="{{$admin}}" >
+                                    <i class="fa fa-key" ></i>
+                                </a>
+
                             </td>
                         </tr>
                         @empty
@@ -116,6 +121,7 @@
 @include('superusuario.administradores.create')
 @include('superusuario.administradores.delete')
 @include('superusuario.administradores.edit')
+@include('superusuario.administradores.cambiar-pass')
 @endsection
 
 @section('scripts')
@@ -137,6 +143,14 @@
 		$('#apellido_paterno').val(usuario.apellido_paterno);
 		$('#apellido_materno').val(usuario.apellido_materno);
         $('#email').val(usuario.email);
+	});
+
+    $('#cambiar-pass').on('show.bs.modal', function(e) {
+		var usuario = $(e.relatedTarget).data().datos;
+		console.log(usuario);
+        $('#nombre_usuario_cambio').val(usuario.name);
+		$('#id_usuario_cambio').val(usuario.id);
+		$('#pass_usuario_cambio').val(usuario.password);
 	});
 
     
