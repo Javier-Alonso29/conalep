@@ -78,7 +78,7 @@
         <div class="inner">
           <h3>Documentos</h3>
 
-            <p>3</p>
+            <p>3</p>{{-- Sujeto a cambios debido a que no está hecho completamente (gracias javis jsjsjsjs) --}}
         </div>
         <div class="icon">
         <i class="fas fa-file"></i>

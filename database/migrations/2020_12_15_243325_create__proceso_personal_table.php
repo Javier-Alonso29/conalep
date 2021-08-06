@@ -17,6 +17,8 @@ class CreateProcesoPersonalTable extends Migration
             $table->id();
             $table->unsignedBigInteger('id_subproceso');
             $table->foreign('id_subproceso')->references('id')->on('subprocesos');
+            $table->unsignedBigInteger("id_usuario");
+            $table->foreign("id_usuario")->references('id')->on('users');
             $table->string('nombre')->unique();
             $table->string('codigo')->unique();
             $table->longText("descripcion")->nullable();

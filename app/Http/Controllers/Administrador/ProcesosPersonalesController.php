@@ -31,6 +31,7 @@ class ProcesosPersonalesController extends Controller
             $subproceso = $proceso->subprocesos;
             array_push($arreglo_subprocesos, $subproceso);
         }
+        /*
         $procesos_personales = array();
         foreach($arreglo_subprocesos as $subprocesos)
         {
@@ -39,7 +40,8 @@ class ProcesosPersonalesController extends Controller
                 $proceso_personal = $subproceso->procesospersonales;
                 array_push($procesos_personales, $proceso_personal);
             }
-        }
+        } */
+        $procesos_personales = ProcesoPersonal::where('id_usuario', '=', Auth::user()->id)->get();
         return view('administrador.personales.index', compact('procesos_personales','procesos_p'));
     }
 
