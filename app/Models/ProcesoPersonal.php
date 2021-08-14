@@ -13,7 +13,7 @@ class ProcesoPersonal extends Model
      * @var array
      */
     protected $fillable = [
-        'id_subproceso', 'nombre', 'codigo', 'descripcion', 'id_usuario'
+        'id_subproceso', 'nombre', 'codigo', 'descripcion', 'id_usuario', 'id_plantel', 'id_proceso'
     ];
 
     /**

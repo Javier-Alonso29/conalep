@@ -79,7 +79,7 @@ class UsuariosSeeder extends Seeder
             'email'=>'Adminconaleptest2@zac.conalep.edu.mx',
             'password'=>Hash::make('Adminconalep123#!'),
             'rol_id'=>$rol_administrador,
-            'id_plantel' => $plantel
+            'id_plantel' => $plantel_2
             ]
         );
 
