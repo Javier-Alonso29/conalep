@@ -71,6 +71,18 @@ class UsuariosSeeder extends Seeder
             ]
         );
 
+        // Administrador de prueba (Lo cambie a un password más complicada por si luego no lo borramos)
+        DB::table('users')->insert(
+            ['name'=>'Juan Pruebita',
+            'apellido_paterno'=>'Test',
+            'apellido_materno'=>'Tesuto',
+            'email'=>'Adminconaleptest2@zac.conalep.edu.mx',
+            'password'=>Hash::make('Adminconalep123#!'),
+            'rol_id'=>$rol_administrador,
+            'id_plantel' => $plantel_2
+            ]
+        );
+
         //Superusuario estatal por defecto
         DB::table('users')->insert(
             ['name'=>'Estatal',

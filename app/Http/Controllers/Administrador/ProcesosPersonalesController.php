@@ -31,15 +31,8 @@ class ProcesosPersonalesController extends Controller
             $subproceso = $proceso->subprocesos;
             array_push($arreglo_subprocesos, $subproceso);
         }
-        $procesos_personales = array();
-        foreach($arreglo_subprocesos as $subprocesos)
-        {
-            foreach($subprocesos as $subproceso)
-            {
-                $proceso_personal = $subproceso->procesospersonales;
-                array_push($procesos_personales, $proceso_personal);
-            }
-        }
+
+        $procesos_personales = ProcesoPersonal::where('id_usuario', '=', Auth::user()->id)->get();
         return view('administrador.personales.index', compact('procesos_personales','procesos_p'));
     }
 
@@ -75,6 +68,7 @@ class ProcesosPersonalesController extends Controller
         $proceso_id = $request->proceso;
         $subproceso_id = $request->subproceso;
 
+
         if($proceso_id === "-0000"){
             return back()
                 ->withErrors('proceso')
@@ -82,22 +76,32 @@ class ProcesosPersonalesController extends Controller
                 ->With('error', 'Seleccionaste un proceso incorrecto');
         }
 
-        if($subproceso_id === "-0000"){
+        /* if($subproceso_id === "-0000"){
             return back()
                 ->withErrors('subproceso')
                 ->With('error', 'Seleccionaste un sub proceso incorrecto');
-        }
+        } */
 
         // Crear el proceso personal
         $proceso_personal = new ProcesoPersonal($request->all());
         $proceso_personal->id_subproceso = $subproceso_id;
+        $proceso_personal->id_proceso = $proceso_id;
+        $proceso_personal->id_plantel = Auth::user()->plantel->id;
+        $proceso_personal->id_usuario = Auth::user()->id;
         $proceso_personal->save();
 
         // Hacemos la carpeta
         $subproceso = Subproceso::find($subproceso_id);
+        $proceso = Proceso::find($proceso_id);
 
-        $access = Storage::makeDirectory('public/' . $subproceso->proceso['codigo'] . '/' . $subproceso->codigo . '/' . $proceso_personal->codigo);
-        Storage::setVisibility('public/' . $subproceso->proceso['codigo'] . '/' . $subproceso->codigo . '/' . $proceso_personal->codigo, 'public');
+        if($subproceso_id === null){
+            $access = Storage::makeDirectory('public/' . $proceso['codigo'] . '/' . $proceso_personal->codigo);
+            Storage::setVisibility('public/' . $proceso['codigo'] . '/' . $proceso_personal->codigo, 'public');
+        }else{
+            $access = Storage::makeDirectory('public/' . $subproceso->proceso['codigo'] . '/' . $subproceso->codigo . '/' . $proceso_personal->codigo);
+            Storage::setVisibility('public/' . $subproceso->proceso['codigo'] . '/' . $subproceso->codigo . '/' . $proceso_personal->codigo, 'public');
+        }
+        
 
         if($access === true){
             return redirect()->route('misCarpetas.index')->With('success', 'Se creo correctamente el proceso personal.');

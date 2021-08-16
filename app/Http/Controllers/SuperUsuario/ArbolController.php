@@ -10,7 +10,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Auth;
-use App\Models\Sesiones;
+use App\Models\Subproceso;
+use App\Models\ProcesoPersonal;
+use App\Models\Documento;
 use App\Models\Proceso;
 
 class ArbolController extends Controller
@@ -33,37 +35,16 @@ class ArbolController extends Controller
      */
     public function arbol()
     {
-        // Se crea un arreglo de subprocesos.
-        $subprocesos = array();
-        // Se obtienen
-        $process = Proceso::all();
-        //dd($process);
-        $documentos = array();
-        $procesosPersonales = array();
-        foreach($process as $proceso)
-        {
-            // Se obtienen todos los procesos registrados.
-            $subproceso = $proceso->subprocesos;
-            //dd($subproceso);
-            // Se obtienen los subprocesos que cada proceso tiene.
-            array_push($subprocesos, $subproceso);
-            // Se crea un ciclo para obtener los documentos registrados en cada subproceso.
-            foreach($subproceso as $subprocess)
-            {
-                // Se obtiene el objeto de arreglo de documentos por subproceso.
-                $procesoPer = $subprocess->procesospersonales;
-                //dd($procesoPer);
-                // Se almacena el arreglo dentro de otro arreglo de arreglos
-                array_push($procesosPersonales, $procesoPer);
+        // Se obtienen todos los procesos, subprocesos, procesos personales y documentos que se ha guardado y se 
+        // se filtran de acuerdo al usuario que los esté revisando.
+        if(Auth::user()->rol_id == 3){
+            $subprocesos = Subproceso::all();
+            $process = Proceso::all();
+            $documentos = Documento::all();
+            $procesosPersonales = ProcesoPersonal::all();
+        }else{
 
-                foreach($procesoPer as $ProcesoP)
-                {
-                    $documento = $ProcesoP->documentos;
-                    array_push($documentos, $documento);
-                }
-            }
-        } 
-
+        }
         return view('superusuario.VistaArbol', compact('process', 'subprocesos', 'documentos', 'procesosPersonales'));
     }
 }

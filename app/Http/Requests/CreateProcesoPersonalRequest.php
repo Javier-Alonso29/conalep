@@ -28,7 +28,6 @@ class CreateProcesoPersonalRequest extends FormRequest
     {
         return [
             'proceso' => 'required',
-            'subproceso' => 'required',
             'nombre' => 'required|unique:proceso_personal',
             'codigo' => 'required|unique:proceso_personal',
             'descripcion',

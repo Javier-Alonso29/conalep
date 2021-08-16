@@ -57,37 +57,25 @@
                                 <td>{{$proceso->nombre}}</td>
                                 <td>{{-- auth::user->id --}}
                                     @foreach ($subprocesos as $subproceso)
-                                        @foreach ($subproceso as $sb)
-                                            @if ($sb->id_proceso === $proceso->id)
-                                                <li>{{$sb->nombre}}</li>
-                                            @endif
-                                        @endforeach
+                                        @if ($subproceso->id_proceso === $proceso->id)
+                                            <li>{{$subproceso->nombre}}</li>
+                                        @endif
                                     @endforeach
                                 </td>
                                 <td>
-                                    @foreach ($subprocesos as $subproceso)
-                                        @foreach ($subproceso as $sb)
-                                            @foreach ($procesosPersonales as $ProcesoP)
-                                                @foreach ($ProcesoP as $Pp)
-                                                    @if (($Pp->id_subproceso === $sb->id) && ($sb->id_proceso === $proceso->id))
-                                                        <li>{{$Pp->nombre}}</li>
-                                                    @endif
-                                                @endforeach
-                                            @endforeach
-                                        @endforeach
+                                    @foreach ($procesosPersonales as $ProcesoP)
+                                        @if ($ProcesoP->id_proceso === $proceso->id)
+                                            <li>{{$ProcesoP->nombre}}</li>
+                                        @endif
                                     @endforeach
                                 </td>
                                 <td>
                                     @foreach ($procesosPersonales as $ProcesoP) {{-- Pendiente a solucionar debido al problema de la tabla de procesos --}}
-                                        @foreach ($ProcesoP as $Pp)
-                                            @foreach ($documentos as $documento)
-                                                @foreach ($documento as $doc)
-                                                    @if (($Pp->id === $doc->id_proceso_personal) && ($sb->id_proceso === $proceso->id))
-                                                        <ol>{{$doc->nombre}}</ol>
-                                                        @continue
-                                                    @endif
-                                                @endforeach
-                                            @endforeach
+                                        @foreach ($documentos as $documento)
+                                            @if (($ProcesoP->id === $documento->id_proceso_personal) && ($ProcesoP->id_proceso === $proceso->id))
+                                                <ol>{{$documento->nombre}}</ol>
+                                                @continue
+                                            @endif
                                         @endforeach
                                     @endforeach
                                 </td>

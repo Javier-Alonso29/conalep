@@ -81,40 +81,38 @@
                     </thead>
                     <tbody>
                         @forelse($procesos_personales as $proceso_personal)
-                            @foreach ($proceso_personal as $proceso)
                             <tr>
                                 <td>{{  $loop->iteration  }}</td>
-                                <td>{{  $proceso->nombre  }}</td>
-                                <td>{{  $proceso->codigo  }}</td>
+                                <td>{{  $proceso_personal->nombre  }}</td>
+                                <td>{{  $proceso_personal->codigo  }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-success btn-circle btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ $proceso->descripcion }}">
+                                    <button type="button" class="btn btn-success btn-circle btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ $proceso_personal->descripcion }}">
                                         <i class="far fa-eye"></i>
                                     </button>
                                 </td>
                                 <td>
-                                    <a class="btn btn-success btn-circle btn-sm" href="{{ route('documentos.byProcesoPersonal', $proceso->id) }}" role="button">
+                                    <a class="btn btn-success btn-circle btn-sm" href="{{ route('documentos.byProcesoPersonal', $proceso_personal->id) }}" role="button">
                                         <i class="fas fa-angle-double-right"></i>
                                     </a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" href="#" data-datos="{{$proceso}}" >
+                                    <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" href="#" data-datos="{{$proceso_personal}}" >
                                         <i class="fa fa-edit" ></i>
                                     </a>
                                     
-                                    <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#downloadFolder" href="#" data-datos="{{$proceso}}" >
+                                    <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#downloadFolder" href="#" data-datos="{{$proceso_personal}}" >
                                         <i class="fa fa-download"></i>
                                     </a>
                                     
-                                    <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar_fitro_subproceso"  href="#" data-datos="{{$proceso}}">
+                                    <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar_fitro_subproceso"  href="#" data-datos="{{$proceso_personal}}">
                                         <i class="fa fa-trash" ></i>
                                     </a>
                                     
                                 </td>
                             </tr>
-                            @endforeach
                         @empty
                         <tr>
-							<td colspan="5">Ningún subproceso registrado.</td>
+							<td colspan="5">Ningún proceso personal registrado.</td>
 						</tr>
                         @endforelse
                     </tbody>

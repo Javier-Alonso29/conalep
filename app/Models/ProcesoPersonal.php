@@ -13,7 +13,7 @@ class ProcesoPersonal extends Model
      * @var array
      */
     protected $fillable = [
-        'id_subproceso', 'nombre', 'codigo', 'descripcion'
+        'id_subproceso', 'nombre', 'codigo', 'descripcion', 'id_usuario', 'id_plantel', 'id_proceso'
     ];
 
     /**
@@ -30,6 +30,14 @@ class ProcesoPersonal extends Model
     public function documentos()
     {
         return $this->hasMany(Documento::class, 'id_proceso_personal', 'id');
+    }
+
+    /**
+     * Un subproceso tiene muchos documentos
+     */
+    public function procesopersonal()
+    {
+        return $this->belongsTo(User::class, 'id_usuario');
     }
 
 }

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Auth;
 use App\Models\Subproceso;
+use App\Models\ProcesoPersonal;
 use App\Models\Tipodocumento;
 
 class HomeController extends Controller
@@ -56,15 +57,7 @@ class HomeController extends Controller
 
         $documentos_array = array();
         
-        foreach($procesos_personales_array as $collection){
-            foreach($collection as $proceso_personal){
-                $documentos = $proceso_personal->documentos;
-                array_push($documentos_array, $documentos);
-                $cantidad_procesos++;
-            }
-        }
-
-        
+        $cantidad_procesos = ProcesoPersonal::where('id_usuario', '=', Auth::user()->id)->get()->count();
 
         return view('administrador.home', compact('procesos_cantidad', 'documentos_array', 'subprocesos_cantidad',
                                                     'cantidad_procesos', 'cantidad_tipos_documentos'));

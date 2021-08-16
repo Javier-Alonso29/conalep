@@ -77,8 +77,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($procesos_personales as $proceso_personal)
-                            @foreach ($proceso_personal as $proceso)
+                        @forelse($procesos_personales as $proceso)
                             <tr>
                                 <td>{{  $loop->iteration  }}</td>
                                 <td>{{  $proceso->nombre  }}</td>
@@ -108,10 +107,9 @@
                                     
                                 </td>
                             </tr>
-                            @endforeach
                         @empty
                         <tr>
-							<td colspan="5">Ningún subproceso registrado.</td>
+							<td colspan="5">Ningún proceso personal registrado.</td>
 						</tr>
                         @endforelse
                     </tbody>
