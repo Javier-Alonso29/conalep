@@ -55,6 +55,16 @@
 						@endif
 					</div>
 
+					<div class="ccontainer-fluid">
+						<div class="row">
+							<div class="col">
+								<label for="plantel">Plantel del Usuario</label>
+								<select class="custom-select mr-sm-2" name="plantel" id="select-plantel" required>
+								</select>
+							</div>
+						</div>
+					</div>
+
 					<input type="hidden" name="id_user" value={{Auth::user()->id}}>
 					
 					<div class="modal-footer">

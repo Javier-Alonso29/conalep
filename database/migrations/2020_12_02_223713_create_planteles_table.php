@@ -15,6 +15,7 @@ class CreatePlantelesTable extends Migration
     {
         Schema::create('planteles', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('nombre_plantel')->unique();
             $table->string('numero')->unique();
             $table->string('clave_trabajo')->unique();
             $table->timestamps();

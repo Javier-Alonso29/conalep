@@ -137,12 +137,28 @@
     $('#editar').on('show.bs.modal', function(e) {
 		var usuario = $(e.relatedTarget).data().datos;
 		console.log(usuario);
+
+        //AJAX
+        $.get('/api/administradores/plantel', function(data) {
+            var plantel_administrador = usuario.id_plantel;
+            console.log(plantel_administrador);
+            var html_select;
+            for (var i = 0; i < data.length; i++)
+                if (plantel_administrador == data[i].id)
+                    html_select += '<option value="' + data[i].id + '" selected>' + data[i].nombre_plantel + '</option>';
+                else
+                    html_select += '<option value="' + data[i].id + '">' + data[i].nombre_plantel + '</option>';
+            $('#select-plantel').html(html_select);
+        });
+
 		$('#nombre_usuario_edit').val(usuario.name);
 		$('#id_usuario').val(usuario.id);
 		$('#user_name').val(usuario.name);
 		$('#apellido_paterno').val(usuario.apellido_paterno);
 		$('#apellido_materno').val(usuario.apellido_materno);
         $('#email').val(usuario.email);
+        $('#plantel').val(usuario.id_plantel);
+
 	});
 
     $('#cambiar-pass').on('show.bs.modal', function(e) {

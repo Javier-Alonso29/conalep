@@ -81,7 +81,7 @@
                     
                         @forelse($process as $proceso)
                         <tr>
-                            <td>{{  $loop->iteration  }}</td>
+                            <td>{{ ($process->currentPage() - 1) * $process->perPage() + $loop->iteration }}</td>
                             <td>{{  $proceso->nombre  }}</td>
                             <td>{{  $proceso->codigo  }}</td>
                             <td>

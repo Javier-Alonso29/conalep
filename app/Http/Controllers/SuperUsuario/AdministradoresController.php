@@ -14,9 +14,11 @@ use Illuminate\Validation\Rule;
 use App\Models\PermisosProcesos;
 use SebastianBergmann\Environment\Console;
 use App\Models\ActividadesAdministradores;
+use App\Models\Planteles;
 
 class AdministradoresController extends Controller
 {
+
     /**
      * Create a new controller instance.
      *
@@ -150,6 +152,8 @@ class AdministradoresController extends Controller
 
         $usuario = User::FindOrFail($request->id);
         $usuario->fill($request->all());
+        $usuario->id_plantel = $request->plantel;
+        $usuario->save();
         
 
         if ($usuario->save()) {
@@ -237,6 +241,15 @@ class AdministradoresController extends Controller
         }else{
             return redirect()->route('administradores.index')->with("error","Administrador no actualizado!!!! :(");
         }
+    }
+
+    
+    /**
+     * Metodo que regresa una lista de municipios
+     */
+    public function api_planteles()
+    {
+        return Planteles::orderBy('nombre_plantel', 'DESC')->get();
     }
 
 }

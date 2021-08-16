@@ -86,7 +86,7 @@
                     <tbody>
                         @forelse($subprocesos as $subproceso)
                         <tr>
-                            <td>{{  $loop->iteration  }}</td>
+                            <td>{{ ($subprocesos->currentPage() - 1) * $subprocesos->perPage() + $loop->iteration }}</td>
                             <td>{{  $subproceso->nombre  }}</td>
                             <td>{{  $subproceso->codigo  }}</td>
                             <td>{{  $subproceso->proceso['nombre']  }}</td>

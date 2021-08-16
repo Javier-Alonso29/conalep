@@ -118,21 +118,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>PENDIENTE</td>
-                        </tr>
+                        @if (($user->id_plantel) == 1)
+                            <tr>
+                                <td>Guadalupe</td>
+                            </tr>
+                        @endif
+
+                        @if (($user->id_plantel) == 2)
+                            <tr>
+                                <td>Guadalupe</td>
+                            </tr>
+                        @endif
+
+                        @if (($user->id_plantel) == 3)
+                            <tr>
+                                <td>Guadalupe</td>
+                            </tr>
+                        @endif
+
                     </tbody>
 
-                    <thead>
-                        <tr>
-                            <th>Proceso</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>PENDIENTE</td>
-                        </tr>
-                    </tbody>
 
 
                 </table>

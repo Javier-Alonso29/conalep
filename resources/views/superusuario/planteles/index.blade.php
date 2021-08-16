@@ -63,6 +63,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Nombre del plantel</th>
                                 <th>Numero de plantel</th>
                                 <th>Clave de trabajo</th>
                                 <th>Municipio</th>
@@ -73,6 +74,7 @@
                             @forelse($planteles as $plantel)
                             <tr>
                                 <td>{{ $loop->iteration  }}</td>
+                                <td>{{ $plantel->nombre_plantel }}</td>
                                 <td>{{ $plantel->numero }}</td>
                                 <td>{{ $plantel->clave_trabajo  }}</td>
                                 <td>{{ $plantel->municipio->nombre }}</td>
