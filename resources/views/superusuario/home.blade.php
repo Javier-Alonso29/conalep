@@ -145,7 +145,7 @@
                       <i class="fas fa-plus"></i>
                   </button>
 
-                  @if ((Auth::user()->rol_id) == 3)
+                  @if (((Auth::user()->rol_id) == 3 || (Auth::user()->rol_id) == 1))
                   <a class="btn btn-tool" href="{{ route('administradores.index') }}">
                     <i class="fas fa-angle-double-right"></i>
                   </a>
