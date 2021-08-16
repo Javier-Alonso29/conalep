@@ -110,7 +110,7 @@
                     <p class="card-text">Operaciones generales que puedes hacer a todos los tipos de documentos registrados</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear-tipodocumento" class="btn btn-success btn-block">Nuevo tipo de documento</a></li>
+                    <li class="list-group-item"><a href="#" data-toggle="modal" data-target="#crear-tipodocumento" class="btn btn-success btn-block">Nuevo tipo de documento</a></li>
                 </ul>
                 <div class="card-footer text-center">Tipos de documentos</div>
             </div>

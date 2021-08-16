@@ -54,7 +54,7 @@
 
                     <div class="card-tools">
                         <div class="btn btn-tool">
-                            <a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo plantel</a>
+                            <a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo plantel</a>
                         </div>
                     </div>
                 </div>

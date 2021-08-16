@@ -64,7 +64,7 @@
                         </select>
                     </div>
                     <div class="btn btn-tool">
-                        <a href="" data-toggle="modal" data-target="#filtrar" class="btn btn-success btn-block">Aplicar filtro</a>
+                        <a href="#" data-toggle="modal" data-target="#filtrar" class="btn btn-success btn-block">Aplicar filtro</a>
                     </div>
                 </div>
                

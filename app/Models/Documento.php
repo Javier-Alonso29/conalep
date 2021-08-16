@@ -13,7 +13,7 @@ class Documento extends Model
      * @var array
      */
     protected $fillable = [
-        'nombre', 'id_tipodocumento', 'id_proceso_personal','created_at', 'updated_at'
+        'nombre', 'id_tipodocumento', 'id_proceso_personal','created_at', 'updated_at', 'id_ciclo'
     ];
 
     /**
@@ -30,5 +30,13 @@ class Documento extends Model
     public function procesopersonal()
     {
         return $this->belongsTo(ProcesoPersonal::class, 'id_proceso_personal');
+    }
+
+    /**
+     * Un documento pertenece a un ciclo escolar
+     */
+    public function ciclo()
+    {
+        return $this->belongsTo(Ciclo::class, 'id_ciclo');
     }
 }
