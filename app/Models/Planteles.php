@@ -7,13 +7,14 @@ use App\User;
 
 class Planteles extends Model
 {
+    public $table = 'planteles';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'numero','clave_trabajo','municipio_id'
+        'nombre_plantel','numero','clave_trabajo','municipio_id'
     ];
 
     /**

@@ -90,6 +90,11 @@
                                 <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" href="#" data-datos="{{$admin}}" >
                                     <i class="fa fa-edit" ></i>
                                 </a>
+
+                                <a class="btn btn-warning btn-circle btn-sm" data-toggle="modal" data-target="#cambiar-pass" href="#" data-datos="{{$admin}}" >
+                                    <i class="fa fa-key" ></i>
+                                </a>
+
                             </td>
                         </tr>
                         @empty
@@ -116,6 +121,7 @@
 @include('superusuario.administradores.create')
 @include('superusuario.administradores.delete')
 @include('superusuario.administradores.edit')
+@include('superusuario.administradores.cambiar-pass')
 @endsection
 
 @section('scripts')
@@ -131,12 +137,36 @@
     $('#editar').on('show.bs.modal', function(e) {
 		var usuario = $(e.relatedTarget).data().datos;
 		console.log(usuario);
+
+        //AJAX
+        $.get('/api/administradores/plantel', function(data) {
+            var plantel_administrador = usuario.id_plantel;
+            console.log(plantel_administrador);
+            var html_select;
+            for (var i = 0; i < data.length; i++)
+                if (plantel_administrador == data[i].id)
+                    html_select += '<option value="' + data[i].id + '" selected>' + data[i].nombre_plantel + '</option>';
+                else
+                    html_select += '<option value="' + data[i].id + '">' + data[i].nombre_plantel + '</option>';
+            $('#select-plantel').html(html_select);
+        });
+
 		$('#nombre_usuario_edit').val(usuario.name);
 		$('#id_usuario').val(usuario.id);
 		$('#user_name').val(usuario.name);
 		$('#apellido_paterno').val(usuario.apellido_paterno);
 		$('#apellido_materno').val(usuario.apellido_materno);
         $('#email').val(usuario.email);
+        $('#plantel').val(usuario.id_plantel);
+
+	});
+
+    $('#cambiar-pass').on('show.bs.modal', function(e) {
+		var usuario = $(e.relatedTarget).data().datos;
+		console.log(usuario);
+        $('#nombre_usuario_cambio').val(usuario.name);
+		$('#id_usuario_cambio').val(usuario.id);
+		$('#pass_usuario_cambio').val(usuario.password);
 	});
 
     

@@ -23,13 +23,13 @@ class UsuariosSeeder extends Seeder
         $plantel_2 = DB::table('planteles')->where('id',2)->value('id');
         $plantel_3 = DB::table('planteles')->where('id',3)->value('id');
 
-        //Superusuario por defecto del plantel 1: Zacatecas
+        //Superusuario por defecto del plantel 1: Guadalupe
         DB::table('users')->insert(
             ['name'=>'Super',
             'apellido_paterno'=>'Usuario',
             'apellido_materno'=>'Uno',
             'email'=>'test@zac.conalep.edu.mx',
-            'password'=>Hash::make('Superusuariozac21$#'),
+            'password'=>Hash::make('Superusuariogua21$#'),
             'rol_id'=>$rol_super_usuario,
             'id_plantel' => $plantel
             ]

@@ -14,6 +14,18 @@ use App\Models\Documento;
 
 class HomeController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    
     public function index()
     {
         // Se obtiene la lista de administradores que se observan dentro de la página principal.

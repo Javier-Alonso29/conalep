@@ -40,6 +40,7 @@ Route::group(['middleware' => ['SuperUsuario','auth',]], function(){
 		Route::resource('/sesion', 'SuperUsuario\SesionesController');
 		
 		Route::resource('/administradores','SuperUsuario\AdministradoresController');
+		Route::get('/administradores/cambiarpass/{id_usuario_cambio}','SuperUsuario\AdministradoresController@cambiarpass')->name('administradores.cambiarpass');
 		
 		Route::resource('/actividad','SuperUsuario\ActividadController');
 		Route::get('/permisos/administrador/{id}', 'SuperUsuario\PermisosController@indexasignarprocesos')->name('usuario.asigna.permisos');
@@ -94,6 +95,12 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 		Route::get('/documentos/{id}','Administrador\DocumentoController@indexByProcesoPersonal')->name('documentos.byProcesoPersonal');
 		Route::resource('/documentos','Administrador\DocumentoController');
 		Route::post('/documentos/downloadFile','Administrador\DocumentoController@downloadFile')->name('documentos.downloadFile');
+
+		/**
+		 * Perfil
+		 */
+		Route::resource('/perfil','Administrador\PerfilController');
+		Route::get('/perfil/cambiarpass/{id_usuario_cambio}','Administrador\PerfilController@cambiarpass')->name('perfil.cambiarpass');	
 
 
 	});

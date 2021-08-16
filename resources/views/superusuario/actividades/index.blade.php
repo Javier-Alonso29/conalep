@@ -73,7 +73,6 @@
                 <table class="table table-striped projects table-sm">
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th>Usuario</th>
                             <th>Plantel</th>
                             <th>Acción realizada</th>
@@ -83,7 +82,6 @@
                     <tbody>
                         @forelse($actividades->reverse() as $actividad)
                         <tr>
-                            <td>{{$actividad->id}}</td>
                             <td>{{$actividad->usuario->name}} {{$actividad->usuario->apellido_paterno}} {{$actividad->usuario->apellido_materno}}</td>
                             <td>ZACATECAS</td>
                             <td>{{$actividad->accion}}</td>

@@ -50,7 +50,7 @@
       <!-- Left navbar links -->
       <ul class="navbar-nav">
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="{{route('inicio')}}" class="nav-link">Home</a>
+          <a href="{{route('inicio')}}" class="nav-link">Inicio</a>
         </li>
       </ul>
 
@@ -70,7 +70,7 @@
             <span class="dropdown-header bg-gray-dark">
               <div class="user-panel d-flex">
                 <div class="image mt-1">
-                  <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+                  <img src="{{asset('imagenes/usuario-conalep-icono.png')}}" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
                   <p>{{Auth::user()->name}}</p>
@@ -79,7 +79,7 @@
               </div>
             </span>
             <div class="dropdown-divider"></div>
-            <a href="#" class="dropdown-item">
+            <a  href="{{route('perfil.index')}}" class="dropdown-item">
               <i class="fas fa-user-cog mr-2"></i> Mi perfil
             </a>
 
@@ -113,24 +113,13 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="{{asset('dist/img/user2-160x160.jpg')}}" class="img-circle elevation-2" alt="User Image">
+            <img src="{{asset('imagenes/usuario-conalep-icono.png')}}" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
             <a href="#" class="d-block">{{Auth::user()->name}}</a>
           </div>
         </div>
 
-        <!-- SidebarSearch Form -->
-        <div class="form-inline">
-          <div class="input-group" data-widget="sidebar-search">
-            <input class="form-control form-control-sidebar" type="search" placeholder="Search" aria-label="Search">
-            <div class="input-group-append">
-              <button class="btn btn-sidebar">
-                <i class="fas fa-search fa-fw"></i>
-              </button>
-            </div>
-          </div>
-        </div>
 
         <!-- Sidebar Menu -->
         <nav class="mt-2">

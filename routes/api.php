@@ -30,3 +30,5 @@ Route::get('/permisos/borrar','SuperUsuario\PermisosController@api_usuarios');
 
 Route::get('/documento/tipo_documento','Administrador\DocumentoController@api_tipos_documentos');
 Route::get('/documento/api_procesos_personal','Administrador\DocumentoController@api_procesos_personal');
+
+Route::get('/administradores/plantel','SuperUsuario\AdministradoresController@api_planteles');

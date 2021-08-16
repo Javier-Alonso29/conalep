@@ -3,14 +3,14 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header bg-black">
-				<h5 class="modal-title" id="exampleModalLabel">Editar administrador.</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Editar perfil de usuario.</h5>
 					<span class="badge badge-danger" class="close"  data-dismiss="modal" aria-label="Close">
                         <i class="fas fa-times fa-lg" style="color:#fff"></i>
                     </span>
 			</div>
 
 			<div class="modal-body">
-				<form method="POST" action="{{ route('administradores.update',1) }}">
+				<form method="POST" action="{{ route('perfil.update',1) }}">
 					@csrf
 					@method('PUT')
 					<input  type="hidden" name="id" id="id_usuario">
@@ -53,16 +53,6 @@
 							<strong>{{ $errors->first('email') }}</strong>
 						</span>
 						@endif
-					</div>
-
-					<div class="ccontainer-fluid">
-						<div class="row">
-							<div class="col">
-								<label for="plantel">Plantel del Usuario</label>
-								<select class="custom-select mr-sm-2" name="plantel" id="select-plantel" required>
-								</select>
-							</div>
-						</div>
 					</div>
 
 					<input type="hidden" name="id_user" value={{Auth::user()->id}}>
