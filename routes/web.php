@@ -69,7 +69,7 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 
 		/**
 		 * Sub procesos
-		 *  */
+		 */
 		Route::get('/subprocesos/{id}','Administrador\SubprocesosController@indexbyProceso')->name('subproceso.byproceso');
 		Route::post('/subprocesos/create/','Administrador\SubprocesosController@storebyProceso')->name('subprocesos.create.byproceso');
 		Route::post('/subprocesos/delete/{id}','Administrador\SubprocesosController@destroybyProceso')->name('subprocesos.destroy.byproceso');
@@ -92,7 +92,8 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 		 * Documentos
 		 */
 		Route::get('/documentos/{id}','Administrador\DocumentoController@indexByProcesoPersonal')->name('documentos.byProcesoPersonal');
-		Route::resource('/documentos','Administrador\DocumentoController');		
+		Route::resource('/documentos','Administrador\DocumentoController');
+		Route::post('/documentos/downloadFile','Administrador\DocumentoController@downloadFile')->name('documentos.downloadFile');
 
 
 	});

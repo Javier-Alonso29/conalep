@@ -7,7 +7,7 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Documentos del Proceso <span class="badge badge-danger">{{  $proceso_personal->codigo  }}</span></h1>
+                <h1 class="m-0 text-dark">Documentos del Proceso <span class="badge badge-danger">{{ $proceso_personal->codigo  }}</span></h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -52,13 +52,13 @@
                 <div class="card-header bg-dark">
                     <h3 class="card-title">Documentos</h3>
                     <div class="card-tools">
-                    <a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo documento</a>
+                        <a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo documento</a>
 
-                    <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
-                        <i class="fas fa-minus"></i>
-                    </button>
+                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                            <i class="fas fa-minus"></i>
+                        </button>
 
-                </div>
+                    </div>
                 </div>
                 <div class="card-body p-0" style="display: block;">
                     <table class="table table-striped projects table-sm">
@@ -73,28 +73,29 @@
                         </thead>
                         <tbody>
                             @forelse($documentos_array as $documento)
-                                
-                                    <tr>
-                                        <td>{{ $loop->iteration  }}</td>
-                                        <td>{{ $documento->nombre  }}</td>
-                                        <td>{{ $documento->tipodocumento->codigo  }}</td>
-                                        <td>
-                                            <a class="btn btn-success btn-circle btn-sm" href="{{route('misCarpetas.bySubproceso',$documento->id)}}" role="button">
-                                                <i class="fas fa-angle-double-left"> {{ $documento->procesopersonal->codigo  }}</i>
-                                            </a>
-                                        </td>
-                                        <td>
-                                            <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar-documento" href="#" data-datos="{{$documento}}">
-                                                <i class="fa fa-trash"></i>
-                                            </a>
-                                            <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar-documento" href="#" data-datos="{{$documento}}">
-                                                <i class="fa fa-edit"></i>
-                                            </a>
-                                            <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#download-documento" href="#" data-datos="{{$documento}}">
-                                                <i class="fa fa-download"></i>
-                                            </a>
-                                        </td>
-                                    </tr>
+
+                            <tr>
+                                <td>{{ $loop->iteration  }}</td>
+                                <td>{{ $documento->nombre  }}</td>
+                                <td>{{ $documento->tipodocumento->codigo  }}</td>
+                                <td>
+                                    <a class="btn btn-success btn-circle btn-sm" href="{{route('misCarpetas.bySubproceso',$documento->id)}}" role="button">
+                                        <i class="fas fa-angle-double-left"> {{ $documento->procesopersonal->codigo  }}</i>
+                                    </a>
+                                </td>
+                                <td>{{ $documento->ciclo->nombre  }}</td>
+                                <td>
+                                    <a data-toggle="modal" data-target="#editar-documento" class="btn btn-info btn-circle btn-sm" data-datos="{{$documento}}" href="#" >
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                    <a data-toggle="modal" data-target="#download-documento" class="btn btn-primary btn-circle btn-sm" data-datos="{{$documento}}" href="#" >
+                                        <i class="fa fa-download"></i>
+                                    </a>
+                                    <a data-toggle="modal" data-target="#eliminar-documento" class="btn btn-danger btn-circle btn-sm" data-datos="{{$documento}}" href="#" >
+                                        <i class="fa fa-trash"></i>
+                                    </a>
+                                </td>
+                            </tr>
 
                             @empty
                             <tr>
@@ -108,32 +109,24 @@
             </div>
             <!-- /.card -->
         </div>
-        
+
     </div>
     <!-- Row -->
 </section>
 
-<a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success back-to-top" role="button">
+<a data-toggle="modal" data-target="#crear" class="btn btn-success back-to-top" role="button" href="#">
     <i class="fas fa-plus fa-lg"></i>
 </a>
 
 @include('administrador.documentos.filtro.create')
 @include('administrador.documentos.filtro.edit')
-
 @include('administrador.documentos.delete')
-@include('administrador.documentos.download')
+@include('administrador.documentos.downloadFile')
 
 @endsection
 
 @section('scripts')
 <script type="text/javascript">
-    $('#eliminar-documento').on('show.bs.modal', function(e) {
-        var documento = $(e.relatedTarget).data().datos;
-        console.log(documento);
-        $('#id_documento').val(documento.id);
-        $('#nombre_documento').text(documento.nombre);
-    });
-
     $('#editar-documento').on('show.bs.modal', function(e) {
         var documento = $(e.relatedTarget).data().datos;
         //AJAX
@@ -163,10 +156,17 @@
         $('#documento_id').val(documento.id);
     });
 
-    $('#download-documento').on('show.bs.modal', function(e) {
-        var proceso = $(e.relatedTarget).data().datos;
+    $('#eliminar-documento').on('show.bs.modal', function(e) {
+        var documento = $(e.relatedTarget).data().datos;
         console.log(documento);
-        $('#download_id').val(documento.id);
+        $('#id_documento').val(documento.id);
+        $('#nombre_documento').text(documento.nombre);
+    });
+
+    $('#download-documento').on('show.bs.modal', function(e) {
+        var documento = $(e.relatedTarget).data().datos;
+        console.log(documento);
+        $('#id_documento').val(documento.id);
         $('#nombre_documento').text(documento.nombre);
     });
 </script>

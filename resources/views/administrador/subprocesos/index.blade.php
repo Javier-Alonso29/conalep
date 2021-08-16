@@ -60,7 +60,7 @@
 
                 @if ((Auth::user()->rol_id) == 3)
                 <div class="card-tools">
-                    <a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo subproceso</a>
+                    <a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo subproceso</a>
 
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                         <i class="fas fa-minus"></i>

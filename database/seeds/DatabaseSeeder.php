@@ -23,7 +23,8 @@ class DatabaseSeeder extends Seeder
             'proceso_personal',
             'proceso_user',
             'documento',
-            'tipodocumento'
+            'tipodocumento',
+            'ciclo'
         ]);
 
         $this->call(RolesSeeder::class);
@@ -37,6 +38,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProcesoUserSeeder::class);
         $this->call(DocumentosSeeder::class);
         $this->call(TiposDocumentoSeeder::class);
+        $this->call(CiclosSeeder::class);
     }
 
     protected function truncateTables(array $tables){

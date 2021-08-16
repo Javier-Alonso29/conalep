@@ -11,6 +11,7 @@ use Validator;
 use Illuminate\Support\Facades\Hash;
 use Auth;
 use App\Http\Requests\CreateDocumentoRequest;
+use App\Models\Ciclo;
 use App\Models\Proceso;
 use App\Models\ProcesoPersonal;
 use Illuminate\Support\Facades\Storage;
@@ -38,44 +39,36 @@ class DocumentoController extends Controller
     {
         $documentos = Documento::get();
         $tipodocumentos = Tipodocumento::orderBy('codigo', 'ASC')->get();
+        $ciclos = Ciclo::orderBy('nombre', 'ASC')->get();
 
         $procesos = Auth::user()->procesos;
 
         $subprocesos_array = array();
 
-        foreach($procesos as $proceso){
+        foreach ($procesos as $proceso) {
             $subprocesos = $proceso->subprocesos;
             array_push($subprocesos_array, $subprocesos);
         }
 
         $procesos_personales_array = array();
 
-        foreach($subprocesos_array as $collection){
-            
-
-            foreach($collection as $subproceso){
-
+        foreach ($subprocesos_array as $collection) {
+            foreach ($collection as $subproceso) {
                 $procesos_personales = $subproceso->procesospersonales;
                 array_push($procesos_personales_array, $procesos_personales);
-
             }
-
         }
 
         $documentos_array = array();
-
-        foreach($procesos_personales_array as $collection){
-
-            foreach($collection as $proceso_personal){
-
+        foreach ($procesos_personales_array as $collection) {
+            foreach ($collection as $proceso_personal) {
                 $documentos = $proceso_personal->documentos;
-
                 array_push($documentos_array, $documentos);
-
             }
         }
 
-        return view('administrador.documentos.index', compact('documentos_array', 'tipodocumentos', 'procesos_personales_array'));
+        return view('administrador.documentos.index', 
+        compact('documentos_array', 'tipodocumentos', 'procesos_personales_array','ciclos'));
     }
 
     public function indexByProcesoPersonal($id)
@@ -85,9 +78,8 @@ class DocumentoController extends Controller
 
         $documentos_array = $proceso_personal->documentos;
 
-        // dd($documentos_array);
-
-        return view('administrador.documentos.filtro.index', compact('documentos_array', 'tipodocumentos', 'proceso_personal'));
+        return view('administrador.documentos.filtro.index', 
+        compact('documentos_array', 'tipodocumentos', 'procesos_personales_array','ciclos'));
     }
 
     /**
@@ -95,7 +87,6 @@ class DocumentoController extends Controller
      */
     public function store(Request $request)
     {
-
         if (!$request->hasFile('archivo')) {
             return redirect()->route('documentos.index')->With('error', 'El documento no se creo');
         }
@@ -104,13 +95,16 @@ class DocumentoController extends Controller
 
         $documento->id_proceso_personal = $request->proceso_personal;
         $ext = $request->file('archivo')->extension();
-        $name = $request->nombre.'.'.$ext;
+        $name = $request->nombre . '.' . $ext;
         $documento->nombre = $name;
+        $documento->id_ciclo = $request->ciclo;
 
-       
-        $assces = $request->file('archivo')->storeAs($documento->procesopersonal->subproceso->proceso['codigo'] . '/' . $documento->procesopersonal->subproceso->codigo.'/'.$documento->procesopersonal->codigo, $name, 'public');
+        $assces = $request->file('archivo')->storeAs(
+            $documento->procesopersonal->subproceso->proceso['codigo'] . '/' . 
+            $documento->procesopersonal->subproceso->codigo . '/' . 
+            $documento->procesopersonal->codigo, $name, 'public');
 
-        if($assces){
+        if ($assces) {
             $documento->save();
         }
 
@@ -125,12 +119,8 @@ class DocumentoController extends Controller
         // Valida que el documento tenga un nombre o un codigo
         $validator = Validator::make($request->all(), [
             'nombre' => 'required',
-            //'id_tipodocumento' => 'required',
-            //'id_subproceso' => 'required',
         ], [
             'nombre.required' => 'Debes asignar un nombre al documento',
-            //'id_tipodocumento.required' => 'Debes asignar un tipo de documento al documento',
-            //'id_subproceso.required' => 'El documento debe estar asignado a un subproceso',
         ]);
 
         if ($validator->fails()) {
@@ -141,7 +131,7 @@ class DocumentoController extends Controller
         }
 
         $documento = Documento::FindOrFail($request->id);
-        
+
         $nombre_doc_anterior = $documento->nombre;
         $procper_doc_anterior = ProcesoPersonal::FindOrFail($documento->id_proceso_personal);
         $subproceso_doc_anterior = Subproceso::FindOrFail($procper_doc_anterior->id_subproceso);
@@ -150,15 +140,26 @@ class DocumentoController extends Controller
         $documento->id_tipodocumento = $request->tipo_documento;
         $documento->id_proceso_personal = $request->proceso_personal;
         $documento->fill($request->all());
-        
+
         $procper_doc_nuevo = ProcesoPersonal::FindOrFail($request->proceso_personal);
         $subproceso_doc_nuevo = Subproceso::FindOrFail($procper_doc_nuevo->id_subproceso);
         $proceso_doc_nuevo = Proceso::FindOrFail($subproceso_doc_nuevo->id_proceso);
+        
+        $documento->id_ciclo = $request->ciclo;
 
         if (($procper_doc_anterior['id'] != $procper_doc_nuevo['id']) || ($nombre_doc_anterior != $documento->nombre)) {
             Storage::move(
-                '/public'.'/'.$proceso_doc_anterior['codigo'].'/'.$subproceso_doc_anterior['codigo'].'/'.$procper_doc_anterior['codigo'].'/'.$nombre_doc_anterior,
-                '/public'.'/'.$proceso_doc_nuevo['codigo'].'/'.$subproceso_doc_nuevo['codigo'].'/'.$procper_doc_nuevo['codigo'].'/'.$request->nombre
+                '/public' . '/' . 
+                $proceso_doc_anterior['codigo'] . '/' . 
+                $subproceso_doc_anterior['codigo'] . '/' . 
+                $procper_doc_anterior['codigo'] . '/' . 
+                $nombre_doc_anterior,
+
+                '/public' . '/' . 
+                $proceso_doc_nuevo['codigo'] . '/' . 
+                $subproceso_doc_nuevo['codigo'] . '/' . 
+                $procper_doc_nuevo['codigo'] . '/' . 
+                $request->nombre
             );
         }
 
@@ -203,10 +204,53 @@ class DocumentoController extends Controller
         $documento->delete();
 
         Storage::delete(
-            '/public'.'/'.$proceso_doc['codigo'].'/'.$subproceso_doc['codigo'].'/'.$procper_doc['codigo'].'/'.$documento->nombre
+            '/public' . '/' . $proceso_doc['codigo'] . '/' . $subproceso_doc['codigo'] . '/' . $procper_doc['codigo'] . '/' . $documento->nombre
         );
 
         return redirect()->route('documentos.index')->With('success', 'Se borro correctamente el documento.');
+    }
+
+    /**
+     * Metodo que descarga el archivo
+     */
+    public function downloadFile(Request $request)
+    {
+        /**
+         * Validar la contraseña del usuario
+         */
+        $validator = Validator::make($request->all(), [
+            'contraseña' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (Hash::check($value, Auth::user()->password)) {
+                    } else {
+                        $fail('Contraseña Incorrecta');
+                    }
+                },
+            ],
+        ]);
+
+        /**
+         * En caso de que sea una contraseña incorrecta 
+         * fallara la validacion y regresamos al index
+         * Con el mensaje de contraseña incorrecta
+         */
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator, 'downloadFile')
+                ->withInput()
+                ->With('error', 'La contraseña ingresada es incorrecta.');
+        }
+
+        #dd($request);
+
+        $documento = Documento::FindOrFail($request->id);
+        #dd($documento);
+
+        $documentoFisico = storage_path('/app/public/'.$documento->procesopersonal->subproceso->proceso['codigo'] . '/' . $documento->procesopersonal->subproceso->codigo . '/' . $documento->procesopersonal->codigo . '/' . $documento->nombre);
+        #dd($documentoFisico);
+
+        return response()->download($documentoFisico);
     }
 
 

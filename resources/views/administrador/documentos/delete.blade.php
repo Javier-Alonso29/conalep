@@ -3,13 +3,16 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header bg-black">
-				<h5 class="modal-title" id="exampleModalLabel">¿Seguro que quieres eliminar el documento <span class="badge badge-danger" id="nombre_documento"></span>?</h5>
+				<h5 class="modal-title" id="exampleModalLabel">
+					¿Seguro que quieres eliminar el documento <span class="badge badge-danger" id="nombre_documento"></span>?
+				</h5>
 				<span class="badge badge-danger" class="close" data-dismiss="modal" aria-label="Close">
 					<i class="fas fa-times fa-lg" style="color:#fff"></i>
 				</span>
 			</div>
 			<form method="POST" action="{{ route('documentos.destroy',0) }}" role="form">
 				<div class="modal-body">
+					<p>Para poder eliminar el documento, es necesario colocar tu contraseña</p>
 					<input class="form-control {{ $errors->delete->has('contraseña') ? ' is-invalid' : '' }}" type="password" name="contraseña" placeholder="Coloca tu contraseña para confirmar">
 					@if ($errors->delete->has('contraseña'))
 					<span class="invalid-feedback" role="alert">

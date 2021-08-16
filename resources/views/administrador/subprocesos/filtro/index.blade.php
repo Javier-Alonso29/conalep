@@ -123,7 +123,7 @@
                     <p class="card-text">Operaciones generales que puedes hacer a todos los subprocesos registrados</p>
                 </div>
                 <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo subproceso</a></li>
+                        <li class="list-group-item"><a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo subproceso</a></li>
                 </ul>
                 <div class="card-footer text-center">Subprocesos</div>
             </div>

@@ -47,9 +47,23 @@
 								<label for="id_subproceso">Proceso personal</label>
 								<select class="custom-select mr-sm-2" name="proceso_personal" required>
 									@foreach($procesos_personales_array as $collection)
-										@foreach($collection as $proceso_personal)
-											<option value="{{$proceso_personal->id}}">{{$proceso_personal->codigo}}</option>
-										@endforeach
+									@foreach($collection as $proceso_personal)
+									<option value="{{$proceso_personal->id}}">{{$proceso_personal->codigo}}</option>
+									@endforeach
+									@endforeach
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col">
+								<label for="id_subproceso">Ciclo</label>
+								<select class="custom-select mr-sm-2" name="ciclo" required>
+									<option selected value> ---- </option>
+									@foreach($ciclos as $ciclo)
+									<option value="{{$ciclo->id}}">{{$ciclo->nombre}}</option>
 									@endforeach
 								</select>
 							</div>
@@ -67,15 +81,15 @@
 	</div>
 </div>
 
-					<!--div class="ccontainer-fluid"-->
-						<!--div class="row"-->
-							<!--div class="col"-->
-								<!--label for="id_subproceso">Subproceso</label-->
-								<!--select class="custom-select mr-sm-2" name="subproceso" id="subproceso_select" required-->
-									<!--@\foreach($subprocesos as $subp)-->
-									<!--option value="$subp->id">$subp->nombre</option-->
-									<!--@\endforeach-->
-								<!--/select-->
-							<!--/div-->
-						<!--/div-->
-					<!--/div-->
+<!--div class="ccontainer-fluid"-->
+<!--div class="row"-->
+<!--div class="col"-->
+<!--label for="id_subproceso">Subproceso</label-->
+<!--select class="custom-select mr-sm-2" name="subproceso" id="subproceso_select" required-->
+<!--@\foreach($subprocesos as $subp)-->
+<!--option value="$subp->id">$subp->nombre</option-->
+<!--@\endforeach-->
+<!--/select-->
+<!--/div-->
+<!--/div-->
+<!--/div-->

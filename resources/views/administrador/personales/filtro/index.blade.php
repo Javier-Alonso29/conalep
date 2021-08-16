@@ -61,7 +61,7 @@
                 <h3 class="card-title">Procesos personales</h3>
 
                 <div class="card-tools">
-                <a href="" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo proceso</a>
+                <a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo proceso</a>
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
                     </button>
