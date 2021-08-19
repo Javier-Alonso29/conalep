@@ -41,31 +41,15 @@ class DocumentoController extends Controller
         $tipodocumentos = Tipodocumento::orderBy('codigo', 'ASC')->get();
         $ciclos = Ciclo::orderBy('nombre', 'ASC')->get();
 
-        $procesos = Auth::user()->procesos;
-
-        $subprocesos_array = array();
-
-        foreach ($procesos as $proceso) {
-            $subprocesos = $proceso->subprocesos;
-            array_push($subprocesos_array, $subprocesos);
+        $procesos_personales_array = ProcesoPersonal::where('id_usuario','=',Auth::user()->id)->get();
+        $procesos_id = array();
+        foreach($procesos_personales_array as $proceso){
+            $ids = $proceso->id;
+            array_push($procesos_id, $ids);
         }
-
-        $procesos_personales_array = array();
-
-        foreach ($subprocesos_array as $collection) {
-            foreach ($collection as $subproceso) {
-                $procesos_personales = $subproceso->procesospersonales;
-                array_push($procesos_personales_array, $procesos_personales);
-            }
-        }
-
-        $documentos_array = array();
-        foreach ($procesos_personales_array as $collection) {
-            foreach ($collection as $proceso_personal) {
-                $documentos = $proceso_personal->documentos;
-                array_push($documentos_array, $documentos);
-            }
-        }
+        
+        $documentos_array = Documento::whereIn('id_proceso_personal', $procesos_id)->get();
+        /* dd($documentos_array); */
 
         return view('administrador.documentos.index', 
         compact('documentos_array', 'tipodocumentos', 'procesos_personales_array','ciclos'));
@@ -78,8 +62,11 @@ class DocumentoController extends Controller
 
         $documentos_array = $proceso_personal->documentos;
 
+        $procesos_personales = ProcesoPersonal::where('id_usuario', '=', Auth::user()->id)->get();
+        $ciclos = Ciclo::orderBy('nombre', 'ASC')->get();
+
         return view('administrador.documentos.filtro.index', 
-        compact('documentos_array', 'tipodocumentos', 'procesos_personales_array','ciclos'));
+        compact('documentos_array', 'tipodocumentos', 'procesos_personales','ciclos','proceso_personal'));
     }
 
     /**
@@ -99,13 +86,23 @@ class DocumentoController extends Controller
         $documento->nombre = $name;
         $documento->id_ciclo = $request->ciclo;
 
-        $assces = $request->file('archivo')->storeAs(
-            $documento->procesopersonal->subproceso->proceso['codigo'] . '/' . 
-            $documento->procesopersonal->subproceso->codigo . '/' . 
-            $documento->procesopersonal->codigo, $name, 'public');
-
-        if ($assces) {
-            $documento->save();
+        if($documento->procesopersonal->id_subproceso != null){
+            $assces = $request->file('archivo')->storeAs(
+                $documento->procesopersonal->subproceso->proceso['codigo'] . '/' . 
+                $documento->procesopersonal->subproceso->codigo . '/' . 
+                $documento->procesopersonal->codigo, $name, 'public');
+                
+            if ($assces) {
+                $documento->save();
+            }
+        }else{
+            $assces = $request->file('archivo')->storeAs(
+                $documento->procesopersonal->proceso['codigo'] . '/' .
+                $documento->procesopersonal->codigo, $name, 'public');
+                
+            if ($assces) {
+                $documento->save();
+            }
         }
 
         return redirect()->route('documentos.index')->With('success', 'El documento se creo con exito');

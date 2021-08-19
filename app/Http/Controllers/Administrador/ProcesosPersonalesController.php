@@ -38,11 +38,11 @@ class ProcesosPersonalesController extends Controller
 
     public function indexbySubproceso($id){
 
-        $subproceso = Subproceso::FindOrFail($id);
+        $proceso = Proceso::FindOrFail($id);
+        $subprocesos = Subproceso::where('id_proceso',$proceso->id)->get();
+        $procesos_personales = ProcesoPersonal::where('id_proceso', $proceso->id)->get();
 
-        $procesos_personales = $subproceso->procesospersonales;
-
-        return view('administrador.personales.filtro.index', compact('procesos_personales','subproceso'));
+        return view('administrador.personales.filtro.index', compact('procesos_personales','proceso','subprocesos'));
 
     }
 
