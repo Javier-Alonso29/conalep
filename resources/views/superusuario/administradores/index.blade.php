@@ -71,7 +71,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($usuarios as $admin)
+                        @forelse($usuario as $admin)
                         <tr>
                             <td>{{  $loop->iteration  }}</td>
                             <td>{{  $admin->name  }} {{  $admin->apellido_paterno  }} {{  $admin->apellido_materno  }}</td>
@@ -99,7 +99,7 @@
                         </tr>
                         @empty
                         <tr>
-							<td colspan="5">Ningún administrador registrado.</td>
+							<td colspan="6">Ningún administrador registrado en este plantel.</td>
 						</tr>
                         @endforelse
                     </tbody>
