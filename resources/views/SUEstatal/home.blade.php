@@ -120,6 +120,19 @@
   
             </div>
           </div>
+
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+            
+              <a class="info-box-icon bg-light elevation-1" href="{{ route('ciclos.index') }}">
+              <i class="fas fa-calendar-alt"></i>
+              </a>
+              <div class="info-box-content">
+                <span class="info-box-text">Ciclos escolares</span>
+              </div>
+  
+            </div>
+          </div>
           @endif
 
         </div>

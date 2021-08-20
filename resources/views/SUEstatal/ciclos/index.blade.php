@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('titulo','Planteles')
+@section('titulo','Ciclos escolares')
 
 @section('contenido')
 <div class="content-header">
@@ -8,13 +8,13 @@
         <div class="row mb-2">
 
             <div class="col-sm-6">
-                <h1 class="m-0 text-dark">Planteles</h1>
+                <h1 class="m-0 text-dark">Ciclos escolares</h1>
             </div>
 
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{{ route('inicio') }}">Inicio</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Planteles</li>
+                    <li class="breadcrumb-item active" aria-current="page">Ciclos escolares</li>
                 </ol>
             </div>
 
@@ -50,11 +50,11 @@
 
             <div class="card">
                 <div class="card-header bg-dark">
-                    <h3 class="card-title">Planteles registrados</h3>
+                    <h3 class="card-title">Ciclos escolares registrados</h3>
 
                     <div class="card-tools">
                         <div class="btn btn-tool">
-                            <a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo plantel</a>
+                            <a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success btn-block">Nuevo ciclo escolar</a>
                         </div>
                     </div>
                 </div>
@@ -63,34 +63,31 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Nombre del plantel</th>
-                                <th>Numero de plantel</th>
-                                <th>Clave de trabajo</th>
-                                <th>Municipio</th>
-                                <th>Operaciones</th>
+                                <th>Nombre del ciclo escolar</th>
+                                <th>Inicio</th>
+                                <th>Conclusión</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($planteles as $plantel)
+                            @forelse($ciclos as $ciclo)
                             <tr>
                                 <td>{{ $loop->iteration  }}</td>
-                                <td>{{ $plantel->nombre_plantel }}</td>
-                                <td>{{ $plantel->numero }}</td>
-                                <td>{{ $plantel->clave_trabajo  }}</td>
-                                <td>{{ $plantel->municipio->nombre }}</td>
+                                <td>{{ $ciclo->nombre }}</td>
+                                <td>{{ $ciclo->inicio }}</td>
+                                <td>{{ $ciclo->conclusion  }}</td>
                                 <td>
-                                    <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar" href="#" data-datos="{{$plantel}}">
+                                    <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar" href="#" data-datos="{{$ciclo}}">
                                         <i class="fa fa-trash"></i>
                                     </a>
 
-                                    <button class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" id="btn-edit-plantel" href="#" data-datos="{{$plantel}}">
+                                    <button class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" id="btn-edit-plantel" href="#" data-datos="{{$ciclo}}">
                                         <i class="fa fa-edit"></i>
                                     </button>
                                 </td>
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="5">Ningún plantel registrado.</td>
+                                <td colspan="5">Ningún ciclo escolar registrado.</td>
                             </tr>
                             @endforelse
                         </tbody>
@@ -110,39 +107,27 @@
     <!-- Row -->
 </section>
 
-@include('superusuario.planteles.create')
-@include('superusuario.planteles.delete')
-@include('superusuario.planteles.edit')
+
+@include('SUEstatal.ciclos.create')
+@include('SUEstatal.ciclos.delete')
+@include('SUEstatal.ciclos.edit')
 @endsection
 
 @section('scripts')
 <script type="text/javascript">
     $('#eliminar').on('show.bs.modal', function(e) {
-        var plantel = $(e.relatedTarget).data().datos;
-        $('#eliminarId').val(plantel.id);
-        $('#numero_plantel').text(plantel.numero);
+        var ciclo = $(e.relatedTarget).data().datos;
+        $('#id').val(ciclo.id);
+        $('#nombre').text(ciclo.nombre);
     });
 
     $('#editar').on('show.bs.modal', function(e) {
-        var plantel = $(e.relatedTarget).data().datos;
-        console.log(plantel.nombre_plantel);
-        //AJAX
-        $.get('/api/planteles/municipio', function(data) {
-            var municipio_plantel = plantel.municipio.nombre;
-            var html_select;
-            for (var i = 0; i < data.length; i++)
-                if (municipio_plantel == data[i].nombre)
-                    html_select += '<option value="' + data[i].id + '" selected>' + data[i].nombre + '</option>';
-                else
-                    html_select += '<option value="' + data[i].id + '">' + data[i].nombre + '</option>';
-            $('#select-municipio').html(html_select);
-        });
+        var ciclo = $(e.relatedTarget).data().datos;
 
-        $('#nombre_plantel').val(plantel.nombre_plantel);
-        $('#numero').val(plantel.numero);
-        $('#clave_trabajo').val(plantel.clave_trabajo);
-        $('#id_plantel').val(plantel.id);
-        $('#municipio').val(plantel.municipio_id);
+        $('#id').val(ciclo.id);
+        $('#nombre').val(ciclo.nombre);
+        $('#inicio').val(ciclo.inicio);
+        $('#conclusion').val(ciclo.conclusion);
         
     });
 </script>

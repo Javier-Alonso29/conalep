@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreatePlantelRequest extends FormRequest
+class CreateCicloRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,21 +27,20 @@ class CreatePlantelRequest extends FormRequest
     public function rules()
     {
         return [
-            'numero' => 'required|integer',
-            'clave_trabajo' => 'required',
-            'municipio' => 'required',
-            'nombre_plantel' => 'required',
+            'nombre' => 'required',
+            'inicio' => 'required|integer',
+            'conclusion' => 'required|integer',
         ];
     }
 
     public function messages()
     {
         return [
-            'numero.unique' => 'Este numero de plantel ya está registrado.',
-            'numero.required' => 'El plantel debe tener un numero de plantel.',
-            'numero.integer' => 'Debes de ingresar un numero',
-            'clave_trabajo.required' => 'El plantel debe de tener una clave de trabajo',
-            'nombre_plantel.required' => 'El plantel debe de tener un nombre',
+            'nombre.required' => 'El ciclo escolar debe tener un nombre.',
+            'inicio.required' => 'El ciclo escolar debe tener un inicio.',
+            'conclusion.required' => 'El ciclo escolar debe tener un final.',
+            'inicio.integer' => 'Debes de ingresar un numero',
+            'conclusion.integer' => 'Debes de ingresar un numero',
         ];
     }
 }

@@ -42,13 +42,13 @@ class PlantelesController extends Controller
             $actividad = new ActividadesAdministradores($request->all());
             $actividad->id=1;
             $actividad->id_user = $request->id_user;
-            $actividad->accion = 'Registró el plantel "'.$request->municipio->nombre.'" ('.$request->numero.')';
+            $actividad->accion = 'Registró el plantel "'.$plantel->municipio->nombre.'" ('.$plantel->numero.')';
             $actividad->save();
         }else{
             $actividad = new ActividadesAdministradores($request->all());
             $actividad->id = ($actividades->id)+1;
             $actividad->id_user = $request->id_user;
-            $actividad->accion = 'Registró el plantel "'.$request->municipio->nombre.'" ('.$request->numero.')';
+            $actividad->accion = 'Registró el plantel "'.$plantel->municipio->nombre.'" ('.$plantel->numero.')';
             $actividad->save();
         }
 
@@ -109,16 +109,18 @@ class PlantelesController extends Controller
     {
         // Valida los datos del plantel
         $validator = Validator::make($request->all(), [
-            'numero' => 'required|integer|digits:10',
+            'numero' => 'required|integer',
             'id_plantel' => 'required',
             'clave_trabajo' => 'required',
             'municipio' => 'required',
+            'nombre_plantel' => 'required',
         ], [
             'numero.required' => 'El plantel debe de tener un numero de plantel',
             'numero.integer' => 'Debes de ingresar un numero',
-            'numero.digits' => 'El numero de plantel debe de ser de 10 caracteres',
-            'clave_trabajo.required' => 'El plantel debe de tener una clave de trabajo'
+            'clave_trabajo.required' => 'El plantel debe de tener una clave de trabajo',
+            'nombre_plantel.required' => 'El plantel debe de tener un nombre',
         ]);
+
 
         if ($validator->fails()) {
             return back()
