@@ -40,17 +40,30 @@ class DocumentoController extends Controller
         $documentos = Documento::get();
         $tipodocumentos = Tipodocumento::orderBy('codigo', 'ASC')->get();
         $ciclos = Ciclo::orderBy('nombre', 'ASC')->get();
+        if(Auth::user()->rol_id == 2){
+            
+            $procesos_personales_array = ProcesoPersonal::where('id_usuario','=',Auth::user()->id)->get();
+            $procesos_id = array();
+            foreach($procesos_personales_array as $proceso){
+                $ids = $proceso->id;
+                array_push($procesos_id, $ids);
+            }
+            
+            $documentos_array = Documento::whereIn('id_proceso_personal', $procesos_id)->get();
+        }elseif (Auth::user()->rol_id == 1) {
 
-        $procesos_personales_array = ProcesoPersonal::where('id_usuario','=',Auth::user()->id)->get();
-        $procesos_id = array();
-        foreach($procesos_personales_array as $proceso){
-            $ids = $proceso->id;
-            array_push($procesos_id, $ids);
+            $procesos_personales_array = ProcesoPersonal::where('id_plantel', '=', Auth::user()->id_plantel)->get();
+            $procesos_id = array();
+            foreach($procesos_personales_array as $proceso){
+                $ids = $proceso->id;
+                array_push($procesos_id, $ids);
+            }
+            
+            $documentos_array = Documento::whereIn('id_proceso_personal', $procesos_id)->get();
+        }else{
+            $procesos_personales_array = ProcesoPersonal::all();
+            $documentos_array = Documento::all();
         }
-        
-        $documentos_array = Documento::whereIn('id_proceso_personal', $procesos_id)->get();
-        /* dd($documentos_array); */
-
         return view('administrador.documentos.index', 
         compact('documentos_array', 'tipodocumentos', 'procesos_personales_array','ciclos'));
     }
@@ -59,12 +72,9 @@ class DocumentoController extends Controller
     {
         $proceso_personal = ProcesoPersonal::FindOrFail($id);
         $tipodocumentos = Tipodocumento::orderBy('codigo', 'ASC')->get();
-
-        $documentos_array = $proceso_personal->documentos;
-
-        $procesos_personales = ProcesoPersonal::where('id_usuario', '=', Auth::user()->id)->get();
         $ciclos = Ciclo::orderBy('nombre', 'ASC')->get();
-
+        $documentos_array = $proceso_personal->documentos;
+        $procesos_personales = ProcesoPersonal::where('id_usuario', '=', Auth::user()->id)->get();
         return view('administrador.documentos.filtro.index', 
         compact('documentos_array', 'tipodocumentos', 'procesos_personales','ciclos','proceso_personal'));
     }

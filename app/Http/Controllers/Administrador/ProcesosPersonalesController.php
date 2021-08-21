@@ -24,6 +24,9 @@ class ProcesosPersonalesController extends Controller
      */
     public function index()
     {
+        /* Contemplar si esta vista será usada para que los super
+        puedan acceder a los procesos personales o si es necesario crear 
+        una vista nueva para ambos tipos de supers. */
         $procesos_p = Auth::user()->procesos;
         $arreglo_subprocesos = array();
         foreach($procesos_p as $proceso)
@@ -40,8 +43,22 @@ class ProcesosPersonalesController extends Controller
 
         $proceso = Proceso::FindOrFail($id);
         $subprocesos = Subproceso::where('id_proceso',$proceso->id)->get();
-        $procesos_personales = ProcesoPersonal::where('id_proceso', $proceso->id)->get();
 
+        if (Auth::user()->rol_id == 3) {
+
+            $procesos_personales = ProcesoPersonal::where('id_proceso', $proceso->id)->get();
+
+        }elseif (Auth::user()->rol_id == 1) {
+
+            $procesos_personales = ProcesoPersonal::where('id_proceso', $proceso->id)->
+                where('id_plantel', Auth::user()->id_plantel)->get();
+
+        }else{
+
+            $procesos_personales = ProcesoPersonal::where('id_proceso', $proceso->id)->
+                where('id_usuario', Auth::user()->id)->get();
+                
+        }
         return view('administrador.personales.filtro.index', compact('procesos_personales','proceso','subprocesos'));
 
     }
