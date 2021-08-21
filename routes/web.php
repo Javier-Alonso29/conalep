@@ -80,7 +80,7 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 		Route::post('/subprocesos/delete/{id}','Administrador\SubprocesosController@destroybyProceso')->name('subprocesos.destroy.byproceso');
 		Route::post('/subprocesos/update/{id}','Administrador\SubprocesosController@updatebyProceso')->name('subprocesos.update.byproceso');
 		Route::resource('/subprocesos','Administrador\SubprocesosController');
-		Route::post('/subprocesos/downloadFolder','Administrador\ZipController@downloadFolder')->name('subprocesos.download.folder');
+		Route::post('/subprocesos/downloadFolder','Administrador\ZipController@downloadFolderSubproceso')->name('subprocesos.download.folder');
 
 		/**
 		 * Procesos personales
