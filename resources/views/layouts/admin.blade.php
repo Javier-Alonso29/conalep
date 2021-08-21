@@ -220,6 +220,12 @@
                   <p>Historial de actividad</p>
                 </a>
               </li>
+              <li class="nav-item">
+                <a href="{{ route('sesion.index') }}" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Accesos al sistema</p>
+                </a>
+              </li>
             </ul>
           </li>
 
@@ -265,7 +271,7 @@
     <footer class="main-footer">
       <div class="container">
         <div class="row justify-content-md-center">
-          <p>Developed by: </p>
+          <p>Desarrollado por: </p>
           <div class=" col-sm-1">
             <a href="https://cozcyt.gob.mx/labsol/" target="_blank" data-toggle="lightbox" data-title="sample 1 - white">
               <img src="{{ asset('imagenes/Labsol.jpg')  }}" class="img-fluid mb-2" alt="white sample" />

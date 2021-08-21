@@ -48,6 +48,10 @@ Route::group(['middleware' => ['SuperUsuario','auth',]], function(){
 		Route::get('/permisos/administrador/quitar/{id_administrador}/{id_proceso}', 'SuperUsuario\PermisosController@quitarprocerso')->name('usuario.quitar.proceso');
 		
 		Route::get('/VistaArbol', 'SuperUsuario\ArbolController@arbol')->name('vistaArbol');
+
+		Route::get('/permisos/administrador/{id}', 'SuperUsuario\PermisosController@indexasignarprocesos')->name('usuario.asigna.permisos');
+		Route::get('/permisos/administrador/asignar/{id}/{id_proceso}','SuperUsuario\PermisosController@asignarproceso')->name('usuario.asignar.proceso');
+		Route::get('/permisos/administrador/quitar/{id_administrador}/{id_proceso}', 'SuperUsuario\PermisosController@quitarprocerso')->name('usuario.quitar.proceso');
 	});
 	
 });
@@ -121,9 +125,6 @@ Route::group(['middleware' => ['SUEstatal','auth',]], function(){
 		Route::resource('/planteles','SuperUsuario\PlantelesController');
 		Route::resource('/ciclos','SUEstatal\CiclosController');
 
-		Route::get('/permisos/administrador/{id}', 'SuperUsuario\PermisosController@indexasignarprocesos')->name('usuario.asigna.permisos');
-		Route::get('/permisos/administrador/asignar/{id}/{id_proceso}','SuperUsuario\PermisosController@asignarproceso')->name('usuario.asignar.proceso');
-		Route::get('/permisos/administrador/quitar/{id_administrador}/{id_proceso}', 'SuperUsuario\PermisosController@quitarprocerso')->name('usuario.quitar.proceso');
 		
 
 	});
