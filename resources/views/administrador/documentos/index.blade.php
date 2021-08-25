@@ -89,7 +89,7 @@
                                     <a data-toggle="modal" data-target="#editar-documento" class="btn btn-info btn-circle btn-sm" data-datos="{{$documento}}" href="#">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a data-toggle="modal" data-target="#downloadFile" class="btn btn-primary btn-circle btn-sm" data-datos="{{$documento}}" href="#">
+                                    <a data-toggle="modal" data-target="#downloadFile" class="btn btn-primary btn-circle btn-sm" data-datos="{{$documento}}" data-typedocnum="{{$loop->iteration}}" href="#">
                                         <i class="fa fa-download"></i>
                                     </a>
                                     <a data-toggle="modal" data-target="#eliminar-documento" class="btn btn-danger btn-circle btn-sm" data-datos="{{$documento}}" href="#">
@@ -115,7 +115,7 @@
     <!-- Row -->
 </section>
 
-<a data-toggle="modal" data-target="#crear" class="btn btn-success back-to-top" role="button" href="#" >
+<a data-toggle="modal" data-target="#crear" class="btn btn-success back-to-top" role="button" href="#">
     <i class="fas fa-plus fa-lg"></i>
 </a>
 
@@ -126,7 +126,7 @@
 
 @endsection
 
-@section('scripts')s
+@section('scripts')
 <script type="text/javascript">
     $('#editar-documento').on('show.bs.modal', function(e) {
         var documento = $(e.relatedTarget).data().datos;
@@ -166,7 +166,9 @@
 
     $('#downloadFile').on('show.bs.modal', function(e) {
         var documento = $(e.relatedTarget).data().datos;
+        var typedoc = $(e.relatedTarget).data().typedocnum;
         console.log(documento);
+        $('#downloadFile_typedocnum').val(typedoc);
         $('#downloadFile_id').val(documento.id);
         $('#downloadFile_name').text(documento.nombre);
     });

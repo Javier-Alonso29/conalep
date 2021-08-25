@@ -85,13 +85,13 @@
                                 </td>
                                 <td>{{ $documento->ciclo->nombre  }}</td>
                                 <td>
-                                    <a data-toggle="modal" data-target="#editar-documento" class="btn btn-info btn-circle btn-sm" data-datos="{{$documento}}" href="#" >
+                                    <a data-toggle="modal" data-target="#editar-documento" class="btn btn-info btn-circle btn-sm" data-datos="{{$documento}}" href="#">
                                         <i class="fa fa-edit"></i>
                                     </a>
-                                    <a data-toggle="modal" data-target="#download-documento" class="btn btn-primary btn-circle btn-sm" data-datos="{{$documento}}" href="#" >
+                                    <a data-toggle="modal" data-target="#downloadFile" class="btn btn-primary btn-circle btn-sm" data-datos="{{$documento}}" data-typedocnum="{{$loop->iteration}}" href="#">
                                         <i class="fa fa-download"></i>
                                     </a>
-                                    <a data-toggle="modal" data-target="#eliminar-documento" class="btn btn-danger btn-circle btn-sm" data-datos="{{$documento}}" href="#" >
+                                    <a data-toggle="modal" data-target="#eliminar-documento" class="btn btn-danger btn-circle btn-sm" data-datos="{{$documento}}" href="#">
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
@@ -163,11 +163,13 @@
         $('#nombre_documento').text(documento.nombre);
     });
 
-    $('#download-documento').on('show.bs.modal', function(e) {
+    $('#downloadFile').on('show.bs.modal', function(e) {
         var documento = $(e.relatedTarget).data().datos;
+        var typedoc = $(e.relatedTarget).data().typedocnum;
         console.log(documento);
-        $('#id_documento').val(documento.id);
-        $('#nombre_documento').text(documento.nombre);
+        $('#downloadFile_typedocnum').val(typedoc);
+        $('#downloadFile_id').val(documento.id);
+        $('#downloadFile_name').text(documento.nombre);
     });
 </script>
 

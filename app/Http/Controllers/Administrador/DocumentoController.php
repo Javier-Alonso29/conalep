@@ -95,8 +95,14 @@ class DocumentoController extends Controller
         $documento = new Documento($request->all());
 
         $documento->id_proceso_personal = $request->proceso_personal;
-        $ext = $request->file('archivo')->extension();
-        $name = $request->nombre . '.' . $ext;
+
+        if ($request->nombre == null) {
+            $name = $request->file('archivo')->getClientOriginalName();
+        } else {
+            $ext = $request->file('archivo')->extension();
+            $name = $request->nombre . '.' . $ext;
+        }
+
         $documento->nombre = $name;
         $documento->id_ciclo = $request->ciclo;
 
@@ -243,13 +249,14 @@ class DocumentoController extends Controller
                 ->With('error', 'La contraseña ingresada es incorrecta.');
         }
 
-        #dd($request);
-
         $documento = Documento::FindOrFail($request->id);
-        #dd($documento);
-
-        $documentoFisico = storage_path('app/public/'.$documento->procesopersonal->subproceso->proceso['codigo'] . '/' . $documento->procesopersonal->subproceso->codigo . '/' . $documento->procesopersonal->codigo . '/' . $documento->nombre);
-        #dd($documentoFisico);
+        $documentoFisico = storage_path(
+            'app/public/'.
+            $documento->procesopersonal->subproceso->proceso['codigo'].'/'.
+            $documento->procesopersonal->subproceso->codigo.'/'.
+            $documento->procesopersonal->codigo.'/'.
+            $documento->nombre
+        );
 
         $info = pathinfo($documentoFisico);
         $ext = $info['extension'];
@@ -264,7 +271,7 @@ class DocumentoController extends Controller
         $abv_proceso = $proc->codigo;
 
         $tipo_documento = Tipodocumento::FindOrFail($documento->id_tipodocumento)->codigo;
-        $num_consecutivo = 01;
+        $num_consecutivo = $request->typedocnum;
 
         $full_name = 
         '16-'.
