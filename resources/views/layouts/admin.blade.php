@@ -136,7 +136,7 @@
             </a>
             <ul class="nav nav-treeview">
 
-              @if ((Auth::user()->rol_id) == 3)
+              @if ((Auth::user()->rol_id) == 3 || (Auth::user()->rol_id) == 1))
               <li class="nav-item">
                 <a href="{{ route('vistaArbol')}}" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>

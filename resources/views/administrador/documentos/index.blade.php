@@ -67,41 +67,39 @@
                                 <th>#</th>
                                 <th>Nombre</th>
                                 <th>Tipo de Documento</th>
-                                <th>Subproceso</th>
+                                <th>Proceso</th>
                                 <th>Ciclo</th>
                                 <th>Operaciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($documentos_array as $collection)
-                            @foreach($collection as $documento)
-                            <tr>
-                                <td>{{ $loop->iteration  }}</td>
-                                <td>{{ $documento->nombre  }}</td>
-                                <td>{{ $documento->tipodocumento->codigo  }}</td>
-                                <td>
-                                    <a class="btn btn-success btn-circle btn-sm" href="{{route('misCarpetas.bySubproceso',$documento->id)}}" role="button">
-                                        <i class="fas fa-angle-double-left"> {{ $documento->procesopersonal->codigo  }}</i>
-                                    </a>
-                                </td>
-                                <td>{{ $documento->ciclo->nombre  }}</td>
-                                <td>
-                                    <a data-toggle="modal" data-target="#editar-documento" class="btn btn-info btn-circle btn-sm" data-datos="{{$documento}}" href="#">
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                    <a data-toggle="modal" data-target="#downloadFile" class="btn btn-primary btn-circle btn-sm" data-datos="{{$documento}}" href="#">
-                                        <i class="fa fa-download"></i>
-                                    </a>
-                                    <a data-toggle="modal" data-target="#eliminar-documento" class="btn btn-danger btn-circle btn-sm" data-datos="{{$documento}}" href="#">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            @endforeach
+                            @forelse($documentos_array as $documento)
+                                <tr>
+                                    <td>{{ $loop->iteration  }}</td>
+                                    <td>{{ $documento->nombre  }}</td>
+                                    <td>{{ $documento->tipodocumento->codigo  }}</td>
+                                    <td>
+                                        <a class="btn btn-success btn-circle btn-sm" href="{{route('misCarpetas.bySubproceso',$documento->procesopersonal->id_proceso)}}" role="button">
+                                            <i class="fas fa-angle-double-left"> {{ $documento->procesopersonal->codigo }}</i>
+                                        </a>
+                                    </td>
+                                    <td>{{ $documento->ciclo->nombre  }}</td>
+                                    <td>
+                                        <a data-toggle="modal" data-target="#editar-documento" class="btn btn-info btn-circle btn-sm" data-datos="{{$documento}}" href="#">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                        <a data-toggle="modal" data-target="#downloadFile" class="btn btn-primary btn-circle btn-sm" data-datos="{{$documento}}" href="#">
+                                            <i class="fa fa-download"></i>
+                                        </a>
+                                        <a data-toggle="modal" data-target="#eliminar-documento" class="btn btn-danger btn-circle btn-sm" data-datos="{{$documento}}" href="#">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                             @empty
-                            <tr>
-                                <td colspan="5">Ningún documento registrado.</td>
-                            </tr>
+                                <tr>
+                                    <td colspan="5">Ningún documento registrado.</td>
+                                </tr>
                             @endforelse
                         </tbody>
                     </table>

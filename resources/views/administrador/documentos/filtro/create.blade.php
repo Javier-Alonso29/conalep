@@ -58,11 +58,21 @@
 							<div class="col">
 								<label for="id_subproceso">Proceso personal</label>
 								<select class="custom-select mr-sm-2" name="proceso_personal" required>
-									
-									
 									<option value="{{$proceso_personal->id}}">{{$proceso_personal->codigo}}</option>
-								
-								
+								</select>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="row">
+							<div class="col">
+								<label for="id_subproceso">Ciclo</label>
+								<select class="custom-select mr-sm-2" name="ciclo" required>
+									<option selected value> ---- </option>
+									@foreach($ciclos as $ciclo)
+									<option value="{{$ciclo->id}}">{{$ciclo->nombre}}</option>
+									@endforeach
 								</select>
 							</div>
 						</div>

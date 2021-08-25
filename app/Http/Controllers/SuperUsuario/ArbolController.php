@@ -25,7 +25,7 @@ class ArbolController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('SUEstatal');
+        $this->middleware('SuperUsuario');
     }
 
     /**
@@ -43,7 +43,16 @@ class ArbolController extends Controller
             $documentos = Documento::all();
             $procesosPersonales = ProcesoPersonal::all();
         }else{
-
+            $subprocesos = Subproceso::all();
+            $process = Proceso::all();
+            $procesosPersonales = ProcesoPersonal::where('id_plantel', Auth::user()->id_plantel)->get();
+            $procesos_id = array();
+            foreach($procesosPersonales as $proceso){
+                $ids = $proceso->id;
+                array_push($procesos_id, $ids);
+            }
+            
+            $documentos = Documento::whereIn('id_proceso_personal', $procesos_id)->get();
         }
         return view('superusuario.VistaArbol', compact('process', 'subprocesos', 'documentos', 'procesosPersonales'));
     }

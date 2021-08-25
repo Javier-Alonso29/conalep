@@ -68,6 +68,7 @@
                                 <th>Nombre</th>
                                 <th>Tipo de Documento</th>
                                 <th>Proceso Personal</th>
+                                <th>Ciclo</th>
                                 <th>Operaciones</th>
                             </tr>
                         </thead>
@@ -79,7 +80,7 @@
                                 <td>{{ $documento->nombre  }}</td>
                                 <td>{{ $documento->tipodocumento->codigo  }}</td>
                                 <td>
-                                    <a class="btn btn-success btn-circle btn-sm" href="{{route('misCarpetas.bySubproceso',$documento->id)}}" role="button">
+                                    <a class="btn btn-success btn-circle btn-sm" href="{{route('misCarpetas.bySubproceso',$documento->procesopersonal->id_proceso)}}" role="button">
                                         <i class="fas fa-angle-double-left"> {{ $documento->procesopersonal->codigo  }}</i>
                                     </a>
                                 </td>

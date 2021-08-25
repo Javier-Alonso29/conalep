@@ -10,6 +10,7 @@ use App\Models\Planteles;
 use App\Models\Proceso;
 use App\Models\Subproceso;
 use App\Models\Tipodocumento;
+use App\Models\ProcesoPersonal;
 use App\Models\Documento;
 
 class HomeController extends Controller
@@ -31,8 +32,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $admin = User::where('rol_id',2)->get();
-        $cantidad_admins = User::where('rol_id',2)->count();
+        $admin = User::where('rol_id',2)->where('id_plantel', Auth::user()->id_plantel)->get();
+        $cantidad_admins = $admin->count();
 
         $planteles = Planteles::get();
         $cantidad_planteles = Planteles::count(); 
@@ -44,11 +45,21 @@ class HomeController extends Controller
         $subprocesos_cantidad = Subproceso::all()->count();
         // Se obtienen la cantidad de tipos de documentos dentro de los registros.
         $cantidad_tipos_documentos = Tipodocumento::all()->count();
-        // Se obtienen la cantidad de documentos dentro de los registros.
-        $cantidad_documentos = Documento::all()->count();
+        // Se obtienen todos los procesos personales que han sido registrados dentro del sistema por el plantel especifico.
+        $procesos_personales_array = ProcesoPersonal::where('id_plantel', '=', Auth::user()->id_plantel)->get();
+        // Se hace un conteo a todos los procesos personales que han sido creados en el plantel.
+        $cantidad_procesos = $procesos_personales_array->count();
+        // Se crea un arreglo en el que se van a almacenar todos los ids de los procesos que contienen un documento.
+        $procesos_id = array();
+        foreach($procesos_personales_array as $proceso){
+            $ids = $proceso->id;
+            array_push($procesos_id, $ids);
+        }
         
+        // Se obtienen la cantidad de documentos dentro de los registros que coinciden con los procesos personales del plantel.
+        $cantidad_documentos = Documento::whereIn('id_proceso_personal', $procesos_id)->count();
 
         return view('superusuario.home', compact('admin','cantidad_admins','procesos_cantidad',
-                                        'subprocesos_cantidad', 'cantidad_tipos_documentos', 'cantidad_documentos'));
+                                        'subprocesos_cantidad', 'cantidad_tipos_documentos', 'cantidad_documentos', 'cantidad_procesos'));
     }
 }

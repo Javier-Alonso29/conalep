@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Validator;
 use Auth;
 use App\Models\ProcesoPersonal;
+use App\Models\ActividadesAdministradores;
 use Illuminate\Validation\Rule;
 
 class ProcesosPersonalesController extends Controller
@@ -24,25 +25,47 @@ class ProcesosPersonalesController extends Controller
      */
     public function index()
     {
-        $procesos_p = Auth::user()->procesos;
-        $arreglo_subprocesos = array();
-        foreach($procesos_p as $proceso)
-        {
-            $subproceso = $proceso->subprocesos;
-            array_push($arreglo_subprocesos, $subproceso);
+        if(Auth::user()->rol_id == 3){
+            $procesos_p = Proceso::all();
+            $procesos_personales = ProcesoPersonal::all();
+        }elseif (Auth::user()->rol_id == 1) {
+            $procesos_p = Proceso::all();
+            $procesos_personales = ProcesoPersonal::where('id_plantel', Auth::user()->id_plantel)->get();
+        }else{
+            $procesos_p = Auth::user()->procesos;
+            $arreglo_subprocesos = array();
+            foreach($procesos_p as $proceso)
+            {
+                $subproceso = $proceso->subprocesos;
+                array_push($arreglo_subprocesos, $subproceso);
+            }
+            
+            $procesos_personales = ProcesoPersonal::where('id_usuario', '=', Auth::user()->id)->get();
         }
-
-        $procesos_personales = ProcesoPersonal::where('id_usuario', '=', Auth::user()->id)->get();
-        return view('administrador.personales.index', compact('procesos_personales','procesos_p'));
-    }
+            return view('administrador.personales.index', compact('procesos_personales','procesos_p'));
+        }
 
     public function indexbySubproceso($id){
 
-        $subproceso = Subproceso::FindOrFail($id);
+        $proceso = Proceso::FindOrFail($id);
+        $subprocesos = Subproceso::where('id_proceso',$proceso->id)->get();
 
-        $procesos_personales = $subproceso->procesospersonales;
+        if (Auth::user()->rol_id == 3) {
 
-        return view('administrador.personales.filtro.index', compact('procesos_personales','subproceso'));
+            $procesos_personales = ProcesoPersonal::where('id_proceso', $proceso->id)->get();
+
+        }elseif (Auth::user()->rol_id == 1) {
+
+            $procesos_personales = ProcesoPersonal::where('id_proceso', $proceso->id)->
+                where('id_plantel', Auth::user()->id_plantel)->get();
+
+        }else{
+
+            $procesos_personales = ProcesoPersonal::where('id_proceso', $proceso->id)->
+                where('id_usuario', Auth::user()->id)->get();
+                
+        }
+        return view('administrador.personales.filtro.index', compact('procesos_personales','proceso','subprocesos'));
 
     }
 
@@ -89,6 +112,10 @@ class ProcesosPersonalesController extends Controller
         $proceso_personal->id_plantel = Auth::user()->plantel->id;
         $proceso_personal->id_usuario = Auth::user()->id;
         $proceso_personal->save();
+        $actividad = new ActividadesAdministradores($request->all());
+        $actividad->id_user = $request->id_user;
+        $actividad->accion = 'Creó el proceso personal "'.$request->nombre.'" ('.$request->codigo.')';
+        $actividad->save();
 
         // Hacemos la carpeta
         $subproceso = Subproceso::find($subproceso_id);
@@ -104,6 +131,7 @@ class ProcesosPersonalesController extends Controller
         
 
         if($access === true){
+            
             return redirect()->route('misCarpetas.index')->With('success', 'Se creo correctamente el proceso personal.');
         }else{
             return redirect()->route('misCarpetas.index')->With('error', 'No se pudo crear el proceso personal.');
@@ -158,6 +186,10 @@ class ProcesosPersonalesController extends Controller
         if($access){
 
             $proceso_personal->delete();
+            $actividad = new ActividadesAdministradores();
+            $actividad->id_user = $request->id_user;
+            $actividad->accion = 'Eliminó el proceso personal "'.$proceso->nombre.'" ('.$proceso->codigo.')';
+            $actividad->save();
             return redirect()->route('misCarpetas.index')->With('success', 'Se borro correctamente el proceso.');
 
         }else{
@@ -209,7 +241,10 @@ class ProcesosPersonalesController extends Controller
         }
 
         if($proceso_personal->save()){
-            
+            $actividad = new ActividadesAdministradores();
+            $actividad->id_user = $request->id_user;
+            $actividad->accion = 'Modificó el proceso personal "'.$proceso->nombre.'" ('.$proceso->codigo.')';
+            $actividad->save();
             return redirect()->route('misCarpetas.index')->With("success","Proceso actualizado correctamente!");
         }else{
             return redirect()->route('misCarpetas.index')->With("error","No se pudo actualizar el proceso");

@@ -74,18 +74,13 @@
                                 <td>{{ $tipo->nombre  }}</td>
                                 <td>{{ $tipo->codigo  }}</td>
                                 <td>
-                                    <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar-tipodocumento" href="#" data-datos="{{$tipo}}">
-                                        <i class="fa fa-trash"></i>
-                                    </a>
-
                                     <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar-tipodocumento" href="#" data-datos="{{$tipo}}">
                                         <i class="fa fa-edit"></i>
                                     </a>
 
-                                    <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#downloadFolder-tipodocumento" href="#" data-datos="{{$tipo}}">
-                                        <i class="fa fa-download"></i>
+                                    <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar-tipodocumento" href="#" data-datos="{{$tipo}}">
+                                        <i class="fa fa-trash"></i>
                                     </a>
-
                                 </td>
                             </tr>
                             @empty
@@ -130,7 +125,6 @@
 @include('administrador.tipodocumento.create')
 @include('administrador.tipodocumento.delete')
 @include('administrador.tipodocumento.edit')
-@include('administrador.tipodocumento.downloadFolder')
 @endsection
 
 @section('scripts')

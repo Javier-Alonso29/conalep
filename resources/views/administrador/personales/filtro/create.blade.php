@@ -3,7 +3,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header bg-dark">
-				<h5 class="modal-title" id="exampleModalLabel">Registrar nuevo proceso personal dentro de <span class="badge badge-danger">{{$subproceso->nombre}}</span></h5>
+				<h5 class="modal-title" id="exampleModalLabel">Registrar nuevo proceso personal dentro de <span class="badge badge-danger">{{$proceso->nombre}}</span></h5>
 				<span class="badge badge-danger" class="close"  data-dismiss="modal" aria-label="Close">
                         <i class="fas fa-times fa-lg" style="color:#fff"></i>
                 </span>
@@ -17,7 +17,7 @@
 					<div class="form-group">
 						<label for="inicio">Proceso</label>
 						<select class="form-control" id="select-proceso" name="proceso">
-                            <option value="{{ $subproceso->proceso->id }}">{{ $subproceso->proceso->nombre }}</option>
+                            <option value="{{ $proceso->id }}">{{ $proceso->nombre }}</option>
                         </select>
 						@if ($errors->has('proceso'))
 						<span class="invalid-feedback" role="alert">
@@ -30,7 +30,9 @@
 					<div class="form-group">
 						<label for="inicio">Sub proceso</label>
 						<select class="form-control" id="select-subProceso" name="subproceso">
-                            <option value="{{ $subproceso->id }}">{{ $subproceso->nombre }}</option>
+							@foreach ($subprocesos as $subproceso)
+                            	<option value="{{ $subproceso->id }}">{{ $subproceso->nombre }}</option>
+							@endforeach
                         </select>
 						@if ($errors->has('subproceso'))
 						<span class="invalid-feedback" role="alert">

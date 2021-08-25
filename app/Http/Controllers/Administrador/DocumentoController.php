@@ -14,6 +14,7 @@ use App\Http\Requests\CreateDocumentoRequest;
 use App\Models\Ciclo;
 use App\Models\Proceso;
 use App\Models\ProcesoPersonal;
+use App\Models\ActividadesAdministradores;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
@@ -40,33 +41,30 @@ class DocumentoController extends Controller
         $documentos = Documento::get();
         $tipodocumentos = Tipodocumento::orderBy('codigo', 'ASC')->get();
         $ciclos = Ciclo::orderBy('nombre', 'ASC')->get();
-
-        $procesos = Auth::user()->procesos;
-
-        $subprocesos_array = array();
-
-        foreach ($procesos as $proceso) {
-            $subprocesos = $proceso->subprocesos;
-            array_push($subprocesos_array, $subprocesos);
-        }
-
-        $procesos_personales_array = array();
-
-        foreach ($subprocesos_array as $collection) {
-            foreach ($collection as $subproceso) {
-                $procesos_personales = $subproceso->procesospersonales;
-                array_push($procesos_personales_array, $procesos_personales);
+        if(Auth::user()->rol_id == 2){
+            
+            $procesos_personales_array = ProcesoPersonal::where('id_usuario','=',Auth::user()->id)->get();
+            $procesos_id = array();
+            foreach($procesos_personales_array as $proceso){
+                $ids = $proceso->id;
+                array_push($procesos_id, $ids);
             }
-        }
+            
+            $documentos_array = Documento::whereIn('id_proceso_personal', $procesos_id)->get();
+        }elseif (Auth::user()->rol_id == 1) {
 
-        $documentos_array = array();
-        foreach ($procesos_personales_array as $collection) {
-            foreach ($collection as $proceso_personal) {
-                $documentos = $proceso_personal->documentos;
-                array_push($documentos_array, $documentos);
+            $procesos_personales_array = ProcesoPersonal::where('id_plantel', '=', Auth::user()->id_plantel)->get();
+            $procesos_id = array();
+            foreach($procesos_personales_array as $proceso){
+                $ids = $proceso->id;
+                array_push($procesos_id, $ids);
             }
+            
+            $documentos_array = Documento::whereIn('id_proceso_personal', $procesos_id)->get();
+        }else{
+            $procesos_personales_array = ProcesoPersonal::all();
+            $documentos_array = Documento::all();
         }
-
         return view('administrador.documentos.index', 
         compact('documentos_array', 'tipodocumentos', 'procesos_personales_array','ciclos'));
     }
@@ -75,11 +73,11 @@ class DocumentoController extends Controller
     {
         $proceso_personal = ProcesoPersonal::FindOrFail($id);
         $tipodocumentos = Tipodocumento::orderBy('codigo', 'ASC')->get();
-
+        $ciclos = Ciclo::orderBy('nombre', 'ASC')->get();
         $documentos_array = $proceso_personal->documentos;
-
+        $procesos_personales = ProcesoPersonal::where('id_usuario', '=', Auth::user()->id)->get();
         return view('administrador.documentos.filtro.index', 
-        compact('documentos_array', 'tipodocumentos', 'procesos_personales_array','ciclos'));
+        compact('documentos_array', 'tipodocumentos', 'procesos_personales','ciclos','proceso_personal'));
     }
 
     /**
@@ -99,13 +97,28 @@ class DocumentoController extends Controller
         $documento->nombre = $name;
         $documento->id_ciclo = $request->ciclo;
 
-        $assces = $request->file('archivo')->storeAs(
-            $documento->procesopersonal->subproceso->proceso['codigo'] . '/' . 
-            $documento->procesopersonal->subproceso->codigo . '/' . 
-            $documento->procesopersonal->codigo, $name, 'public');
-
-        if ($assces) {
-            $documento->save();
+        if($documento->procesopersonal->id_subproceso != null){
+            $assces = $request->file('archivo')->storeAs(
+                $documento->procesopersonal->subproceso->proceso['codigo'] . '/' . 
+                $documento->procesopersonal->subproceso->codigo . '/' . 
+                $documento->procesopersonal->codigo, $name, 'public');
+                
+            if ($assces) {
+                $documento->save();
+                $actividad = new ActividadesAdministradores();
+                $actividad->id_user = Auth::user()->id;
+                $actividad->accion = 'Guardó el documento "'.$documento->nombre.'" en el proceso personal: '.$documento->procesopersonal->nombre.'';
+                $actividad->save();
+            }
+        }else{
+            $assces = $request->file('archivo')->storeAs(
+                $documento->procesopersonal->proceso['codigo'] . '/' .
+                $documento->procesopersonal->codigo, $name, 'public');
+                
+            if ($assces) {
+                dd('aqui');
+                $documento->save();
+            }
         }
 
         return redirect()->route('documentos.index')->With('success', 'El documento se creo con exito');
@@ -166,6 +179,10 @@ class DocumentoController extends Controller
         $documento->save();
 
         if ($documento->save()) {
+            $actividad = new ActividadesAdministradores();
+            $actividad->id_user = Auth::user()->id;
+            $actividad->accion = 'Modificó el documento "'.$documento->nombre.'" en el proceso personal: '.$documento->procesopersonal->nombre.'';
+            $actividad->save();
             return redirect()->route('documentos.index')->with("success", "Documento actualizado correctamente!");
         } else {
             return redirect()->route('documentos.index')->with("error", "Documento no actualizado!");
@@ -202,6 +219,10 @@ class DocumentoController extends Controller
         $proceso_doc = Proceso::FindOrFail($subproceso_doc->id_proceso);
 
         $documento->delete();
+        $actividad = new ActividadesAdministradores();
+        $actividad->id_user = Auth::user()->id;
+        $actividad->accion = 'Eliminó el documento "'.$documento->nombre.'" en el proceso personal: '.$documento->procesopersonal->nombre.'';
+        $actividad->save();
 
         Storage::delete(
             '/public' . '/' . $proceso_doc['codigo'] . '/' . $subproceso_doc['codigo'] . '/' . $procper_doc['codigo'] . '/' . $documento->nombre

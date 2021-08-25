@@ -17,11 +17,19 @@ class ProcesoPersonal extends Model
     ];
 
     /**
-     * Un subproceso pertenece a un proceso
+     * Un subproceso pertenece a un subproceso
      */
     public function subproceso()
     {
         return $this->belongsTo(Subproceso::class, 'id_subproceso');
+    }
+
+    /**
+     * Un subproceso pertenece a un proceso
+     */
+    public function proceso()
+    {
+        return $this->belongsTo(Proceso::class, 'id_proceso');
     }
 
     /**

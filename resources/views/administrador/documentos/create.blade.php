@@ -58,10 +58,8 @@
 							<div class="col">
 								<label for="id_subproceso">Proceso personal</label>
 								<select class="custom-select mr-sm-2" name="proceso_personal" required>
-									@foreach($procesos_personales_array as $collection)
-									@foreach($collection as $proceso_personal)
-									<option value="{{$proceso_personal->id}}">{{$proceso_personal->codigo}}</option>
-									@endforeach
+									@foreach($procesos_personales_array as $proceso_personal)
+										<option value="{{$proceso_personal->id}}">{{$proceso_personal->codigo}}</option>
 									@endforeach
 								</select>
 							</div>

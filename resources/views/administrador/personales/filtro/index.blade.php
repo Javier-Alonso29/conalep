@@ -8,15 +8,14 @@
       <div class="row mb-2">
 
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Procesos personales del subproceso <span class="badge badge-danger">{{$subproceso->nombre}}</span></h1>
+            <h1 class="m-0 text-dark">Procesos personales del proceso <span class="badge badge-danger">{{$proceso->nombre}}</span></h1>
           </div>
 
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('inicio') }}">Inicio</a></li>
               <li class="breadcrumb-item"><a href="{{ route('procesos.index') }}">Procesos</a></li>
-              <li class="breadcrumb-item"><a href="{{ route('subproceso.byproceso', $subproceso->proceso->id) }}">{{$subproceso->proceso->nombre}}</a></li>
-              <li class="breadcrumb-item active" aria-current="page">{{$subproceso->nombre}}</li>
+              <li class="breadcrumb-item"><a href="{{ route('subproceso.byproceso', $proceso->id) }}">{{$proceso->nombre}}</a></li>
             </ol>
         </div>
 
