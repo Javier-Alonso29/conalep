@@ -165,9 +165,7 @@
 
     $('#downloadFile').on('show.bs.modal', function(e) {
         var documento = $(e.relatedTarget).data().datos;
-        var typedoc = $(e.relatedTarget).data().typedocnum;
         console.log(documento);
-        $('#downloadFile_typedocnum').val(typedoc);
         $('#downloadFile_id').val(documento.id);
         $('#downloadFile_name').text(documento.nombre);
     });

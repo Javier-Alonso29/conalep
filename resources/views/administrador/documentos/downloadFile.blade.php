@@ -20,7 +20,6 @@
 					</span>
 					@endif
 					<input type="hidden" name="id" id="downloadFile_id">
-					<input type="hidden" name="typedocnum" id="downloadFile_typedocnum">
 				</div>
 				<input type="hidden" name="id_user" value={{Auth::user()->id}}>
 				<div class="modal-footer">

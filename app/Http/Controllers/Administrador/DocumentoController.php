@@ -271,7 +271,7 @@ class DocumentoController extends Controller
         $abv_proceso = $proc->codigo;
 
         $tipo_documento = Tipodocumento::FindOrFail($documento->id_tipodocumento)->codigo;
-        $num_consecutivo = $request->typedocnum;
+        $num_consecutivo = "01";
 
         $full_name = 
         '16-'.
