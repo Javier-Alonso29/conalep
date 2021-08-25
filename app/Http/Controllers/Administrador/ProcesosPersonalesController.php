@@ -178,10 +178,17 @@ class ProcesosPersonalesController extends Controller
         // Encontramos el proceso origen
         $proceso = Proceso::FindOrFail($request->id_proceso);
 
+        $subproceso_id = $subproceso->id;
+
         /**
         * Se elimina el directorio con el codigo del nuevo proceso
         */
-        $access = Storage::deleteDirectory('public/'.$proceso->codigo.'/'.$subproceso->codigo.'/'.$proceso_personal->codigo);
+        if($subproceso_id === null){
+            $access = Storage::deleteDirectory('public/'.$proceso->codigo.'/'.$proceso_personal->codigo);
+        }else{
+            $access = Storage::deleteDirectory('public/'.$proceso->codigo.'/'.$subproceso->codigo.'/'.$proceso_personal->codigo);
+        }
+        
 
         if($access){
 

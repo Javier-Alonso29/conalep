@@ -45,7 +45,7 @@
         <div class="container">
 
         <div class="row justify-content-md-center">
-        <p>Developed by: </p>
+        <p>Desarrollado por: </p>
             <div class=" col-sm-1">
                 
                 <a href="https://cozcyt.gob.mx/labsol/" target="_blank" data-toggle="lightbox" data-title="sample 1 - white">

@@ -56,7 +56,7 @@
                 <h3 class="card-title">Todos tus procesos personales</h3>
 
                 <div class="card-tools">
-                    <a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo proceso</a>
+                    <a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo proceso personal</a>
 
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                         <i class="fas fa-minus"></i>
@@ -101,7 +101,7 @@
                                         <i class="fa fa-download"></i>
                                     </a>
                                     
-                                    <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar_fitro_subproceso"  href="#" data-datos="{{$proceso}}">
+                                    <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar"  href="#" data-datos="{{$proceso}}">
                                         <i class="fa fa-trash" ></i>
                                     </a>
                                     
@@ -156,8 +156,8 @@
         let proceso_origen = $(e.relatedTarget).data().proceso;
         let subproceso_origen = $(e.relatedTarget).data().subproceso;
         $('#eliminarId').val(proceso.id);
-        $('#proceso_origen').val(proceso_origen.id);
-        $('#subproceso_origen').val(subproceso_origen.id);
+        $('#proceso_origen').val(proceso.id_proceso);
+        $('#subproceso_origen').val(proceso.id_subproceso);
 		$('#nombre_proceso').text(proceso.codigo);
 	});
 
@@ -170,8 +170,8 @@
         $('#edit_descripcion').val(proceso.descripcion);
 		$('#id_proceso').val(proceso.id);
 
-        $('#proceso_o').val(proceso_origen.id);
-        $('#subproceso_o').val(subproceso_origen.id);
+        $('#proceso_o').val(proceso.id_proceso);
+        $('#subproceso_o').val(proceso.id_subproceso);
 	});
 
 

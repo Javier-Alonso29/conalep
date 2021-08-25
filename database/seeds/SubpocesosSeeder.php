@@ -105,7 +105,7 @@ class SubprocesosSeeder extends Seeder
 
 
 
-        //SUBPROCESOS DEL PROCESO CONALEP
+        //SUBPROCESOS DEL PROCESO MEJORA
         DB::table('subprocesos')->insert(['nombre'=>'Mejora continua','id_proceso'=>'7','codigo'=>'MC','descripcion'=>' ']);
        
     }

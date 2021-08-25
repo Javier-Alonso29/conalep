@@ -15,6 +15,8 @@
 					@method('PUT')
 					<input type="hidden" name="id_plantel" id="id_plantel">
 
+					
+
 					<div class="ccontainer-fluid">
 						<div class="row">
 							<div class="col">
@@ -41,6 +43,16 @@
 						@if ($errors->has('clave_trabajo'))
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $errors->first('clave_trabajo') }}</strong>
+						</span>
+						@endif
+					</div>
+
+					<div class="form-group">
+						<label for="inicio">Nombre de plantel</label>
+						<input id="nombre_plantel" required type="text" name="nombre_plantel" class="form-control {{ $errors->has('nombre_plantel') ? ' is-invalid' : '' }}" autocomplete="off" value="{{ old('nombre_plantel') }}">
+						@if ($errors->has('nombre_plantel'))
+						<span class="invalid-feedback" role="alert">
+							<strong>{{ $errors->first('nombre_plantel') }}</strong>
 						</span>
 						@endif
 					</div>

@@ -79,7 +79,7 @@ class SubprocesosController extends Controller
             return redirect()->route('subprocesos.index')->With('success', 'El subproceso '.$subproceso->codigo.' se creo con exito');
 
         }else{
-            return redirect()->route('subprocesos.index')->With('error', 'No se creo el directorio de nuevo subproceso');
+            return redirect()->route('subprocesos.index')->With('error', 'No se creo el directorio del nuevo subproceso');
         }
     }
 
@@ -273,7 +273,7 @@ class SubprocesosController extends Controller
 
             return redirect()->route('subprocesos.index')->with("success", "Subproceso actualizado correctamente!");
         } else {
-            return redirect()->route('subprocesos.index')->with("error", "Subproceso no actualizada!");
+            return redirect()->route('subprocesos.index')->with("error", "Subproceso no actualizado!");
         }
     }
 

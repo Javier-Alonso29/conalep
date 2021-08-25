@@ -12,6 +12,17 @@
 				<form method="POST" action="{{ route('planteles.store') }}">
 					@csrf
 
+					<!-- from grup -->
+					<div class="form-group">
+						<label for="nombre_plantel">Nombre del plantel</label>
+						<input type="text" name="nombre_plantel" class="form-control {{ $errors->has('nombre_plantel') ? ' is-invalid' : '' }}" autocomplete="off" >
+						@if ($errors->has('nombre_plantel'))
+						<span class="invalid-feedback" role="alert">
+							<strong>{{ $errors->first('nombre_plantel') }}</strong>
+						</span>
+						@endif
+					</div>
+
 					@if ($errors->has('municipio'))
 						<div role="alert">{{ $errors->first('municipio') }}</div>
 					@endif
