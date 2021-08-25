@@ -70,7 +70,7 @@
                                     @endforeach
                                 </td>
                                 <td>
-                                    @foreach ($procesosPersonales as $ProcesoP) {{-- Pendiente a solucionar debido al problema de la tabla de procesos --}}
+                                    @foreach ($procesosPersonales as $ProcesoP)
                                         @foreach ($documentos as $documento)
                                             @if (($ProcesoP->id === $documento->id_proceso_personal) && ($ProcesoP->id_proceso === $proceso->id))
                                                 <ol>{{$documento->nombre}}</ol>

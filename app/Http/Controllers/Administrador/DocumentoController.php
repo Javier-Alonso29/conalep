@@ -14,6 +14,7 @@ use App\Http\Requests\CreateDocumentoRequest;
 use App\Models\Ciclo;
 use App\Models\Proceso;
 use App\Models\ProcesoPersonal;
+use App\Models\ActividadesAdministradores;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 
@@ -104,6 +105,10 @@ class DocumentoController extends Controller
                 
             if ($assces) {
                 $documento->save();
+                $actividad = new ActividadesAdministradores();
+                $actividad->id_user = Auth::user()->id;
+                $actividad->accion = 'Guardó el documento "'.$documento->nombre.'" en el proceso personal: '.$documento->procesopersonal->nombre.'';
+                $actividad->save();
             }
         }else{
             $assces = $request->file('archivo')->storeAs(
@@ -111,6 +116,7 @@ class DocumentoController extends Controller
                 $documento->procesopersonal->codigo, $name, 'public');
                 
             if ($assces) {
+                dd('aqui');
                 $documento->save();
             }
         }
@@ -173,6 +179,10 @@ class DocumentoController extends Controller
         $documento->save();
 
         if ($documento->save()) {
+            $actividad = new ActividadesAdministradores();
+            $actividad->id_user = Auth::user()->id;
+            $actividad->accion = 'Modificó el documento "'.$documento->nombre.'" en el proceso personal: '.$documento->procesopersonal->nombre.'';
+            $actividad->save();
             return redirect()->route('documentos.index')->with("success", "Documento actualizado correctamente!");
         } else {
             return redirect()->route('documentos.index')->with("error", "Documento no actualizado!");
@@ -209,6 +219,10 @@ class DocumentoController extends Controller
         $proceso_doc = Proceso::FindOrFail($subproceso_doc->id_proceso);
 
         $documento->delete();
+        $actividad = new ActividadesAdministradores();
+        $actividad->id_user = Auth::user()->id;
+        $actividad->accion = 'Eliminó el documento "'.$documento->nombre.'" en el proceso personal: '.$documento->procesopersonal->nombre.'';
+        $actividad->save();
 
         Storage::delete(
             '/public' . '/' . $proceso_doc['codigo'] . '/' . $subproceso_doc['codigo'] . '/' . $procper_doc['codigo'] . '/' . $documento->nombre

@@ -92,7 +92,18 @@
 
         @if ((Auth::user()->rol_id) == 1 || (Auth::user()->rol_id) == 3)
         <div class="row">
-      
+          
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <a class="info-box-icon bg-primary elevation-1" href="{{ route('misCarpetas.index') }}">
+                <i class="fas fa-folder"></i>
+              </a>
+              <div class="info-box-content">
+                  <span class="info-box-text">Procesos personales</span>
+                  <span class="info-box-number">{{$cantidad_procesos}}</span>
+              </div>
+            </div>
+          </div>
 
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box">

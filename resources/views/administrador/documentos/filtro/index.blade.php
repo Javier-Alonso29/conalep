@@ -68,6 +68,7 @@
                                 <th>Nombre</th>
                                 <th>Tipo de Documento</th>
                                 <th>Proceso Personal</th>
+                                <th>Ciclo</th>
                                 <th>Operaciones</th>
                             </tr>
                         </thead>

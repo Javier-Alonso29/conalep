@@ -11,6 +11,7 @@ use App\Models\Proceso;
 use App\Models\Subproceso;
 use App\Models\Tipodocumento;
 use App\Models\Documento;
+use App\Models\ProcesoPersonal;
 
 class HomeController extends Controller
 {
@@ -46,9 +47,11 @@ class HomeController extends Controller
         $cantidad_tipos_documentos = Tipodocumento::all()->count();
         // Se obtienen la cantidad de documentos dentro de los registros.
         $cantidad_documentos = Documento::all()->count();
+        // Se obtienen todos los procesos personales que han sido registrados dentro del sistema.
+        $cantidad_procesos = ProcesoPersonal::all()->count();
         
 
         return view('SUEstatal.home', compact('admin','cantidad_admins','planteles','cantidad_planteles','procesos_cantidad',
-                                                'subprocesos_cantidad', 'cantidad_tipos_documentos', 'cantidad_documentos'));
+                                                'subprocesos_cantidad', 'cantidad_tipos_documentos', 'cantidad_documentos', 'cantidad_procesos'));
     }
 }
