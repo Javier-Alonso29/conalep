@@ -113,7 +113,7 @@
     <!-- Row -->
 </section>
 
-<a data-toggle="modal" data-target="#crear" class="btn btn-success back-to-top" role="button" href="#" >
+<a data-toggle="modal" data-target="#crear" class="btn btn-success back-to-top" role="button" href="#">
     <i class="fas fa-plus fa-lg"></i>
 </a>
 
@@ -124,7 +124,7 @@
 
 @endsection
 
-@section('scripts')s
+@section('scripts')
 <script type="text/javascript">
     $('#editar-documento').on('show.bs.modal', function(e) {
         var documento = $(e.relatedTarget).data().datos;
