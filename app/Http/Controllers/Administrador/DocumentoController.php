@@ -292,7 +292,25 @@ class DocumentoController extends Controller
         $abv_proceso = $proc->codigo;
 
         $tipo_documento = Tipodocumento::FindOrFail($documento->id_tipodocumento)->codigo;
-        $num_consecutivo = "01";
+
+        $docs = Documento::get();
+        $sorteddocs = $docs->sortBy('created_at');
+        $doctype = $documento->id_tipodocumento;
+        $docsoftype = [];
+
+        foreach ($sorteddocs as $docfor) {
+            if ($docfor->id_tipodocumento == $doctype) {
+                $docsoftype[] = $docfor;
+            }
+        }
+
+        $num_consecutivo = 1;
+        foreach ($docsoftype as $docfor) {
+            if ($docfor->id == $documento->id) {
+                break;
+            }
+            $num_consecutivo = $num_consecutivo + 1;
+        }
 
         $full_name = 
         '16-'.
