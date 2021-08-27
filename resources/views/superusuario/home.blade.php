@@ -117,7 +117,7 @@
             </div>
           </div>
 
-          @if ((Auth::user()->rol_id) == 3)
+          @if ((Auth::user()->rol_id) == 3 || (Auth::user()->rol_id) == 1)
           <div class="col-12 col-sm-6 col-md-3">
             <div class="info-box">
               

@@ -58,7 +58,7 @@ class AdministradoresController extends Controller
         $usuario->rol_id = 2;
         # Saber que super usuario esta logeado y asi obtener el plantel al que pertenece
         $plantel = Auth::user()->plantel;
-        $usuario->id_plantel = $plantel->id;
+        $usuario->id_plantel = $request->plantel;
         $usuario->save();
          
 
@@ -251,7 +251,7 @@ class AdministradoresController extends Controller
 
     
     /**
-     * Metodo que regresa una lista de municipios
+     * Metodo que regresa una lista de planteles
      */
     public function api_planteles()
     {

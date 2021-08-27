@@ -65,6 +65,7 @@
                             <th>#</th>
                             <th>Nombre</th>
                             <th>Correo</th>
+                            <th>Plantel</th>
                             <th>Fecha registro</th>
                             <th>Procesos</th>
                             <th>Operaciones</th>
@@ -76,6 +77,7 @@
                             <td>{{  $loop->iteration  }}</td>
                             <td>{{  $admin->name  }} {{  $admin->apellido_paterno  }} {{  $admin->apellido_materno  }}</td>
                             <td>{{  $admin->email  }}</td>
+                            <td>{{  $admin->plantel->nombre_plantel }}</td>
                             <td>{{ $admin->created_at }}</td>
                             <td>
                                 <a href="{{route('usuario.asigna.permisos', $admin->id)}}" class="btn btn-success btn-circle btn-sm">
@@ -139,15 +141,16 @@
 		console.log(usuario);
 
         //AJAX
-        $.get('/api/administradores/plantel', function(data) {
+        $.get('/api/administradores/plantel', function(data){
             var plantel_administrador = usuario.id_plantel;
             console.log(plantel_administrador);
+            
             var html_select;
             for (var i = 0; i < data.length; i++)
-                if (plantel_administrador == data[i].id)
-                    html_select += '<option value="' + data[i].id + '" selected>' + data[i].nombre_plantel + '</option>';
+                if (plantel_administrador == data[i].id_plantel)
+                    html_select += '<option value="' + data[i].id_plantel + '" selected>' + data[i].plantel.nombre_plantel + '</option>';
                 else
-                    html_select += '<option value="' + data[i].id + '">' + data[i].nombre_plantel + '</option>';
+                    html_select += '<option value="' + data[i].id_plantel + '">' + data[i].plantel.nombre_plantel + '</option>';
             $('#select-plantel').html(html_select);
         });
 
@@ -157,7 +160,6 @@
 		$('#apellido_paterno').val(usuario.apellido_paterno);
 		$('#apellido_materno').val(usuario.apellido_materno);
         $('#email').val(usuario.email);
-        $('#plantel').val(usuario.id_plantel);
 
 	});
 

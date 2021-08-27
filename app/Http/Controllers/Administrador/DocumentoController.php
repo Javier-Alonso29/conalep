@@ -157,7 +157,7 @@ class DocumentoController extends Controller
                 $documento->procesopersonal->codigo, $name, 'public');
                 
             if ($assces) {
-                dd('aqui');
+                
                 $documento->save();
             }
         }

@@ -81,12 +81,27 @@
                     </thead>
                     <tbody>
                         @forelse($actividades->reverse() as $actividad)
-                        <tr>
-                            <td>{{$actividad->usuario->name}} {{$actividad->usuario->apellido_paterno}} {{$actividad->usuario->apellido_materno}}</td>
-                            <td>ZACATECAS</td>
-                            <td>{{$actividad->accion}}</td>
-                            <td>{{$actividad->created_at}}</td>
-                        </tr>
+
+                        @if ((Auth::user()->rol_id) == 3)
+                            <tr>
+                                <td>{{$actividad->usuario->name}} {{$actividad->usuario->apellido_paterno}} {{$actividad->usuario->apellido_materno}}</td>
+                                <td>{{$actividad->usuario->plantel->nombre_plantel}} </td>
+                                <td>{{$actividad->accion}}</td>
+                                <td>{{$actividad->created_at}}</td>
+                            </tr>
+                        @else
+
+                            @if ((Auth::user()->id_plantel) == $actividad->usuario->id_plantel)
+                                <tr>
+                                    <td>{{$actividad->usuario->name}} {{$actividad->usuario->apellido_paterno}} {{$actividad->usuario->apellido_materno}}</td>
+                                    <td>{{$actividad->usuario->plantel->nombre_plantel}} </td>
+                                    <td>{{$actividad->accion}}</td>
+                                    <td>{{$actividad->created_at}}</td>
+                                </tr>
+                            @endif
+
+                        @endif
+
                         @empty
                         <tr>
 							<td colspan="5">Ninguna actividad se ha realizado.</td>
@@ -98,7 +113,7 @@
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer">
-                    
+                
                 </div>
             </div>
             <!-- /.card -->
@@ -107,6 +122,7 @@
 
     </div>
     <!-- Row -->
+
 </section>
 
 
@@ -116,6 +132,8 @@
 @section('scripts')
 
 <script type="text/javascript">
+
+    
     $('#eliminar').on('show.bs.modal', function(e) {
 
     });

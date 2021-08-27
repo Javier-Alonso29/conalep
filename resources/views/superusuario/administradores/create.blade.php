@@ -45,6 +45,21 @@
 						@endif
 					</div>
 
+					<!-- from grup -->
+					<div class="form-group">
+						<div class="row">
+							<div class="col">
+								<label for="id_plantel">Plantel</label>
+								<select class="custom-select mr-sm-2" name="plantel" required>
+									<option selected value> ---- </option>
+									@foreach($planteles as $plantel)
+									<option value="{{$plantel->id}}">{{$plantel->nombre_plantel}}</option>
+									@endforeach
+								</select>
+							</div>
+						</div>
+					</div>
+
                     <!-- from grup -->
 					<div class="form-group">
 						<label for="inicio">E-Mail</label>

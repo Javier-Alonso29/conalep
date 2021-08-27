@@ -72,7 +72,7 @@
                             <th>Nombre</th>
                             <th>Codigo</th>
                             <th>Descripción</th>
-                            <th>Tipos de documentos</th>
+                            <th>Documentos</th>
                             <th>Operaciones</th>
                         </tr>
                     </thead>
