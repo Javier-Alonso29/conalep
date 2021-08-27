@@ -78,7 +78,7 @@
         <div class="inner">
           <h3>Documentos</h3>
 
-            <p>3</p>{{-- Sujeto a cambios debido a que no está hecho completamente (gracias javis jsjsjsjs) --}}
+            <p>{{ $cantidad_documentos }}</p>{{-- Sujeto a cambios debido a que no está hecho completamente (gracias javis jsjsjsjs) --}}
         </div>
         <div class="icon">
         <i class="fas fa-file"></i>
@@ -99,14 +99,9 @@
         <div class="card-header bg-dark">
             <h3 class="card-title">Mis documentos</h3>
             <div class="card-tools">
-              <div class="input-group input-group-sm" style="width: 150px;">
+              {{-- <div class="input-group input-group-sm" style="width: 150px;">
                 <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-default">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </div>
+              </div> --}}
             </div>
         </div>
         <!-- Dody de la tabla principal -->
@@ -114,30 +109,25 @@
           
           <div class="row row-cols-1 row-cols-md-3">
 
-            @forelse($documentos_array as $collection)
-                @foreach($collection as $documento)
-
-                <div class="col mb-6">
-                  <div class="card text-center mb-3" style="width: 18rem;">
+            @forelse($documentos_array as $documento)
+              <div class="col mb-6">
+                <div class="card text-center mb-3" style="width: 18rem;">
                   <!-- Se puede cambiar la imagen, file es de color verde y file2 es de color azul -->
-                      <img src="{{ asset('imagenes/file.png') }}" class="card-img-top" alt="{{ $documento->nombre }}" >
-                      <div class="card-body">
-                      </div>
-                        <a href="Descargar doc" class="list-group-item list-group-item-action active" aria-current="true">
-                          <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">{{$documento->nombre}}</h5>
-                            <small>{{ $documento->created_at }}</small>
-                          </div>
-                          <hr>
-                          <p class="mb-1">Proceso: {{ $documento->procesopersonal->codigo }}</p>
-                          <p class="mb-1">Tipo de documento: {{ $documento->tipodocumento->nombre }}</p>
-                          <small>{{Auth::user()->name}}</small>
-                        </a>
-
-                        
+                  <img href="{{ route('documentos.index') }}" src="{{ asset('imagenes/file.png') }}" class="card-img-top" alt="{{ $documento->nombre }}" >
+                  <div class="card-body">
                   </div>
+                    <a href="{{ route('documentos.index') }}" class="list-group-item list-group-item-action active" aria-current="true">
+                      <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">{{$documento->nombre}}</h5>
+                        <small>{{ $documento->created_at }}</small>
+                      </div>
+                      <hr>
+                      <p class="mb-1">Proceso: {{ $documento->procesopersonal->codigo }}</p>
+                      <p class="mb-1">Tipo de documento: {{ $documento->tipodocumento->nombre }}</p>
+                        <small>{{Auth::user()->name}}</small>
+                      </a>
                 </div>
-                  @endforeach
+              </div>
             @empty 
               
             @endforelse

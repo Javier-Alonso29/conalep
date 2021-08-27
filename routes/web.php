@@ -96,8 +96,9 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 		/**
 		 * Documentos
 		 */
-		Route::get('/documentos/{id}','Administrador\DocumentoController@indexByProcesoPersonal')->name('documentos.byProcesoPersonal');
+		Route::get('/documentos/filtrar','Administrador\DocumentoController@filtrar')->name('documentos.filtrar');
 		Route::resource('/documentos','Administrador\DocumentoController');
+		Route::get('/documentos/{id}','Administrador\DocumentoController@indexByProcesoPersonal')->name('documentos.byProcesoPersonal');
 		Route::post('/documentos/downloadFile','Administrador\DocumentoController@downloadFile')->name('documentos.downloadFile');
 
 		/**
