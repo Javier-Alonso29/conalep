@@ -39,6 +39,7 @@ class DocumentoController extends Controller
      */
     public function index()
     {
+        
         $documentos = Documento::get();
         $tipodocumentos = Tipodocumento::orderBy('codigo', 'ASC')->get();
         $ciclos = Ciclo::orderBy('nombre', 'ASC')->get();
@@ -65,6 +66,39 @@ class DocumentoController extends Controller
         }else{
             $procesos_personales_array = ProcesoPersonal::all();
             $documentos_array = Documento::all();
+        }
+        return view('administrador.documentos.index', 
+        compact('documentos_array', 'tipodocumentos', 'procesos_personales_array','ciclos'));
+    }
+
+    public function filtrar(Request $request)
+    {
+        $documentos = Documento::get();
+        $tipodocumentos = Tipodocumento::orderBy('codigo', 'ASC')->get();
+        $ciclos = Ciclo::orderBy('nombre', 'ASC')->get();
+        $ciclo = $request->filtrar_id;
+
+        if(Auth::user()->rol_id == 2){
+            
+            $procesos_personales_array = ProcesoPersonal::where('id_usuario','=',Auth::user()->id)->get();
+            $procesos_id = array();
+            foreach($procesos_personales_array as $proceso){
+                $ids = $proceso->id;
+                array_push($procesos_id, $ids);
+            }
+            $documentos_array = Documento::whereIn('id_proceso_personal', $procesos_id)->where('id_ciclo', $ciclo)->get();
+        }elseif (Auth::user()->rol_id == 1) {
+
+            $procesos_personales_array = ProcesoPersonal::where('id_plantel', '=', Auth::user()->id_plantel)->get();
+            $procesos_id = array();
+            foreach($procesos_personales_array as $proceso){
+                $ids = $proceso->id;
+                array_push($procesos_id, $ids);
+            }
+            $documentos_array = Documento::whereIn('id_proceso_personal', $procesos_id)->where('id_ciclo', $ciclo)->get();
+        }else{
+            $procesos_personales_array = ProcesoPersonal::all();
+            $documentos_array = Documento::where('id_ciclo', $ciclo)->get();
         }
         return view('administrador.documentos.index', 
         compact('documentos_array', 'tipodocumentos', 'procesos_personales_array','ciclos'));

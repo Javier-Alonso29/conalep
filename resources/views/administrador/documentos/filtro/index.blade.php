@@ -52,11 +52,19 @@
                 <div class="card-header bg-dark">
                     <h3 class="card-title">Documentos</h3>
                     <div class="card-tools">
+                        <div class="btn btn-tool">
+                            <select class="form-select form-select-sm" id="filtro_id" name="filtro_id">
+                                @foreach
+                                <option value={{ $ciclos->id }}>{{ $ciclos->nombre }}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
                         <a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo documento</a>
 
-                        <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                        {{-- <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                             <i class="fas fa-minus"></i>
-                        </button>
+                        </button> --}}
 
                     </div>
                 </div>
@@ -123,6 +131,7 @@
 @include('administrador.documentos.filtro.edit')
 @include('administrador.documentos.delete')
 @include('administrador.documentos.downloadFile')
+@include('administrador.documentos.filtro')
 
 @endsection
 

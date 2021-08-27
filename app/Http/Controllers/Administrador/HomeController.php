@@ -8,6 +8,7 @@ use Auth;
 use App\Models\Subproceso;
 use App\Models\ProcesoPersonal;
 use App\Models\Tipodocumento;
+use App\Models\Documento;
 
 class HomeController extends Controller
 {
@@ -54,12 +55,19 @@ class HomeController extends Controller
         // Se obtienen la cantidad de tipos de documentos dentro de los registros.
         $cantidad_tipos_documentos = Tipodocumento::all()->count();
 
-
-        $documentos_array = array();
+        $procesos_personales_array = ProcesoPersonal::where('id_usuario','=',Auth::user()->id)->get();
+            $procesos_id = array();
+            foreach($procesos_personales_array as $proceso){
+                $ids = $proceso->id;
+                array_push($procesos_id, $ids);
+            }
+            
+        $documentos_array = Documento::whereIn('id_proceso_personal', $procesos_id)->get();
+        $cantidad_documentos = $documentos_array->count();
         
         $cantidad_procesos = ProcesoPersonal::where('id_usuario', '=', Auth::user()->id)->get()->count();
 
         return view('administrador.home', compact('procesos_cantidad', 'documentos_array', 'subprocesos_cantidad',
-                                                    'cantidad_procesos', 'cantidad_tipos_documentos'));
+                                                    'cantidad_procesos', 'cantidad_tipos_documentos', 'cantidad_documentos'));
     }
 }
