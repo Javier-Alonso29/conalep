@@ -39,15 +39,18 @@ class ActividadController extends Controller
      */
     public function index()
     {
+        $plantel_su = Auth::user()->id_plantel;
+        $administradores = User::get();
+        $planteles = Planteles::all();
         $fecha_actual = date('Y');
         /* Elminación automática de historial por año*/
         ActividadesAdministradores::whereYear('created_at','<',$fecha_actual)->delete();
         $actividades = ActividadesAdministradores::paginate(1000);
         $planteles = Planteles::paginate(10);
         $procesos = Proceso::paginate(10);
-        $administradores = User::where('rol_id',2)->get();
+        #$administradores = User::where('rol_id',2)->get();
         $post='';
-        return view('superusuario.actividades.index', compact('actividades','planteles','procesos','administradores','post'));
+        return view('superusuario.actividades.index', compact('actividades','planteles','procesos','administradores','post','plantel_su'));
     }
 
 
@@ -65,37 +68,37 @@ class ActividadController extends Controller
                 $actividades = ActividadesAdministradores::whereDate('created_at', today())->get();
                 $planteles = Planteles::paginate(10);
                 $procesos = Proceso::paginate(10);
-                $administradores = User::where('rol_id',2)->get();
+                $administradores = User::get();
                 break;
             case 2:
                 $actividades = ActividadesAdministradores::whereDate('created_at', Carbon::yesterday())->get();
                 $planteles = Planteles::paginate(10);
                 $procesos = Proceso::paginate(10);
-                $administradores = User::where('rol_id',2)->get();
+                $administradores = User::get();
                 break;
             case 3:
                 $actividades = ActividadesAdministradores::where('created_at', '>=', today()->subDays(7))->get();
                 $planteles = Planteles::paginate(10);
                 $procesos = Proceso::paginate(10);
-                $administradores = User::where('rol_id',2)->get();
+                $administradores = User::get();
                 break;
             case 4:
                 $actividades = ActividadesAdministradores::whereMonth('created_at', date('m'))->get();
                 $planteles = Planteles::paginate(10);
                 $procesos = Proceso::paginate(10);
-                $administradores = User::where('rol_id',2)->get();
+                $administradores = User::get();
                 break;
             case 5:
                 $actividades = ActividadesAdministradores::where('created_at', '>=', today()->subDays(30))->get();
                 $planteles = Planteles::paginate(10);
                 $procesos = Proceso::paginate(10);
-                $administradores = User::where('rol_id',2)->get();
+                $administradores = User::get();
                 break;
             default:
                 $actividades = ActividadesAdministradores::paginate(1000);
                 $planteles = Planteles::paginate(10);
                 $procesos = Proceso::paginate(10);
-                $administradores = User::where('rol_id',2)->get();
+                $administradores = User::get();
             }
         return view('superusuario.actividades.index', compact('actividades','planteles','procesos','administradores','post'));
     }

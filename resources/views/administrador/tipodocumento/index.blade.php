@@ -64,7 +64,9 @@
                                 <th>#</th>
                                 <th>Nombre</th>
                                 <th>Codigo</th>
+                                @if ((Auth::user()->rol_id) == 3)
                                 <th>Operaciones</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -73,6 +75,7 @@
                                 <td>{{ $loop->iteration  }}</td>
                                 <td>{{ $tipo->nombre  }}</td>
                                 <td>{{ $tipo->codigo  }}</td>
+                                @if ((Auth::user()->rol_id) == 3)
                                 <td>
                                     <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar-tipodocumento" href="#" data-datos="{{$tipo}}">
                                         <i class="fa fa-edit"></i>
@@ -82,6 +85,7 @@
                                         <i class="fa fa-trash"></i>
                                     </a>
                                 </td>
+                                @endif
                             </tr>
                             @empty
                             <tr>
