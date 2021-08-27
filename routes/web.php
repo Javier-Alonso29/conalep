@@ -87,18 +87,18 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 		 */
 		Route::get('/misCarpetas/{id}', 'Administrador\ProcesosPersonalesController@indexbySubproceso')->name('misCarpetas.bySubproceso');
 		Route::resource('/misCarpetas', 'Administrador\ProcesosPersonalesController');
-
+		
 		/**
 		 * Tipos de documentos
 		 */
 		Route::resource('/tipodocumento','Administrador\TipodocumentoController');
-
+		
 		/**
 		 * Documentos
 		 */
 		Route::get('/documentos/filtrar','Administrador\DocumentoController@filtrar')->name('documentos.filtrar');
-		Route::resource('/documentos','Administrador\DocumentoController');
 		Route::get('/documentos/{id}','Administrador\DocumentoController@indexByProcesoPersonal')->name('documentos.byProcesoPersonal');
+		Route::resource('/documentos','Administrador\DocumentoController');
 		Route::post('/documentos/downloadFile','Administrador\DocumentoController@downloadFile')->name('documentos.downloadFile');
 
 		/**

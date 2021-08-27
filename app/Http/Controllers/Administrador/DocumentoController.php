@@ -111,6 +111,7 @@ class DocumentoController extends Controller
         $ciclos = Ciclo::orderBy('nombre', 'ASC')->get();
         $documentos_array = $proceso_personal->documentos;
         $procesos_personales = ProcesoPersonal::where('id_usuario', '=', Auth::user()->id)->get();
+        /* dd('aca'); */
         return view('administrador.documentos.filtro.index', 
         compact('documentos_array', 'tipodocumentos', 'procesos_personales','ciclos','proceso_personal'));
     }

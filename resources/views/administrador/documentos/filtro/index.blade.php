@@ -54,12 +54,14 @@
                     <div class="card-tools">
                         <div class="btn btn-tool">
                             <select class="form-select form-select-sm" id="filtro_id" name="filtro_id">
-                                @foreach
-                                <option value={{ $ciclos->id }}>{{ $ciclos->nombre }}}</option>
+                                @foreach( $ciclos as $ciclo )
+                                    <option value={{ $ciclo->id }}>{{ $ciclo->nombre }}</option>
                                 @endforeach
                             </select>
                         </div>
-
+                        <div class="btn btn-tool">
+                            <a href="#" data-toggle="modal" data-target="#filtrar" class="btn btn-success btn-block">Aplicar filtro</a>
+                        </div>
                         <a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo documento</a>
 
                         {{-- <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
@@ -131,7 +133,7 @@
 @include('administrador.documentos.filtro.edit')
 @include('administrador.documentos.delete')
 @include('administrador.documentos.downloadFile')
-@include('administrador.documentos.filtro')
+@include('administrador.documentos.filtrar')
 
 @endsection
 
@@ -185,6 +187,15 @@
     $(document).ready(function() {
         $('.toast').toast('show')
     })
+</script>
+
+<script type="text/javascript">
+    $('#filtrar').on('show.bs.modal', function(e) {
+        var filtrar = document.getElementById("filtro_id");
+        console.log(filtrar.value);
+        var valor = filtrar.value;
+        $('#filtrar_id').val(valor);
+    });
 </script>
 
 @stop
