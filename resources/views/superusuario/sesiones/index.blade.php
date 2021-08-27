@@ -80,13 +80,23 @@
                     </thead>
                     <tbody>
                         @forelse($sesiones->reverse() as $sesion)
-                        @if ((Auth::user()->id_plantel) == $sesion->usuario->id_plantel)
+
+                        @if ((Auth::user()->rol_id) == 3)
                             <tr>
-                                <td>{{$sesion->usuario->name}} {{$sesion->usuario->apellido_paterno}} {{$sesion->usuario->apellido_materno}}</td>
-                                <td>{{$sesion->ip_address}}</td>
-                                <td>{{$sesion->date_time}}</td>
+                                    <td>{{$sesion->usuario->name}} {{$sesion->usuario->apellido_paterno}} {{$sesion->usuario->apellido_materno}}</td>
+                                    <td>{{$sesion->ip_address}}</td>
+                                    <td>{{$sesion->date_time}}</td>
                             </tr>
+                        @else
+                            @if ((Auth::user()->id_plantel) == $sesion->usuario->id_plantel)
+                                <tr>
+                                    <td>{{$sesion->usuario->name}} {{$sesion->usuario->apellido_paterno}} {{$sesion->usuario->apellido_materno}}</td>
+                                    <td>{{$sesion->ip_address}}</td>
+                                    <td>{{$sesion->date_time}}</td>
+                                </tr>
+                            @endif
                         @endif
+
                         @empty
                         <tr>
 							<td colspan="5">No hay accesos registrados aún.</td>

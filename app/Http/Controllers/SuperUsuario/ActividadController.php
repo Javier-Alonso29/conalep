@@ -40,7 +40,7 @@ class ActividadController extends Controller
     public function index()
     {
         $plantel_su = Auth::user()->id_plantel;
-        $administradores = User::get();
+        $administradores = User::all();
         $planteles = Planteles::all();
         $fecha_actual = date('Y');
         /* Elminación automática de historial por año*/

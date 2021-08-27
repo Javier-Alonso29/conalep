@@ -37,7 +37,7 @@
 					
 					<div class="form-group">
 						<label for="inicio">Apellido Materno del Administrador</label>
-						<input id="apellido_materno" required type="text" name="apellido_materno" class="form-control {{ $errors->has('apellido_materno') ? ' is-invalid' : '' }}" autocomplete="off" value="{{ old('apellido_materno') }}" >
+						<input id="apellido_materno"  type="text" name="apellido_materno" class="form-control {{ $errors->has('apellido_materno') ? ' is-invalid' : '' }}" autocomplete="off" value="{{ old('apellido_materno') }}" >
 						@if ($errors->has('apellido_materno'))
 						<span class="invalid-feedback" role="alert">
 							<strong>{{ $errors->first('apellido_materno') }}</strong>
@@ -70,6 +70,7 @@
 							</div>
 						</div>
 					</div>
+
 
 					<input type="hidden" name="id_user" value={{Auth::user()->id}}>
 					
