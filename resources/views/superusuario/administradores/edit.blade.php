@@ -60,10 +60,12 @@
 							<div class="col">
 								<label for="plantel">Plantel del Usuario</label>
 								<select class="custom-select mr-sm-2" name="plantel" id="select-plantel" required>
-									<option value={{ $plantel_su }} selected="{{ $plantel_su }}">{{ $plantel_su }}</option>
 									@foreach($planteles as $plantel)
-										@if ($plantel->id != $plantel_su)
-											<option value="{{ $plantel->id }}"> {{ $plantel->id }} </option>
+										@if ($plantel->id == $plantel_su->id_plantel)
+											<option value="{{ $plantel->id }}" selected="selected"> {{ $plantel->nombre_plantel }} </option>
+										@endif
+										@if ($plantel->id != $plantel_su->id_plantel)
+											<option value="{{ $plantel->id }}"> {{ $plantel->nombre_plantel }} </option>
 										@endif
 									@endforeach
 								</select>

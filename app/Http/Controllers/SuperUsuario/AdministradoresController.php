@@ -44,6 +44,7 @@ class AdministradoresController extends Controller
             $usuario = User::where('rol_id',2)->where('id_plantel', $plantel_su)->paginate(10);
         }
         $planteles = Planteles::all();
+        $plantel_su = Auth::user();
 
         return view('superusuario.administradores.index', compact('usuario','planteles','plantel_su'));
     }

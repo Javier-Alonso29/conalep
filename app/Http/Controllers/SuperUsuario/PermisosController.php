@@ -89,13 +89,13 @@ class PermisosController extends Controller
                 
                 $administrador->procesos()->detach($proceso_a->id);
 
-                return back()->With('success', 'El proceso '.$proceso->nombre.' se desaigno correctamente del administrador '.$administrador->name);
+                return back()->With('success', 'El proceso '.$proceso->nombre.' se desasigno correctamente del administrador '.$administrador->name);
 
             }
 
         }
 
-        return back()->With('error', 'El proceso '.$proceso->nombre.' no esta asignado al administrador '.$administrador->name);
+        return back()->With('error', 'El proceso '.$proceso->nombre.' no está asignado al administrador '.$administrador->name);
         
     }
 
