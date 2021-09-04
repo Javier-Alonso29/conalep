@@ -21,7 +21,7 @@ class CiclosController extends Controller
      */
     public function index()
     {
-        $ciclos = Ciclo::paginate(10);
+        $ciclos = Ciclo::all();
 
         return view('SUEstatal.ciclos.index', compact('ciclos'));
     }
@@ -50,7 +50,7 @@ class CiclosController extends Controller
             $actividad->save();
         }
 
-        return redirect()->route('ciclos.index')->With('success', 'El ciclo esoclar '.$ciclos->nombre.' se creo con éxito');
+        return redirect()->route('ciclos.index')->With('success', 'El ciclo escolar '.$ciclos->nombre.' se creo con éxito')->withInput();
        
     }
 
