@@ -138,6 +138,7 @@
 @include('administrador.subprocesos.filtro.create')
 @include('administrador.subprocesos.filtro.delete')
 @include('administrador.subprocesos.filtro.edit')
+@include('administrador.subprocesos.filtro.downloadFolder')
 @endsection
 
 @section('scripts')

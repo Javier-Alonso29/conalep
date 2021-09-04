@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('titulo','Procesos personales')
+@section('titulo','Procesos Personales')
 
 @section('contenido')
 <div class="content-header">
@@ -15,7 +15,7 @@
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('inicio') }}">Inicio</a></li>
               <li class="breadcrumb-item"><a href="{{ route('procesos.index') }}">Procesos</a></li>
-              <li class="breadcrumb-item"><a href="{{ route('subprocesos.index') }}">Sub procesos</a></li>
+              <li class="breadcrumb-item"><a href="{{ route('subprocesos.index') }}">Subprocesos</a></li>
               <li class="breadcrumb-item active" aria-current="page">Mis procesos</li>
             </ol>
         </div>
@@ -77,31 +77,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($procesos_personales as $proceso)
+                        @forelse($procesos_personales as $proceso_personal)
                             <tr>
                                 <td>{{  $loop->iteration  }}</td>
-                                <td>{{  $proceso->nombre  }}</td>
-                                <td>{{  $proceso->codigo  }}</td>
+                                <td>{{  $proceso_personal->nombre  }}</td>
+                                <td>{{  $proceso_personal->codigo  }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-success btn-circle btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ $proceso->descripcion }}">
+                                    <button type="button" class="btn btn-success btn-circle btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ $proceso_personal->descripcion }}">
                                         <i class="far fa-eye"></i>
                                     </button>
                                 </td>
                                 <td>
-                                    <a class="btn btn-success btn-circle btn-sm" href="{{ route('documentos.byProcesoPersonal', $proceso->id) }}" role="button">
+                                    <a class="btn btn-success btn-circle btn-sm" href="{{ route('documentos.byProcesoPersonal', $proceso_personal->id) }}" role="button">
                                         <i class="fas fa-angle-double-right"></i>
                                     </a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" href="#" data-datos="{{$proceso}}" >
+                                    <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" href="#" data-datos="{{$proceso_personal}}" >
                                         <i class="fa fa-edit" ></i>
                                     </a>
                                     
-                                    <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#downloadFolder" href="#" data-datos="{{$proceso}}" >
+                                    <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#downloadFolder" href="#" data-datos="{{$proceso_personal}}" >
                                         <i class="fa fa-download"></i>
                                     </a>
                                     
-                                    <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar"  href="#" data-datos="{{$proceso}}">
+                                    <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar"  href="#" data-datos="{{$proceso_personal}}">
                                         <i class="fa fa-trash" ></i>
                                     </a>
                                     
@@ -137,13 +137,11 @@
 @include('administrador.personales.create')
 @include('administrador.personales.delete')
 @include('administrador.personales.edit')
+@include('administrador.personales.downloadFolder')
 
 @endsection
 
 @section('scripts')
-
-<script src="{{ asset('js/appis.js') }}"></script>
-
 <script type="text/javascript">
 
     $(function () {
@@ -176,10 +174,10 @@
 
 
     $('#downloadFolder').on('show.bs.modal', function(e) {
-		var proceso = $(e.relatedTarget).data().datos;
-		console.log(proceso);
-        $('#downloadFolder_id').val(proceso.id);
-		$('#codigo_proceso').text(proceso.codigo);
+		var subproceso = $(e.relatedTarget).data().datos;
+		console.log(subproceso);
+        $('#downloadFolder_id').val(subproceso.id);
+		$('#codigo_procpers').text(subproceso.codigo);
     });
 
 </script>

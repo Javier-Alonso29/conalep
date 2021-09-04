@@ -3,7 +3,7 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header bg-black">
-				<h5 class="modal-title" id="exampleModalLabel">Descargar folder <span class="badge badge-danger" id="codigo_proceso"></span></h5>
+				<h5 class="modal-title" id="exampleModalLabel">Descargar folder <span class="badge badge-danger" id="codigo_subproceso"></span></h5>
                 
 				
                     <span class="badge badge-danger" class="close"  data-dismiss="modal" aria-label="Close">
@@ -12,7 +12,7 @@
 			
                 
 			</div>
-			<form  method="POST" action="{{ route('procesos.download.folder') }}" role="form" >
+			<form  method="POST" action="{{ route('subprocesos.download.folder') }}" role="form" >
                 @csrf
                 
 				<div class="modal-body">
@@ -29,7 +29,7 @@
 				</div>
 
 				<input type="hidden" name="id_user" value={{Auth::user()->id}}>
-			
+
 				<div class="modal-footer">
                         
                         

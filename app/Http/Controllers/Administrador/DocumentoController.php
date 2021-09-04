@@ -137,6 +137,14 @@ class DocumentoController extends Controller
         }
 
         $documento->nombre = $name;
+
+        $documentos = Documento::get();
+        foreach ($documentos as $doc) {
+            if ($doc->nombre === $name) {
+                return redirect()->route('documentos.index')->With('error', 'Nombre de documento ya existente');
+            }
+        }
+
         $documento->id_ciclo = $request->ciclo;
 
         if($documento->procesopersonal->id_subproceso != null){

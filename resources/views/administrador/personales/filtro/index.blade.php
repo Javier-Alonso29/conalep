@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('titulo','Subproceso')
+@section('titulo','Procesos Personales')
 
 @section('contenido')
 <div class="content-header">
@@ -8,7 +8,7 @@
       <div class="row mb-2">
 
         <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Procesos personales del proceso <span class="badge badge-danger">{{$proceso->nombre}}</span></h1>
+            <h1 class="m-0 text-dark">Procesos personales del subproceso <span class="badge badge-danger">{{$subproceso->nombre}}</span></h1>
           </div>
 
         <div class="col-sm-6">
@@ -60,7 +60,7 @@
                 <h3 class="card-title">Procesos personales</h3>
 
                 <div class="card-tools">
-                <a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo proceso</a>
+                <a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo proceso personal</a>
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
                     </button>
@@ -73,7 +73,7 @@
                             <th>#</th>
                             <th>Nombre</th>
                             <th>Codigo</th>
-                            <th>Descripcion</th>
+                            <th>Descripción</th>
                             <th>Documentos</th>
                             <th>Operaciones</th>
                         </tr>
@@ -103,7 +103,7 @@
                                         <i class="fa fa-download"></i>
                                     </a>
                                     
-                                    <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar_fitro_subproceso"  href="#" data-datos="{{$proceso_personal}}">
+                                    <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar"  href="#" data-datos="{{$proceso_personal}}">
                                         <i class="fa fa-trash" ></i>
                                     </a>
                                     
@@ -118,6 +118,9 @@
                 </table>
                 </div>
                 <!-- /.card-body -->
+                <div class="card-footer">
+                    
+                </div>
             </div>
             <!-- /.card -->
         </div>
@@ -132,6 +135,9 @@
 </a>
 
 @include('administrador.personales.filtro.create')
+@include('administrador.personales.filtro.edit')
+@include('administrador.personales.delete')
+@include('administrador.personales.downloadFolder')
 
 @endsection
 
@@ -142,7 +148,7 @@
         $('[data-toggle="popover"]').popover()
     })
 
-	$('#eliminar_fitro_subproceso').on('show.bs.modal', function(e) {
+	$('#eliminar').on('show.bs.modal', function(e) {
 		var subproceso = $(e.relatedTarget).data().datos;
 		console.log(subproceso);
         $('#eliminarId').val(subproceso.id);
@@ -160,7 +166,7 @@
 		var subproceso = $(e.relatedTarget).data().datos;
 		console.log(subproceso);
         $('#downloadFolder_id').val(subproceso.id);
-		$('#codigo_subproceso').text(subproceso.codigo);
+		$('#codigo_procpers').text(subproceso.codigo);
     });
     
 </script>
