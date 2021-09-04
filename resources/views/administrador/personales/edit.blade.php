@@ -19,7 +19,7 @@
 					<input type="hidden" name="subproceso_o" id="subproceso_o">
 					
 					<div class="form-group">
-						<label for="inicio">Nombre del proceso</label>
+						<label for="inicio">Nombre del proceso personal</label>
 						<input required type="text" id="edit_proceso" name="nombre" class="form-control {{ $errors->has('nombre') ? ' is-invalid' : '' }}" autocomplete="off" value="{{ old('nombre') }}" >
 						@if ($errors->has('nombre'))
 						<span class="invalid-feedback" role="alert">
@@ -29,7 +29,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="inicio">Codigo del proceso</label>
+						<label for="inicio">Codigo del proceso personal</label>
 						<input required type="text" id="edit_codigo" name="codigo" class="form-control {{ $errors->has('codigo') ? ' is-invalid' : '' }}" autocomplete="off" value="{{ old('codigo') }}" >
 						@if ($errors->has('codigo'))
 						<span class="invalid-feedback" role="alert">
