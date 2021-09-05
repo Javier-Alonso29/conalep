@@ -4,6 +4,7 @@
 		<div class="modal-content">
 			<div class="modal-header bg-black">
 				<h5 class="modal-title" id="exampleModalLabel">Descargar folder <span class="badge badge-danger" id="codigo_procpers"></span></h5>
+
                 
 				
                     <span class="badge badge-danger" class="close"  data-dismiss="modal" aria-label="Close">

@@ -14,8 +14,10 @@
         <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="{{ route('inicio') }}">Inicio</a></li>
-              <li class="breadcrumb-item"><a href="{{ route('procesos.index') }}">Procesos</a></li>
-              <li class="breadcrumb-item"><a href="{{ route('subprocesos.index') }}">Subprocesos</a></li>
+
+              <li class="breadcrumb-item"><a>Procesos</a></li>
+              <li class="breadcrumb-item"><a>Sub procesos</a></li>
+              
               <li class="breadcrumb-item active" aria-current="page">Mis procesos</li>
             </ol>
         </div>

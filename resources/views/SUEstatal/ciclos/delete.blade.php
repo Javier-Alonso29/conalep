@@ -21,7 +21,7 @@
                                     <strong>{{ $errors->delete->first('contraseña') }}</strong>
                                 </span>
                             @endif
-                            <input type="hidden" name="id" id="id">
+                            <input type="hidden" name="id" id="id_ciclo">
                             
                             </div>
                         </div>

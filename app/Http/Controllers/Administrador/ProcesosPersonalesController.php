@@ -191,13 +191,19 @@ class ProcesosPersonalesController extends Controller
         // Encontrar el proceso personal
         $proceso_personal = ProcesoPersonal::FindOrFail($request->id);
 
+        $subproceso_id = null;
+
         // Encontramos el sub proceso origen
-        $subproceso = Subproceso::FindOrFail($request->id_subproceso);
+        if(($request->id_subproceso) == null){
+        
+        }else{
+            $subproceso = Subproceso::FindOrFail($request->id_subproceso);
+            $subproceso_id = $subproceso->id;
+        }
 
         // Encontramos el proceso origen
         $proceso = Proceso::FindOrFail($request->id_proceso);
 
-        $subproceso_id = $subproceso->id;
 
         /**
         * Se elimina el directorio con el codigo del nuevo proceso
@@ -229,6 +235,7 @@ class ProcesosPersonalesController extends Controller
      */
     public function update(Request $request)
     {
+
         // Valida que el proceso tenga un nombre o un codigo
         $validator = Validator::make($request->all(), [
             'nombre' => ['required', Rule::unique('procesos', 'nombre')->ignore($request->proceso)],
@@ -255,11 +262,14 @@ class ProcesosPersonalesController extends Controller
         // Actualizamos los datos del proceso
         $proceso_personal->fill($request->all());
 
+
         // Encontramos el sub proceso origen
-        $subproceso = Subproceso::FindOrFail($request->proceso_o);
+        #$subproceso = Subproceso::FindOrFail($request->subproceso_o);
+
+        #dd($subproceso);
 
         // Encontramos el proceso origen
-        $proceso = Proceso::FindOrFail($request->subproceso_o);
+        $proceso = Proceso::FindOrFail($request->proceso_o);
 
         // Cambiar el nombre del codigo debe de cambiar el nombre de  la carpeta 
         if ($codigo_anterior != $proceso_personal->codigo) {

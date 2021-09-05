@@ -16,15 +16,17 @@
 					<input type="hidden" name="id" id="id">
 
 
-					<div class="form-group">
-						<label for="inicio">Nombre del ciclo esoclar</label>
-						<input id="nombre" required type="text" name="nombre" class="form-control {{ $errors->has('nombre') ? ' is-invalid' : '' }}" autocomplete="off" value="{{ old('nombre') }}">
-						@if ($errors->has('nombre'))
+					
+				    <div class="form-group">
+						<label for="inicio">Inicio del ciclo escolar</label>
+						<input id="nombre1" required type="text" name="nombre" class="form-control {{ $errors->has('nombre1') ? ' is-invalid' : '' }}" autocomplete="off" value="{{ old('nombre1') }}">
+						@if ($errors->has('nombre1'))
 						<span class="invalid-feedback" role="alert">
-							<strong>{{ $errors->first('nombre') }}</strong>
+							<strong>{{ $errors->first('nombre1') }}</strong>
 						</span>
 						@endif
 					</div>
+
 
                     <div class="form-group">
 						<label for="inicio">Inicio del ciclo escolar</label>
@@ -51,3 +53,9 @@
 					
 					<div class="modal-footer">
 						<button type="submit" class="btn btn-primary btn-block">Guardar</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

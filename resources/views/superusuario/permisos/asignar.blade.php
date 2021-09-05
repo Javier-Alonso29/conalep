@@ -112,7 +112,7 @@
         
             <div class="card">
                 <div class="card-header bg-dark">
-                <h3 class="card-title">Permisos en los que esta asignado {{$administrador->name}}</h3>
+                <h3 class="card-title">Permisos en los que está asignado {{$administrador->name}}</h3>
 
                 <div class="card-tools">
                 </div>
