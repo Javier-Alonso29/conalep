@@ -18,6 +18,7 @@ use App\Models\ProcesoPersonal;
 use App\Models\ActividadesAdministradores;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use QuitameDeAqui;
 
 class DocumentoController extends Controller
 {
