@@ -291,6 +291,7 @@ class ZipController extends Controller
     }
 
 
+
     /**
      * Metodo que consigue el nombre con nomenclatura de un documento
      */
@@ -347,5 +348,6 @@ class ZipController extends Controller
         #--------------
 
         return $full_name;
+
     }
 }
