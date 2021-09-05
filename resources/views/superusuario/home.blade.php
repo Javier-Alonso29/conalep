@@ -145,10 +145,6 @@
 
                 <div class="card-tools">
 
-                  <div class="btn btn-tool">
-                      <input type="search" class="form-control" type="search" placeholder="Buscar" >
-                  </div>
-
                   <span title="3 New Messages" class="badge bg-primary">{{$cantidad_admins}}</span>
 
                   <button type="button" class="btn btn-tool" data-card-widget="collapse">

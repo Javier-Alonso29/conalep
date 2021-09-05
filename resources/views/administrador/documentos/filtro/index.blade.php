@@ -53,13 +53,6 @@
                     <h3 class="card-title">Documentos</h3>
                     <div class="card-tools">
                         <div class="btn btn-tool">
-                            <select class="form-select form-select-sm" id="filtro_id" name="filtro_id">
-                                @foreach( $ciclos as $ciclo )
-                                    <option value={{ $ciclo->id }}>{{ $ciclo->nombre }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="btn btn-tool">
                             <a href="#" data-toggle="modal" data-target="#filtrar" class="btn btn-success btn-block">Aplicar filtro</a>
                         </div>
                         <a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo documento</a>

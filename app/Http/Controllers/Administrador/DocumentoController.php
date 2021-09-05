@@ -158,7 +158,10 @@ class DocumentoController extends Controller
                 $documento->procesopersonal->codigo, $name, 'public');
                 
             if ($assces) {
-                
+                $documento->save();
+                $actividad = new ActividadesAdministradores();
+                $actividad->id_user = Auth::user()->id;
+                $actividad->accion = 'Guardó el documento "'.$documento->nombre.'" en el proceso personal: '.$documento->procesopersonal->nombre.'';
                 $documento->save();
             }
         }
@@ -186,36 +189,89 @@ class DocumentoController extends Controller
         }
 
         $documento = Documento::FindOrFail($request->id);
-
         $nombre_doc_anterior = $documento->nombre;
         $procper_doc_anterior = ProcesoPersonal::FindOrFail($documento->id_proceso_personal);
-        $subproceso_doc_anterior = Subproceso::FindOrFail($procper_doc_anterior->id_subproceso);
-        $proceso_doc_anterior = Proceso::FindOrFail($subproceso_doc_anterior->id_proceso);
+        if($procper_doc_anterior->id_subproceso === null){
+            $flag = true;
+        }else{
+            $subproceso_doc_anterior = Subproceso::FindOrFail($procper_doc_anterior->id_subproceso);
+            $flag = false;
+        }
+        $proceso_doc_anterior = Proceso::FindOrFail($procper_doc_anterior->id_proceso);
 
         $documento->id_tipodocumento = $request->tipo_documento;
         $documento->id_proceso_personal = $request->proceso_personal;
         $documento->fill($request->all());
 
         $procper_doc_nuevo = ProcesoPersonal::FindOrFail($request->proceso_personal);
-        $subproceso_doc_nuevo = Subproceso::FindOrFail($procper_doc_nuevo->id_subproceso);
-        $proceso_doc_nuevo = Proceso::FindOrFail($subproceso_doc_nuevo->id_proceso);
+        if ($procper_doc_nuevo->id_subproceso === null) {
+            $flag2 = true;
+        }else{
+            $subproceso_doc_nuevo = Subproceso::FindOrFail($procper_doc_nuevo->id_subproceso);
+            $flag2 = false;
+        }
+        $proceso_doc_nuevo = Proceso::FindOrFail($procper_doc_nuevo->id_proceso);
         
         $documento->id_ciclo = $request->ciclo;
 
         if (($procper_doc_anterior['id'] != $procper_doc_nuevo['id']) || ($nombre_doc_anterior != $documento->nombre)) {
-            Storage::move(
-                '/public' . '/' . 
-                $proceso_doc_anterior['codigo'] . '/' . 
-                $subproceso_doc_anterior['codigo'] . '/' . 
-                $procper_doc_anterior['codigo'] . '/' . 
-                $nombre_doc_anterior,
-
-                '/public' . '/' . 
-                $proceso_doc_nuevo['codigo'] . '/' . 
-                $subproceso_doc_nuevo['codigo'] . '/' . 
-                $procper_doc_nuevo['codigo'] . '/' . 
-                $request->nombre
-            );
+            if (!$flag) {
+                if (!$flag2) {
+                    Storage::move(
+                        '/public' . '/' . 
+                        $proceso_doc_anterior['codigo'] . '/' . 
+                        $subproceso_doc_anterior['codigo'] . '/' . 
+                        $procper_doc_anterior['codigo'] . '/' . 
+                        $nombre_doc_anterior,
+                        
+                        '/public' . '/' . 
+                        $proceso_doc_nuevo['codigo'] . '/' . 
+                        $subproceso_doc_nuevo['codigo'] . '/' . 
+                        $procper_doc_nuevo['codigo'] . '/' . 
+                        $request->nombre
+                    );
+                }else{
+                    Storage::move(
+                        '/public' . '/' . 
+                        $proceso_doc_anterior['codigo'] . '/' . 
+                        $subproceso_doc_anterior['codigo'] . '/' . 
+                        $procper_doc_anterior['codigo'] . '/' . 
+                        $nombre_doc_anterior,
+                        
+                        '/public' . '/' . 
+                        $proceso_doc_nuevo['codigo'] . '/' . 
+                        $procper_doc_nuevo['codigo'] . '/' . 
+                        $request->nombre
+                    );
+                }
+            }else{
+                if ($flag2) {
+                    Storage::move(
+                        '/public' . '/' . 
+                        $proceso_doc_anterior['codigo'] . '/' . 
+                        $procper_doc_anterior['codigo'] . '/' . 
+                        $nombre_doc_anterior,
+                        
+                        '/public' . '/' . 
+                        $proceso_doc_nuevo['codigo'] . '/' . 
+                        $procper_doc_nuevo['codigo'] . '/' . 
+                        $request->nombre
+                    );
+                }else{
+                    Storage::move(
+                        '/public' . '/' . 
+                        $proceso_doc_anterior['codigo'] . '/' . 
+                        $procper_doc_anterior['codigo'] . '/' . 
+                        $nombre_doc_anterior,
+                        
+                        '/public' . '/' . 
+                        $proceso_doc_nuevo['codigo'] . '/' . 
+                        $subproceso_doc_nuevo['codigo'] . '/' . 
+                        $procper_doc_nuevo['codigo'] . '/' . 
+                        $request->nombre
+                    );
+                }
+            }
         }
 
         $documento->save();
@@ -257,8 +313,13 @@ class DocumentoController extends Controller
 
         $documento = Documento::FindOrFail($request->id);
         $procper_doc = ProcesoPersonal::FindOrFail($documento->id_proceso_personal);
-        $subproceso_doc = Subproceso::FindOrFail($procper_doc->id_subproceso);
-        $proceso_doc = Proceso::FindOrFail($subproceso_doc->id_proceso);
+        if ($procper_doc->id_subproceso === null) {
+            $flag = true;
+        }else{
+            $subproceso_doc = Subproceso::FindOrFail($procper_doc->id_subproceso);
+            $flag = false;
+        }
+        $proceso_doc = Proceso::FindOrFail($procper_doc->id_proceso);
 
         $documento->delete();
         $actividad = new ActividadesAdministradores();
@@ -266,9 +327,15 @@ class DocumentoController extends Controller
         $actividad->accion = 'Eliminó el documento "'.$documento->nombre.'" en el proceso personal: '.$documento->procesopersonal->nombre.'';
         $actividad->save();
 
-        Storage::delete(
-            '/public' . '/' . $proceso_doc['codigo'] . '/' . $subproceso_doc['codigo'] . '/' . $procper_doc['codigo'] . '/' . $documento->nombre
-        );
+        if (!$flag) {
+            Storage::delete(
+                '/public' . '/' . $proceso_doc['codigo'] . '/' . $subproceso_doc['codigo'] . '/' . $procper_doc['codigo'] . '/' . $documento->nombre
+            );
+        }else{
+            Storage::delete(
+                '/public' . '/' . $proceso_doc['codigo'] . '/' . $procper_doc['codigo'] . '/' . $documento->nombre
+            );
+        }
 
         return redirect()->route('documentos.index')->With('success', 'Se borro correctamente el documento.');
     }
@@ -306,13 +373,22 @@ class DocumentoController extends Controller
         }
 
         $documento = Documento::FindOrFail($request->id);
-        $documentoFisico = storage_path(
-            'app/public/'.
-            $documento->procesopersonal->subproceso->proceso['codigo'].'/'.
-            $documento->procesopersonal->subproceso->codigo.'/'.
-            $documento->procesopersonal->codigo.'/'.
-            $documento->nombre
-        );
+        if ($documento->procesopersonal->subproceso === null) {
+            $documentoFisico = storage_path(
+                'app/public/'.
+                $documento->procesopersonal->proceso['codigo'].'/'.
+                $documento->procesopersonal->codigo.'/'.
+                $documento->nombre
+            );
+        }else{
+            $documentoFisico = storage_path(
+                'app/public/'.
+                $documento->procesopersonal->subproceso->proceso['codigo'].'/'.
+                $documento->procesopersonal->subproceso->codigo.'/'.
+                $documento->procesopersonal->codigo.'/'.
+                $documento->nombre
+            );
+        }
 
         $info = pathinfo($documentoFisico);
         $ext = $info['extension'];
@@ -322,8 +398,7 @@ class DocumentoController extends Controller
         $clave_unidad = $plant->numero;
 
         $procper = ProcesoPersonal::FindOrFail($documento->id_proceso_personal);
-        $subproc = Subproceso::FindOrFail($procper->id_subproceso);
-        $proc = Proceso::FindOrFail($subproc->id_proceso);
+        $proc = Proceso::FindOrFail($procper->id_proceso);
         $abv_proceso = $proc->codigo;
 
         $tipo_documento = Tipodocumento::FindOrFail($documento->id_tipodocumento)->codigo;
