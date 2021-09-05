@@ -137,7 +137,7 @@
 @include('administrador.personales.create')
 @include('administrador.personales.delete')
 @include('administrador.personales.edit')
-
+@include('administrador.personales.downloadFolder')
 @endsection
 
 @section('scripts')

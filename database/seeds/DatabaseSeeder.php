@@ -34,8 +34,8 @@ class DatabaseSeeder extends Seeder
         $this->call(UsuariosSeeder::class);
         $this->call(ProcesosSeeder::class);
         $this->call(SubprocesosSeeder::class);
-        $this->call(ProcesoPersonal::class);
-        $this->call(ProcesoUserSeeder::class);
+        #$this->call(ProcesoPersonal::class);
+        #$this->call(ProcesoUserSeeder::class);
         $this->call(DocumentosSeeder::class);
         $this->call(TiposDocumentoSeeder::class);
         $this->call(CiclosSeeder::class);

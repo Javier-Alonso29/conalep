@@ -84,6 +84,7 @@ Route::group(['middleware' => ['Administrador','auth',]], function(){
 		 */
 		Route::get('/misCarpetas/{id}', 'Administrador\ProcesosPersonalesController@indexbySubproceso')->name('misCarpetas.bySubproceso');
 		Route::resource('/misCarpetas', 'Administrador\ProcesosPersonalesController');
+		Route::post('/misCarpetas/downloadFolder','Administrador\ZipController@downloadFolderProcesoPersonal')->name('misCarpetas.download.folder');
 		
 		/**
 		 * Tipos de documentos
@@ -119,9 +120,11 @@ Route::group(['middleware' => ['SUEstatal','auth',]], function(){
 	
 	Route::prefix('SUEstatal')->middleware(['SUEstatal','auth',])->group(function (){
 
+		Route::resource('/ciclos','SUEstatal\CiclosController');
+
 		
 		Route::resource('/planteles','SuperUsuario\PlantelesController');
-		Route::resource('/ciclos','SUEstatal\CiclosController');
+		
 
 		
 

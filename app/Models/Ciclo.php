@@ -13,7 +13,7 @@ class Ciclo extends Model
      * @var array
      */
     protected $fillable = [
-        'nombre', 'inicio', 'conclusion',
+        'nombre', 'inicio', 'conclusion'
     ];
 
     /**

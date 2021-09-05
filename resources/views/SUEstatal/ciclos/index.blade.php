@@ -117,15 +117,15 @@
 <script type="text/javascript">
     $('#eliminar').on('show.bs.modal', function(e) {
         var ciclo = $(e.relatedTarget).data().datos;
-        $('#id').val(ciclo.id);
+        $('#id_ciclo').val(ciclo.id);
         $('#nombre').text(ciclo.nombre);
     });
 
     $('#editar').on('show.bs.modal', function(e) {
         var ciclo = $(e.relatedTarget).data().datos;
-
+        console.log(ciclo.nombre);
         $('#id').val(ciclo.id);
-        $('#nombre').val(ciclo.nombre);
+        $('#nombre1').val(ciclo.nombre);
         $('#inicio').val(ciclo.inicio);
         $('#conclusion').val(ciclo.conclusion);
         

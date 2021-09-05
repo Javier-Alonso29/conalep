@@ -28,8 +28,8 @@ class UsuariosSeeder extends Seeder
             ['name'=>'Super',
             'apellido_paterno'=>'Usuario',
             'apellido_materno'=>'Uno',
-            'email'=>'test@zac.conalep.edu.mx',
-            'password'=>Hash::make('Superusuariogua21$#'),
+            'email'=>'superusuario_plantel1@zac.conalep.edu.mx',
+            'password'=>Hash::make('Superusuario121$#'),
             'rol_id'=>$rol_super_usuario,
             'id_plantel' => $plantel
             ]
@@ -41,7 +41,7 @@ class UsuariosSeeder extends Seeder
             'apellido_paterno'=>'Usuario',
             'apellido_materno'=>'Dos',
             'email'=>'superusuario_plantel2@zac.conalep.edu.mx',
-            'password'=>Hash::make('Superusuariofres21$#'),
+            'password'=>Hash::make('Superusuario122$#'),
             'rol_id'=>$rol_super_usuario,
             'id_plantel' => $plantel_2
             ]
@@ -53,42 +53,18 @@ class UsuariosSeeder extends Seeder
             'apellido_paterno'=>'Usuario',
             'apellido_materno'=>'Tres',
             'email'=>'superusuario_plantel3@zac.conalep.edu.mx',
-            'password'=>Hash::make('Superusuariomaz21$#'),
+            'password'=>Hash::make('Superusuario123$#'),
             'rol_id'=>$rol_super_usuario,
             'id_plantel' => $plantel_3
             ]
         );
 
-        // Administrador de prueba (Lo cambie a un password más complicada por si luego no lo borramos)
-        DB::table('users')->insert(
-            ['name'=>'Carlos Javier',
-            'apellido_paterno'=>'Alonso',
-            'apellido_materno'=>'Caldera',
-            'email'=>'Adminconaleptest@zac.conalep.edu.mx',
-            'password'=>Hash::make('Adminconalep123#!'),
-            'rol_id'=>$rol_administrador,
-            'id_plantel' => $plantel
-            ]
-        );
-
-        // Administrador de prueba (Lo cambie a un password más complicada por si luego no lo borramos)
-        DB::table('users')->insert(
-            ['name'=>'Juan Pruebita',
-            'apellido_paterno'=>'Test',
-            'apellido_materno'=>'Tesuto',
-            'email'=>'Adminconaleptest2@zac.conalep.edu.mx',
-            'password'=>Hash::make('Adminconalep123#!'),
-            'rol_id'=>$rol_administrador,
-            'id_plantel' => $plantel_2
-            ]
-        );
-
         //Superusuario estatal por defecto
         DB::table('users')->insert(
-            ['name'=>'Estatal',
-            'apellido_paterno'=>'Test',
-            'apellido_materno'=>'Test',
-            'email'=>'testEstatal@zac.conalep.edu.mx',
+            ['name'=>'Super',
+            'apellido_paterno'=>'Usuario',
+            'apellido_materno'=>'Estatal',
+            'email'=>'superusuario_estatal@zac.conalep.edu.mx',
             'password'=>Hash::make('Superestatal123@!'),
             'rol_id'=>$rol_SU_Estatal,
             'id_plantel' => $plantel
