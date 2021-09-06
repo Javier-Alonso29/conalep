@@ -15,6 +15,7 @@ use App\Models\PermisosProcesos;
 use SebastianBergmann\Environment\Console;
 use App\Models\ActividadesAdministradores;
 use App\Models\Planteles;
+use App\Models\Sesiones;
 
 class AdministradoresController extends Controller
 {
@@ -124,7 +125,10 @@ class AdministradoresController extends Controller
             $actividad->accion = 'Dio de baja al usuario "'.$usuario->name.' '.$usuario->apellido_paterno.' '.$usuario->apellido_materno.'"';
             $actividad->save();
         }
-
+        
+        $sesiones = Sesiones::where('id_user', $usuario->id);
+        $sesiones = ActividadesAdministradores::where('id_user', $usuario->id);
+        $sesiones->delete();
         $usuario->delete();
 
         
