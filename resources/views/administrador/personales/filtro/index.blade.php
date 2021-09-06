@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('titulo','Subproceso')
+@section('titulo','Procesos Personales')
 
 @section('contenido')
 <div class="content-header">
@@ -60,7 +60,7 @@
                 <h3 class="card-title">Procesos personales</h3>
 
                 <div class="card-tools">
-                <a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo proceso</a>
+                <a href="#" data-toggle="modal" data-target="#crear" class="btn btn-success btn-tool">Nuevo proceso personal</a>
                     <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
                     <i class="fas fa-minus"></i>
                     </button>
@@ -118,6 +118,9 @@
                 </table>
                 </div>
                 <!-- /.card-body -->
+                <div class="card-footer">
+                    
+                </div>
             </div>
             <!-- /.card -->
         </div>
@@ -132,6 +135,9 @@
 </a>
 
 @include('administrador.personales.filtro.create')
+@include('administrador.personales.filtro.edit')
+@include('administrador.personales.delete')
+@include('administrador.personales.downloadFolder')
 
 @endsection
 
@@ -157,10 +163,10 @@
 		$('#id_subproceso').val(subproceso.id);
 	});
     $('#downloadFolder').on('show.bs.modal', function(e) {
-		var subproceso = $(e.relatedTarget).data().datos;
-		console.log(subproceso);
-        $('#downloadFolder_id').val(subproceso.id);
-		$('#codigo_subproceso').text(subproceso.codigo);
+		var procesopers = $(e.relatedTarget).data().datos;
+		console.log(procesopers);
+        $('#downloadFolder_id').val(procesopers.id);
+		$('#codigo_procesopersonal').text(procesopers.codigo);
     });
     
 </script>

@@ -65,6 +65,28 @@ class ProcesosPersonalesController extends Controller
                 where('id_usuario', Auth::user()->id)->get();
                 
         }
+        /* el correcto
+        $subproceso = Subproceso::FindOrFail($id);
+        $proceso = Proceso::FindOrFail($subproceso->id_proceso);
+        $subprocesos = Subproceso::where('id_proceso',$proceso->id)->get();
+
+        if (Auth::user()->rol_id == 3) {
+
+            $procesos_personales = ProcesoPersonal::where('id_subproceso', $subproceso->id)->get();
+
+        }elseif (Auth::user()->rol_id == 1) {
+
+            $procesos_personales = ProcesoPersonal::where('id_subproceso', $subproceso->id)->
+                where('id_plantel', Auth::user()->id_plantel)->get();
+
+        }else{
+
+            $procesos_personales = ProcesoPersonal::where('id_subproceso', $subproceso->id)->
+                where('id_usuario', Auth::user()->id)->get();
+                
+        }
+        return view('administrador.personales.filtro.index', compact('procesos_personales','proceso','subprocesos','subproceso'));
+        */
         return view('administrador.personales.filtro.index', compact('procesos_personales','proceso','subprocesos'));
 
     }

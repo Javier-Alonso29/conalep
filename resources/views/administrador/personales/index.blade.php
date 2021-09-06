@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('titulo','Procesos personales')
+@section('titulo','Procesos Personales')
 
 @section('contenido')
 <div class="content-header">
@@ -77,31 +77,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse($procesos_personales as $proceso)
+                        @forelse($procesos_personales as $procesopers)
                             <tr>
                                 <td>{{  $loop->iteration  }}</td>
-                                <td>{{  $proceso->nombre  }}</td>
-                                <td>{{  $proceso->codigo  }}</td>
+                                <td>{{  $procesopers->nombre  }}</td>
+                                <td>{{  $procesopers->codigo  }}</td>
                                 <td>
-                                    <button type="button" class="btn btn-success btn-circle btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ $proceso->descripcion }}">
+                                    <button type="button" class="btn btn-success btn-circle btn-sm" data-container="body" data-toggle="popover" data-placement="right" data-content="{{ $procesopers->descripcion }}">
                                         <i class="far fa-eye"></i>
                                     </button>
                                 </td>
                                 <td>
-                                    <a class="btn btn-success btn-circle btn-sm" href="{{ route('documentos.byProcesoPersonal', $proceso->id) }}" role="button">
+                                    <a class="btn btn-success btn-circle btn-sm" href="{{ route('documentos.byProcesoPersonal', $procesopers->id) }}" role="button">
                                         <i class="fas fa-angle-double-right"></i>
                                     </a>
                                 </td>
                                 <td>
-                                    <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" href="#" data-datos="{{$proceso}}" >
+                                    <a class="btn btn-info btn-circle btn-sm" data-toggle="modal" data-target="#editar" href="#" data-datos="{{$procesopers}}" >
                                         <i class="fa fa-edit" ></i>
                                     </a>
                                     
-                                    <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#downloadFolder" href="#" data-datos="{{$proceso}}" >
+                                    <a class="btn btn-primary btn-circle btn-sm" data-toggle="modal" data-target="#downloadFolder" href="#" data-datos="{{$procesopers}}" >
                                         <i class="fa fa-download"></i>
                                     </a>
                                     
-                                    <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar"  href="#" data-datos="{{$proceso}}">
+                                    <a class="btn btn-danger btn-circle btn-sm" data-toggle="modal" data-target="#eliminar"  href="#" data-datos="{{$procesopers}}">
                                         <i class="fa fa-trash" ></i>
                                     </a>
                                     
@@ -138,6 +138,7 @@
 @include('administrador.personales.delete')
 @include('administrador.personales.edit')
 @include('administrador.personales.downloadFolder')
+
 @endsection
 
 @section('scripts')
@@ -176,10 +177,10 @@
 
 
     $('#downloadFolder').on('show.bs.modal', function(e) {
-		var proceso = $(e.relatedTarget).data().datos;
-		console.log(proceso);
-        $('#downloadFolder_id').val(proceso.id);
-		$('#codigo_proceso').text(proceso.codigo);
+		var procesopers = $(e.relatedTarget).data().datos;
+		console.log(procesopers);
+        $('#downloadFolder_id').val(procesopers.id);
+		$('#codigo_procesopersonal').text(procesopers.codigo);
     });
 
 </script>

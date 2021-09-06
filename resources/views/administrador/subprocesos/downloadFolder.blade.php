@@ -1,9 +1,9 @@
-<!-- eliminar Modal-->
+<!-- descargar Modal-->
 <div class="modal fade" id="downloadFolder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header bg-black">
-				<h5 class="modal-title" id="exampleModalLabel">Descargar folder <span class="badge badge-danger" id="codigo_subproceso"></span></h5>
+				<h5 class="modal-title" id="exampleModalLabel">Descargar folder del subproceso <span class="badge badge-danger" id="codigo_subproceso"></span></h5>
                 
 				
                     <span class="badge badge-danger" class="close"  data-dismiss="modal" aria-label="Close">
